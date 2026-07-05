@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "Découvrez des expériences qui valent le coup"
+  },
+  "nav": {
+    "explore": "Explorer",
+    "me": "Moi",
+    "account": "Compte"
+  },
+  "explore": {
+    "title": "Explorer",
+    "subtitle": "Recherchez des idées intéressantes à rejoindre",
+    "searchPlaceholder": "Rechercher idées, lieux, activités…",
+    "filters": "Filtres",
+    "results": "{count} idées",
+    "empty": "Aucune idée trouvée. Essayez une autre recherche."
+  },
+  "idea": {
+    "back": "Retour à l'exploration",
+    "participate": "Participer",
+    "about": "À propos de cette idée",
+    "location": "Lieu",
+    "date": "Quand",
+    "participants": "Participants",
+    "organizer": "Organisateur",
+    "notFound": "Idée introuvable"
+  },
+  "me": {
+    "title": "Moi",
+    "subtitle": "Vos expériences enregistrées et rejointes",
+    "saved": "Idées enregistrées",
+    "joined": "Rejointes",
+    "created": "Créées par vous",
+    "empty": "Rien pour l'instant. Explorez des idées pour commencer."
+  },
+  "account": {
+    "title": "Compte",
+    "subtitle": "Profil et préférences",
+    "language": "Langue",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "notifications": "Notifications",
+    "privacy": "Confidentialité"
+  },
+  "common": {
+    "loading": "Chargement…",
+    "seeAll": "Tout voir"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "Temukan pengalaman yang layak diikuti"
+  },
+  "nav": {
+    "explore": "Jelajahi",
+    "me": "Saya",
+    "account": "Akun"
+  },
+  "explore": {
+    "title": "Jelajahi",
+    "subtitle": "Cari ide menarik untuk diikuti",
+    "searchPlaceholder": "Cari ide, tempat, aktivitas…",
+    "filters": "Filter",
+    "results": "{count} ide",
+    "empty": "Tidak ada ide ditemukan. Coba pencarian lain."
+  },
+  "idea": {
+    "back": "Kembali ke jelajahi",
+    "participate": "Ikut",
+    "about": "Tentang ide ini",
+    "location": "Lokasi",
+    "date": "Kapan",
+    "participants": "Peserta",
+    "organizer": "Penyelenggara",
+    "notFound": "Ide tidak ditemukan"
+  },
+  "me": {
+    "title": "Saya",
+    "subtitle": "Pengalaman tersimpan dan yang diikuti",
+    "saved": "Ide tersimpan",
+    "joined": "Diikuti",
+    "created": "Dibuat oleh Anda",
+    "empty": "Belum ada apa pun. Jelajahi ide untuk memulai."
+  },
+  "account": {
+    "title": "Akun",
+    "subtitle": "Profil dan preferensi",
+    "language": "Bahasa",
+    "signIn": "Masuk",
+    "signOut": "Keluar",
+    "profile": "Profil",
+    "settings": "Pengaturan",
+    "notifications": "Notifikasi",
+    "privacy": "Privasi"
+  },
+  "common": {
+    "loading": "Memuat…",
+    "seeAll": "Lihat semua"
+  }
+}

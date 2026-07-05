@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "嘛呢",
+    "tagline": "发现值得参与的体验想法"
+  },
+  "nav": {
+    "explore": "探索",
+    "me": "我的",
+    "account": "账户"
+  },
+  "explore": {
+    "title": "探索",
+    "subtitle": "搜索有趣的想法并参与体验",
+    "searchPlaceholder": "搜索想法、地点、活动…",
+    "filters": "筛选",
+    "results": "{count} 个想法",
+    "empty": "未找到相关想法，请尝试其他搜索。"
+  },
+  "idea": {
+    "back": "返回探索",
+    "participate": "参与",
+    "about": "关于此想法",
+    "location": "地点",
+    "date": "时间",
+    "participants": "参与者",
+    "organizer": "发起人",
+    "notFound": "未找到该想法"
+  },
+  "me": {
+    "title": "我的",
+    "subtitle": "你收藏和参与的体验",
+    "saved": "收藏的想法",
+    "joined": "已参与",
+    "created": "我发起的",
+    "empty": "暂无内容，去探索一些想法吧。"
+  },
+  "account": {
+    "title": "账户",
+    "subtitle": "个人资料与偏好设置",
+    "language": "语言",
+    "signIn": "登录",
+    "signOut": "退出登录",
+    "profile": "个人资料",
+    "settings": "设置",
+    "notifications": "通知",
+    "privacy": "隐私"
+  },
+  "common": {
+    "loading": "加载中…",
+    "seeAll": "查看全部"
+  }
+}

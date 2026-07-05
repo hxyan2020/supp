@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "Descubre experiencias que merecen la pena"
+  },
+  "nav": {
+    "explore": "Explorar",
+    "me": "Yo",
+    "account": "Cuenta"
+  },
+  "explore": {
+    "title": "Explorar",
+    "subtitle": "Busca ideas interesantes en las que participar",
+    "searchPlaceholder": "Buscar ideas, lugares, actividades…",
+    "filters": "Filtros",
+    "results": "{count} ideas",
+    "empty": "No se encontraron ideas. Prueba otra búsqueda."
+  },
+  "idea": {
+    "back": "Volver a explorar",
+    "participate": "Participar",
+    "about": "Sobre esta idea",
+    "location": "Ubicación",
+    "date": "Cuándo",
+    "participants": "Participantes",
+    "organizer": "Organizador",
+    "notFound": "Idea no encontrada"
+  },
+  "me": {
+    "title": "Yo",
+    "subtitle": "Tus experiencias guardadas y unidas",
+    "saved": "Ideas guardadas",
+    "joined": "Unidas",
+    "created": "Creadas por ti",
+    "empty": "Nada aquí todavía. Explora ideas para empezar."
+  },
+  "account": {
+    "title": "Cuenta",
+    "subtitle": "Perfil y preferencias",
+    "language": "Idioma",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "profile": "Perfil",
+    "settings": "Ajustes",
+    "notifications": "Notificaciones",
+    "privacy": "Privacidad"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "seeAll": "Ver todo"
+  }
+}

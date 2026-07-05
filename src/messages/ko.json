@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "참여하고 싶은 경험 아이디어를 발견하세요"
+  },
+  "nav": {
+    "explore": "탐색",
+    "me": "나",
+    "account": "계정"
+  },
+  "explore": {
+    "title": "탐색",
+    "subtitle": "참여할 만한 흥미로운 아이디어를 검색하세요",
+    "searchPlaceholder": "아이디어, 장소, 활동 검색…",
+    "filters": "필터",
+    "results": "아이디어 {count}개",
+    "empty": "아이디어를 찾을 수 없습니다. 다른 검색어를 시도해 보세요."
+  },
+  "idea": {
+    "back": "탐색으로 돌아가기",
+    "participate": "참여하기",
+    "about": "이 아이디어 소개",
+    "location": "장소",
+    "date": "일시",
+    "participants": "참가자",
+    "organizer": "주최자",
+    "notFound": "아이디어를 찾을 수 없습니다"
+  },
+  "me": {
+    "title": "나",
+    "subtitle": "저장 및 참여한 경험",
+    "saved": "저장한 아이디어",
+    "joined": "참여 중",
+    "created": "내가 만든",
+    "empty": "아직 없습니다. 아이디어를 탐색해 보세요."
+  },
+  "account": {
+    "title": "계정",
+    "subtitle": "프로필 및 환경설정",
+    "language": "언어",
+    "signIn": "로그인",
+    "signOut": "로그아웃",
+    "profile": "프로필",
+    "settings": "설정",
+    "notifications": "알림",
+    "privacy": "개인정보"
+  },
+  "common": {
+    "loading": "로딩 중…",
+    "seeAll": "전체 보기"
+  }
+}

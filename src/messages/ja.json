@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "参加したくなる体験アイデアを見つけよう"
+  },
+  "nav": {
+    "explore": "探す",
+    "me": "マイページ",
+    "account": "アカウント"
+  },
+  "explore": {
+    "title": "探す",
+    "subtitle": "参加したい面白いアイデアを検索",
+    "searchPlaceholder": "アイデア、場所、アクティビティを検索…",
+    "filters": "フィルター",
+    "results": "{count}件のアイデア",
+    "empty": "アイデアが見つかりません。別の検索をお試しください。"
+  },
+  "idea": {
+    "back": "探すに戻る",
+    "participate": "参加する",
+    "about": "このアイデアについて",
+    "location": "場所",
+    "date": "日時",
+    "participants": "参加者",
+    "organizer": "主催者",
+    "notFound": "アイデアが見つかりません"
+  },
+  "me": {
+    "title": "マイページ",
+    "subtitle": "保存・参加した体験",
+    "saved": "保存したアイデア",
+    "joined": "参加中",
+    "created": "自分が作成",
+    "empty": "まだ何もありません。アイデアを探してみましょう。"
+  },
+  "account": {
+    "title": "アカウント",
+    "subtitle": "プロフィールと設定",
+    "language": "言語",
+    "signIn": "ログイン",
+    "signOut": "ログアウト",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "notifications": "通知",
+    "privacy": "プライバシー"
+  },
+  "common": {
+    "loading": "読み込み中…",
+    "seeAll": "すべて見る"
+  }
+}

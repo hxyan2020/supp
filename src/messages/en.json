@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "name": "Supp",
+    "tagline": "Discover experiences worth joining"
+  },
+  "nav": {
+    "explore": "Explore",
+    "me": "Me",
+    "account": "Account"
+  },
+  "explore": {
+    "title": "Explore",
+    "subtitle": "Search for interesting ideas to participate in",
+    "searchPlaceholder": "Search ideas, places, activities…",
+    "filters": "Filters",
+    "results": "{count} ideas",
+    "empty": "No ideas found. Try a different search."
+  },
+  "idea": {
+    "back": "Back to explore",
+    "participate": "Participate",
+    "about": "About this idea",
+    "location": "Location",
+    "date": "When",
+    "participants": "Participants",
+    "organizer": "Organizer",
+    "notFound": "Idea not found"
+  },
+  "me": {
+    "title": "Me",
+    "subtitle": "Your saved and joined experiences",
+    "saved": "Saved ideas",
+    "joined": "Joined",
+    "created": "Created by you",
+    "empty": "Nothing here yet. Explore ideas to get started."
+  },
+  "account": {
+    "title": "Account",
+    "subtitle": "Profile and preferences",
+    "language": "Language",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "privacy": "Privacy"
+  },
+  "common": {
+    "loading": "Loading…",
+    "seeAll": "See all"
+  }
+}
