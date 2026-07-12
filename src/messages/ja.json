@@ -1,52 +1,113 @@
 {
   "brand": {
     "name": "Supp",
-    "tagline": "参加したくなる体験アイデアを見つけよう"
+    "tagline": "初めての素敵な体験を"
   },
   "nav": {
     "explore": "探す",
-    "me": "マイページ",
-    "account": "アカウント"
+    "map": "マップ",
+    "me": "マイページ"
   },
   "explore": {
-    "title": "探す",
-    "subtitle": "参加したい面白いアイデアを検索",
-    "searchPlaceholder": "アイデア、場所、アクティビティを検索…",
-    "filters": "フィルター",
-    "results": "{count}件のアイデア",
-    "empty": "アイデアが見つかりません。別の検索をお試しください。"
+    "searchPlaceholder": "Explore your first wonderful experience!",
+    "city": "City",
+    "weather": "Weather",
+    "fee": "Experience fee",
+    "duration": "Duration",
+    "category": "Category",
+    "any": "Any",
+    "start": "Start exploring",
+    "forYou": "For you",
+    "forYouSub": "Top 10 ideas matched to your preferences",
+    "resultsTitle": "Search results",
+    "empty": "No ideas found. Try different filters.",
+    "minutesShort": "min",
+    "stats": {
+      "database": "Ideas in the experience database: {count}",
+      "mine": "Ideas I've experienced: {count}",
+      "remaining": "Ideas left to browse today: {count}"
+    },
+    "weatherOptions": {
+      "any": "Any",
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
+    },
+    "feeOptions": {
+      "any": "Any",
+      "free": "Free",
+      "under100": "Under ¥100",
+      "over100": "Over ¥100"
+    },
+    "durationOptions": {
+      "any": "Any",
+      "short": "Under 30 min",
+      "medium": "30–120 min",
+      "long": "Over 2 hours"
+    },
+    "categories": {
+      "comfort": "Comfort zone",
+      "taste": "Taste buds",
+      "outdoors": "Outdoors",
+      "creative": "Creative",
+      "social": "Social",
+      "culture": "Culture",
+      "adrenaline": "Adrenaline",
+      "wellness": "Wellness"
+    }
   },
-  "idea": {
-    "back": "探すに戻る",
-    "participate": "参加する",
-    "about": "このアイデアについて",
-    "location": "場所",
-    "date": "日時",
-    "participants": "参加者",
-    "organizer": "主催者",
-    "notFound": "アイデアが見つかりません"
+  "map": {
+    "searchPlaceholder": "Search here",
+    "loading": "Loading map…",
+    "go": "GO",
+    "locate": "My location",
+    "providerGoogle": "Navigate with Google Maps",
+    "providerChina": "Navigate with Amap"
   },
   "me": {
-    "title": "マイページ",
-    "subtitle": "保存・参加した体験",
-    "saved": "保存したアイデア",
-    "joined": "参加中",
-    "created": "自分が作成",
-    "empty": "まだ何もありません。アイデアを探してみましょう。"
+    "editProfile": "Edit avatar & username",
+    "experienced": "Done",
+    "favorited": "Saved",
+    "claimed": "Claimed",
+    "summaryLead": "As of today, you have…",
+    "summaryExperienced": "Experienced {count} ideas",
+    "summarySaved": "Saved {count} ideas recently",
+    "summaryPercentile": "Your experience count tops {pct}% of Supp users",
+    "summaryQuote": "Because you exist, our species gets more interesting!",
+    "soulReport": "Tap to generate your Interesting Soul Report",
+    "personaTitle": "You are a {persona}",
+    "joinedTitle": "Experiences I've joined",
+    "joinedHint": "*Show this screen on the day to check in",
+    "savedTitle": "Saved / liked ideas",
+    "friendsTitle": "Similar souls",
+    "friendsSub": "People who collect ideas like yours",
+    "language": "Language"
   },
-  "account": {
-    "title": "アカウント",
-    "subtitle": "プロフィールと設定",
-    "language": "言語",
-    "signIn": "ログイン",
-    "signOut": "ログアウト",
-    "profile": "プロフィール",
-    "settings": "設定",
-    "notifications": "通知",
-    "privacy": "プライバシー"
+  "idea": {
+    "back": "Back",
+    "category": "Category",
+    "sensation": "Median sensation",
+    "duration": "Estimated duration",
+    "minutes": "minutes",
+    "publishedBy": "{name} published this idea",
+    "experienced": "Done",
+    "favorite": "Save",
+    "share": "Share",
+    "claim": "Claim",
+    "claimNote": "*Host events & earn",
+    "claimedBy": "{name} claimed this experience",
+    "about": "About this idea",
+    "location": "Location",
+    "when": "When",
+    "address": "Address",
+    "fee": "Fee",
+    "free": "Free",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "openOnMap": "Open on map",
+    "notFound": "Idea not found"
   },
   "common": {
-    "loading": "読み込み中…",
-    "seeAll": "すべて見る"
+    "loading": "Loading…"
   }
 }

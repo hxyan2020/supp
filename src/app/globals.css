@@ -1,18 +1,107 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
+  --supp-red: #e31b23;
+  --supp-red-dark: #c4141b;
+  --supp-black: #0a0a0a;
+  --supp-ink: #1a1a1a;
+  --supp-muted: #6b6b6b;
+  --supp-line: #e8e8e8;
+  --supp-soft: #f4f4f4;
+  --supp-card: #ffffff;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-supp-red: var(--supp-red);
+  --color-supp-red-dark: var(--supp-red-dark);
+  --color-supp-black: var(--supp-black);
+  --color-supp-ink: var(--supp-ink);
+  --color-supp-muted: var(--supp-muted);
+  --color-supp-line: var(--supp-line);
+  --color-supp-soft: var(--supp-soft);
+  --font-sans: var(--font-noto-sans);
+  --font-display: var(--font-noto-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-noto-sans), "PingFang SC", "Noto Sans SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--supp-red) 35%, transparent);
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  font: inherit;
+  z-index: 0;
+}
+
+.supp-avatar-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.supp-avatar-marker .pin {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  background: #111;
+}
+
+.supp-avatar-marker .pin img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease both;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 2.4s ease-in-out infinite;
 }

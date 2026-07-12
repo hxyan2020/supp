@@ -1,52 +1,113 @@
 {
   "brand": {
     "name": "嘛呢",
-    "tagline": "发现值得参与的体验想法"
+    "tagline": "探索你的第一次奇妙体验"
   },
   "nav": {
     "explore": "探索",
-    "me": "我的",
-    "account": "账户"
+    "map": "地图",
+    "me": "我的"
   },
   "explore": {
-    "title": "探索",
-    "subtitle": "搜索有趣的想法并参与体验",
-    "searchPlaceholder": "搜索想法、地点、活动…",
-    "filters": "筛选",
-    "results": "{count} 个想法",
-    "empty": "未找到相关想法，请尝试其他搜索。"
+    "searchPlaceholder": "探索你的第一次奇妙体验！",
+    "city": "城市",
+    "weather": "天气",
+    "fee": "体验费用",
+    "duration": "体验时长",
+    "category": "体验分类",
+    "any": "随便",
+    "start": "开始探索",
+    "forYou": "为你推荐",
+    "forYouSub": "根据你的偏好精选 Top 10",
+    "resultsTitle": "搜索结果",
+    "empty": "没有找到点子，换个条件试试。",
+    "minutesShort": "分钟",
+    "stats": {
+      "database": "当前人类体验数据库点子数：{count}",
+      "mine": "我已体验的点子数：{count}",
+      "remaining": "今天剩余浏览点子数：{count}"
+    },
+    "weatherOptions": {
+      "any": "随便",
+      "sunny": "晴天",
+      "cloudy": "多云",
+      "rainy": "下雨"
+    },
+    "feeOptions": {
+      "any": "随便",
+      "free": "免费",
+      "under100": "100 元以下",
+      "over100": "100 元以上"
+    },
+    "durationOptions": {
+      "any": "随便",
+      "short": "30 分钟内",
+      "medium": "30–120 分钟",
+      "long": "2 小时以上"
+    },
+    "categories": {
+      "comfort": "舒适圈",
+      "taste": "味蕾",
+      "outdoors": "户外",
+      "creative": "创意",
+      "social": "社交",
+      "culture": "文化",
+      "adrenaline": "肾上腺素",
+      "wellness": "身心"
+    }
   },
-  "idea": {
-    "back": "返回探索",
-    "participate": "参与",
-    "about": "关于此想法",
-    "location": "地点",
-    "date": "时间",
-    "participants": "参与者",
-    "organizer": "发起人",
-    "notFound": "未找到该想法"
+  "map": {
+    "searchPlaceholder": "搜索地点或点子",
+    "loading": "地图加载中…",
+    "go": "GO",
+    "locate": "定位",
+    "providerGoogle": "使用 Google 地图导航",
+    "providerChina": "使用高德地图导航"
   },
   "me": {
-    "title": "我的",
-    "subtitle": "你收藏和参与的体验",
-    "saved": "收藏的想法",
-    "joined": "已参与",
-    "created": "我发起的",
-    "empty": "暂无内容，去探索一些想法吧。"
+    "editProfile": "编辑头像与用户名",
+    "experienced": "已体验",
+    "favorited": "已收藏",
+    "claimed": "已认领",
+    "summaryLead": "截至今日，你已经…",
+    "summaryExperienced": "体验了 {count} 个点子",
+    "summarySaved": "最近收藏了 {count} 个点子",
+    "summaryPercentile": "体验数量超过 {pct}% 的嘛呢用户",
+    "summaryQuote": "因为你的存在，让我们这个物种变得更有趣！",
+    "soulReport": "点我一键生成《有趣的灵魂报告》",
+    "personaTitle": "你是{persona}",
+    "joinedTitle": "我已报名的体验",
+    "joinedHint": "*活动当天出示此界面即可入场",
+    "savedTitle": "我收藏 / 喜欢的点子",
+    "friendsTitle": "相似的灵魂",
+    "friendsSub": "收藏口味接近你的人",
+    "language": "语言"
   },
-  "account": {
-    "title": "账户",
-    "subtitle": "个人资料与偏好设置",
-    "language": "语言",
-    "signIn": "登录",
-    "signOut": "退出登录",
-    "profile": "个人资料",
-    "settings": "设置",
-    "notifications": "通知",
-    "privacy": "隐私"
+  "idea": {
+    "back": "返回",
+    "category": "分类",
+    "sensation": "体验感受中位数",
+    "duration": "预计时长",
+    "minutes": "分钟",
+    "publishedBy": "{name} 发布了这个体验点子",
+    "experienced": "已体验",
+    "favorite": "收藏",
+    "share": "分享",
+    "claim": "认领",
+    "claimNote": "*举办活动获得收益",
+    "claimedBy": "{name} 认领了该体验",
+    "about": "关于这个点子",
+    "location": "地点",
+    "when": "时间",
+    "address": "地址",
+    "fee": "费用",
+    "free": "免费",
+    "comments": "评论",
+    "writeComment": "写评论",
+    "openOnMap": "在地图中打开",
+    "notFound": "未找到该点子"
   },
   "common": {
-    "loading": "加载中…",
-    "seeAll": "查看全部"
+    "loading": "加载中…"
   }
 }

@@ -1,0 +1,187 @@
+"use client";
+
+import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import {
+  getIdeaById,
+  localizedIdea,
+  mockFriends,
+  mockUser,
+} from "@/data/mock-ideas";
+
+export function MeView() {
+  const t = useTranslations("me");
+  const locale = useLocale();
+  const zh = locale === "zh";
+
+  const favorited = mockUser.favoritedIds
+    .map(getIdeaById)
+    .filter(Boolean)
+    .slice(0, 6);
+  const joined = mockUser.joinedIds.map(getIdeaById).filter(Boolean);
+
+  return (
+    <div className="min-h-full bg-[#f5f5f5] text-supp-ink">
+      <section className="relative overflow-hidden bg-black text-white">
+        <Image
+          src="/images/me-bg.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-45"
+          sizes="500px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/80" />
+
+        <div className="relative z-10 space-y-5 px-4 pb-6 pt-5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-white/70">
+                <Image src={mockUser.avatar} alt="" fill className="object-cover" sizes="56px" />
+              </div>
+              <div>
+                <p className="text-base font-semibold">
+                  {zh ? mockUser.nameZh : mockUser.name}
+                </p>
+                <p className="text-[11px] text-white/65">{t("editProfile")}</p>
+              </div>
+            </div>
+            <div className="flex gap-4 text-center text-xs">
+              <Stat value={mockUser.experienced} label={t("experienced")} />
+              <Stat value={mockUser.favorited} label={t("favorited")} />
+              <Stat value={mockUser.claimed} label={t("claimed")} />
+            </div>
+          </div>
+
+          <div className="space-y-1 text-sm leading-relaxed text-white/90">
+            <p>{t("summaryLead")}</p>
+            <p>
+              {t("summaryExperienced", { count: mockUser.experienced })}
+            </p>
+            <p>{t("summarySaved", { count: 4 })}</p>
+            <p>
+              {t("summaryPercentile", { pct: mockUser.percentile })}
+            </p>
+            <p className="pt-1 text-white/75">{t("summaryQuote")}</p>
+          </div>
+        </div>
+      </section>
+
+      <button
+        type="button"
+        className="relative mx-4 -mt-3 flex items-center gap-3 overflow-hidden rounded-xl bg-supp-red px-3 py-3 text-left text-white shadow-lg"
+      >
+        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg">
+          <Image src="/images/soul-dog.jpg" alt="" fill className="object-cover" sizes="48px" />
+        </div>
+        <span className="text-sm font-semibold leading-snug">{t("soulReport")}</span>
+      </button>
+
+      <section className="mx-4 mt-4 rounded-2xl bg-white p-4 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="relative h-14 w-14 overflow-hidden rounded-full bg-supp-soft">
+            <Image src="/images/persona.png" alt="" fill className="object-cover" sizes="56px" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">
+              {t("personaTitle", {
+                persona: zh ? mockUser.personaZh : mockUser.persona,
+              })}
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-supp-muted">
+              {zh ? mockUser.personaDescZh : mockUser.personaDesc}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-4 mt-4 rounded-2xl bg-white p-4 shadow-sm">
+        <h2 className="text-sm font-semibold">{t("joinedTitle")}</h2>
+        <p className="mt-1 text-[11px] text-supp-muted">{t("joinedHint")}</p>
+        <div className="mt-3 space-y-3">
+          {joined.map((idea) => {
+            if (!idea) return null;
+            const L = localizedIdea(idea, locale);
+            return (
+              <Link
+                key={idea.id}
+                href={`/ideas/${idea.id}`}
+                className="flex items-center gap-3 rounded-xl bg-supp-soft/80 p-2.5"
+              >
+                <div className="relative h-12 w-12 overflow-hidden rounded-lg">
+                  <Image src={idea.image} alt="" fill className="object-cover" sizes="48px" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{L.title}</p>
+                  <p className="truncate text-xs text-supp-muted">{idea.date}</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mx-4 mt-4 rounded-2xl bg-white p-4 shadow-sm">
+        <h2 className="text-sm font-semibold">{t("savedTitle")}</h2>
+        <div className="mt-3 grid grid-cols-2 gap-2.5">
+          {favorited.map((idea) => {
+            if (!idea) return null;
+            const L = localizedIdea(idea, locale);
+            return (
+              <Link
+                key={idea.id}
+                href={`/ideas/${idea.id}`}
+                className="overflow-hidden rounded-xl bg-supp-soft"
+              >
+                <div className="relative h-24">
+                  <Image src={idea.image} alt="" fill className="object-cover" sizes="160px" />
+                </div>
+                <p className="line-clamp-2 p-2 text-xs font-medium">{L.title}</p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mx-4 mt-4 rounded-2xl bg-white p-4 shadow-sm">
+        <h2 className="text-sm font-semibold">{t("friendsTitle")}</h2>
+        <p className="mt-1 text-xs text-supp-muted">{t("friendsSub")}</p>
+        <div className="mt-3 space-y-3">
+          {mockFriends.map((friend) => (
+            <div key={friend.id} className="flex items-center gap-3">
+              <div className="relative h-11 w-11 overflow-hidden rounded-full">
+                <Image src={friend.avatar} alt="" fill className="object-cover" sizes="44px" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium">
+                  {zh ? friend.nameZh : friend.name}
+                </p>
+                <p className="truncate text-xs text-supp-muted">
+                  {zh ? friend.bioZh : friend.bio}
+                </p>
+              </div>
+              <span className="rounded-full bg-supp-red/10 px-2 py-1 text-[11px] font-semibold text-supp-red">
+                {friend.overlap}%
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-4 mb-6 mt-4 space-y-3 rounded-2xl bg-white p-4 shadow-sm">
+        <h2 className="text-sm font-semibold">{t("language")}</h2>
+        <LanguageSwitcher />
+      </section>
+    </div>
+  );
+}
+
+function Stat({ value, label }: { value: number; label: string }) {
+  return (
+    <div>
+      <p className="text-base font-bold">{value}</p>
+      <p className="text-[10px] text-white/65">{label}</p>
+    </div>
+  );
+}

@@ -1,52 +1,113 @@
 {
   "brand": {
     "name": "Supp",
-    "tagline": "Temukan pengalaman yang layak diikuti"
+    "tagline": "Pengalaman menakjubkan pertamamu"
   },
   "nav": {
     "explore": "Jelajahi",
-    "me": "Saya",
-    "account": "Akun"
+    "map": "Peta",
+    "me": "Saya"
   },
   "explore": {
-    "title": "Jelajahi",
-    "subtitle": "Cari ide menarik untuk diikuti",
-    "searchPlaceholder": "Cari ide, tempat, aktivitas…",
-    "filters": "Filter",
-    "results": "{count} ide",
-    "empty": "Tidak ada ide ditemukan. Coba pencarian lain."
+    "searchPlaceholder": "Explore your first wonderful experience!",
+    "city": "City",
+    "weather": "Weather",
+    "fee": "Experience fee",
+    "duration": "Duration",
+    "category": "Category",
+    "any": "Any",
+    "start": "Start exploring",
+    "forYou": "For you",
+    "forYouSub": "Top 10 ideas matched to your preferences",
+    "resultsTitle": "Search results",
+    "empty": "No ideas found. Try different filters.",
+    "minutesShort": "min",
+    "stats": {
+      "database": "Ideas in the experience database: {count}",
+      "mine": "Ideas I've experienced: {count}",
+      "remaining": "Ideas left to browse today: {count}"
+    },
+    "weatherOptions": {
+      "any": "Any",
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
+    },
+    "feeOptions": {
+      "any": "Any",
+      "free": "Free",
+      "under100": "Under ¥100",
+      "over100": "Over ¥100"
+    },
+    "durationOptions": {
+      "any": "Any",
+      "short": "Under 30 min",
+      "medium": "30–120 min",
+      "long": "Over 2 hours"
+    },
+    "categories": {
+      "comfort": "Comfort zone",
+      "taste": "Taste buds",
+      "outdoors": "Outdoors",
+      "creative": "Creative",
+      "social": "Social",
+      "culture": "Culture",
+      "adrenaline": "Adrenaline",
+      "wellness": "Wellness"
+    }
   },
-  "idea": {
-    "back": "Kembali ke jelajahi",
-    "participate": "Ikut",
-    "about": "Tentang ide ini",
-    "location": "Lokasi",
-    "date": "Kapan",
-    "participants": "Peserta",
-    "organizer": "Penyelenggara",
-    "notFound": "Ide tidak ditemukan"
+  "map": {
+    "searchPlaceholder": "Search here",
+    "loading": "Loading map…",
+    "go": "GO",
+    "locate": "My location",
+    "providerGoogle": "Navigate with Google Maps",
+    "providerChina": "Navigate with Amap"
   },
   "me": {
-    "title": "Saya",
-    "subtitle": "Pengalaman tersimpan dan yang diikuti",
-    "saved": "Ide tersimpan",
-    "joined": "Diikuti",
-    "created": "Dibuat oleh Anda",
-    "empty": "Belum ada apa pun. Jelajahi ide untuk memulai."
+    "editProfile": "Edit avatar & username",
+    "experienced": "Done",
+    "favorited": "Saved",
+    "claimed": "Claimed",
+    "summaryLead": "As of today, you have…",
+    "summaryExperienced": "Experienced {count} ideas",
+    "summarySaved": "Saved {count} ideas recently",
+    "summaryPercentile": "Your experience count tops {pct}% of Supp users",
+    "summaryQuote": "Because you exist, our species gets more interesting!",
+    "soulReport": "Tap to generate your Interesting Soul Report",
+    "personaTitle": "You are a {persona}",
+    "joinedTitle": "Experiences I've joined",
+    "joinedHint": "*Show this screen on the day to check in",
+    "savedTitle": "Saved / liked ideas",
+    "friendsTitle": "Similar souls",
+    "friendsSub": "People who collect ideas like yours",
+    "language": "Language"
   },
-  "account": {
-    "title": "Akun",
-    "subtitle": "Profil dan preferensi",
-    "language": "Bahasa",
-    "signIn": "Masuk",
-    "signOut": "Keluar",
-    "profile": "Profil",
-    "settings": "Pengaturan",
-    "notifications": "Notifikasi",
-    "privacy": "Privasi"
+  "idea": {
+    "back": "Back",
+    "category": "Category",
+    "sensation": "Median sensation",
+    "duration": "Estimated duration",
+    "minutes": "minutes",
+    "publishedBy": "{name} published this idea",
+    "experienced": "Done",
+    "favorite": "Save",
+    "share": "Share",
+    "claim": "Claim",
+    "claimNote": "*Host events & earn",
+    "claimedBy": "{name} claimed this experience",
+    "about": "About this idea",
+    "location": "Location",
+    "when": "When",
+    "address": "Address",
+    "fee": "Fee",
+    "free": "Free",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "openOnMap": "Open on map",
+    "notFound": "Idea not found"
   },
   "common": {
-    "loading": "Memuat…",
-    "seeAll": "Lihat semua"
+    "loading": "Loading…"
   }
 }

@@ -8,6 +8,5 @@ type Props = {
 export default async function ExplorePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-
   return <ExploreView />;
 }

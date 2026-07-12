@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans_SC } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -6,14 +6,10 @@ import { AppShell } from "@/components/AppShell";
 import { routing, type Locale } from "@/i18n/routing";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const notoSans = Noto_Sans_SC({
+  variable: "--font-noto-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 type Props = {
@@ -49,9 +45,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${notoSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans">
+      <body className="min-h-full bg-black font-sans text-white">
         <NextIntlClientProvider messages={messages}>
           <AppShell>{children}</AppShell>
         </NextIntlClientProvider>

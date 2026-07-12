@@ -1,52 +1,113 @@
 {
   "brand": {
     "name": "Supp",
-    "tagline": "참여하고 싶은 경험 아이디어를 발견하세요"
+    "tagline": "당신의 첫 멋진 경험"
   },
   "nav": {
     "explore": "탐색",
-    "me": "나",
-    "account": "계정"
+    "map": "지도",
+    "me": "나"
   },
   "explore": {
-    "title": "탐색",
-    "subtitle": "참여할 만한 흥미로운 아이디어를 검색하세요",
-    "searchPlaceholder": "아이디어, 장소, 활동 검색…",
-    "filters": "필터",
-    "results": "아이디어 {count}개",
-    "empty": "아이디어를 찾을 수 없습니다. 다른 검색어를 시도해 보세요."
+    "searchPlaceholder": "Explore your first wonderful experience!",
+    "city": "City",
+    "weather": "Weather",
+    "fee": "Experience fee",
+    "duration": "Duration",
+    "category": "Category",
+    "any": "Any",
+    "start": "Start exploring",
+    "forYou": "For you",
+    "forYouSub": "Top 10 ideas matched to your preferences",
+    "resultsTitle": "Search results",
+    "empty": "No ideas found. Try different filters.",
+    "minutesShort": "min",
+    "stats": {
+      "database": "Ideas in the experience database: {count}",
+      "mine": "Ideas I've experienced: {count}",
+      "remaining": "Ideas left to browse today: {count}"
+    },
+    "weatherOptions": {
+      "any": "Any",
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
+    },
+    "feeOptions": {
+      "any": "Any",
+      "free": "Free",
+      "under100": "Under ¥100",
+      "over100": "Over ¥100"
+    },
+    "durationOptions": {
+      "any": "Any",
+      "short": "Under 30 min",
+      "medium": "30–120 min",
+      "long": "Over 2 hours"
+    },
+    "categories": {
+      "comfort": "Comfort zone",
+      "taste": "Taste buds",
+      "outdoors": "Outdoors",
+      "creative": "Creative",
+      "social": "Social",
+      "culture": "Culture",
+      "adrenaline": "Adrenaline",
+      "wellness": "Wellness"
+    }
   },
-  "idea": {
-    "back": "탐색으로 돌아가기",
-    "participate": "참여하기",
-    "about": "이 아이디어 소개",
-    "location": "장소",
-    "date": "일시",
-    "participants": "참가자",
-    "organizer": "주최자",
-    "notFound": "아이디어를 찾을 수 없습니다"
+  "map": {
+    "searchPlaceholder": "Search here",
+    "loading": "Loading map…",
+    "go": "GO",
+    "locate": "My location",
+    "providerGoogle": "Navigate with Google Maps",
+    "providerChina": "Navigate with Amap"
   },
   "me": {
-    "title": "나",
-    "subtitle": "저장 및 참여한 경험",
-    "saved": "저장한 아이디어",
-    "joined": "참여 중",
-    "created": "내가 만든",
-    "empty": "아직 없습니다. 아이디어를 탐색해 보세요."
+    "editProfile": "Edit avatar & username",
+    "experienced": "Done",
+    "favorited": "Saved",
+    "claimed": "Claimed",
+    "summaryLead": "As of today, you have…",
+    "summaryExperienced": "Experienced {count} ideas",
+    "summarySaved": "Saved {count} ideas recently",
+    "summaryPercentile": "Your experience count tops {pct}% of Supp users",
+    "summaryQuote": "Because you exist, our species gets more interesting!",
+    "soulReport": "Tap to generate your Interesting Soul Report",
+    "personaTitle": "You are a {persona}",
+    "joinedTitle": "Experiences I've joined",
+    "joinedHint": "*Show this screen on the day to check in",
+    "savedTitle": "Saved / liked ideas",
+    "friendsTitle": "Similar souls",
+    "friendsSub": "People who collect ideas like yours",
+    "language": "Language"
   },
-  "account": {
-    "title": "계정",
-    "subtitle": "프로필 및 환경설정",
-    "language": "언어",
-    "signIn": "로그인",
-    "signOut": "로그아웃",
-    "profile": "프로필",
-    "settings": "설정",
-    "notifications": "알림",
-    "privacy": "개인정보"
+  "idea": {
+    "back": "Back",
+    "category": "Category",
+    "sensation": "Median sensation",
+    "duration": "Estimated duration",
+    "minutes": "minutes",
+    "publishedBy": "{name} published this idea",
+    "experienced": "Done",
+    "favorite": "Save",
+    "share": "Share",
+    "claim": "Claim",
+    "claimNote": "*Host events & earn",
+    "claimedBy": "{name} claimed this experience",
+    "about": "About this idea",
+    "location": "Location",
+    "when": "When",
+    "address": "Address",
+    "fee": "Fee",
+    "free": "Free",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "openOnMap": "Open on map",
+    "notFound": "Idea not found"
   },
   "common": {
-    "loading": "로딩 중…",
-    "seeAll": "전체 보기"
+    "loading": "Loading…"
   }
 }

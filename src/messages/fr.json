@@ -1,52 +1,113 @@
 {
   "brand": {
     "name": "Supp",
-    "tagline": "Découvrez des expériences qui valent le coup"
+    "tagline": "Votre première expérience merveilleuse"
   },
   "nav": {
     "explore": "Explorer",
-    "me": "Moi",
-    "account": "Compte"
+    "map": "Carte",
+    "me": "Moi"
   },
   "explore": {
-    "title": "Explorer",
-    "subtitle": "Recherchez des idées intéressantes à rejoindre",
-    "searchPlaceholder": "Rechercher idées, lieux, activités…",
-    "filters": "Filtres",
-    "results": "{count} idées",
-    "empty": "Aucune idée trouvée. Essayez une autre recherche."
+    "searchPlaceholder": "Explore your first wonderful experience!",
+    "city": "City",
+    "weather": "Weather",
+    "fee": "Experience fee",
+    "duration": "Duration",
+    "category": "Category",
+    "any": "Any",
+    "start": "Start exploring",
+    "forYou": "For you",
+    "forYouSub": "Top 10 ideas matched to your preferences",
+    "resultsTitle": "Search results",
+    "empty": "No ideas found. Try different filters.",
+    "minutesShort": "min",
+    "stats": {
+      "database": "Ideas in the experience database: {count}",
+      "mine": "Ideas I've experienced: {count}",
+      "remaining": "Ideas left to browse today: {count}"
+    },
+    "weatherOptions": {
+      "any": "Any",
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
+    },
+    "feeOptions": {
+      "any": "Any",
+      "free": "Free",
+      "under100": "Under ¥100",
+      "over100": "Over ¥100"
+    },
+    "durationOptions": {
+      "any": "Any",
+      "short": "Under 30 min",
+      "medium": "30–120 min",
+      "long": "Over 2 hours"
+    },
+    "categories": {
+      "comfort": "Comfort zone",
+      "taste": "Taste buds",
+      "outdoors": "Outdoors",
+      "creative": "Creative",
+      "social": "Social",
+      "culture": "Culture",
+      "adrenaline": "Adrenaline",
+      "wellness": "Wellness"
+    }
   },
-  "idea": {
-    "back": "Retour à l'exploration",
-    "participate": "Participer",
-    "about": "À propos de cette idée",
-    "location": "Lieu",
-    "date": "Quand",
-    "participants": "Participants",
-    "organizer": "Organisateur",
-    "notFound": "Idée introuvable"
+  "map": {
+    "searchPlaceholder": "Search here",
+    "loading": "Loading map…",
+    "go": "GO",
+    "locate": "My location",
+    "providerGoogle": "Navigate with Google Maps",
+    "providerChina": "Navigate with Amap"
   },
   "me": {
-    "title": "Moi",
-    "subtitle": "Vos expériences enregistrées et rejointes",
-    "saved": "Idées enregistrées",
-    "joined": "Rejointes",
-    "created": "Créées par vous",
-    "empty": "Rien pour l'instant. Explorez des idées pour commencer."
+    "editProfile": "Edit avatar & username",
+    "experienced": "Done",
+    "favorited": "Saved",
+    "claimed": "Claimed",
+    "summaryLead": "As of today, you have…",
+    "summaryExperienced": "Experienced {count} ideas",
+    "summarySaved": "Saved {count} ideas recently",
+    "summaryPercentile": "Your experience count tops {pct}% of Supp users",
+    "summaryQuote": "Because you exist, our species gets more interesting!",
+    "soulReport": "Tap to generate your Interesting Soul Report",
+    "personaTitle": "You are a {persona}",
+    "joinedTitle": "Experiences I've joined",
+    "joinedHint": "*Show this screen on the day to check in",
+    "savedTitle": "Saved / liked ideas",
+    "friendsTitle": "Similar souls",
+    "friendsSub": "People who collect ideas like yours",
+    "language": "Language"
   },
-  "account": {
-    "title": "Compte",
-    "subtitle": "Profil et préférences",
-    "language": "Langue",
-    "signIn": "Se connecter",
-    "signOut": "Se déconnecter",
-    "profile": "Profil",
-    "settings": "Paramètres",
-    "notifications": "Notifications",
-    "privacy": "Confidentialité"
+  "idea": {
+    "back": "Back",
+    "category": "Category",
+    "sensation": "Median sensation",
+    "duration": "Estimated duration",
+    "minutes": "minutes",
+    "publishedBy": "{name} published this idea",
+    "experienced": "Done",
+    "favorite": "Save",
+    "share": "Share",
+    "claim": "Claim",
+    "claimNote": "*Host events & earn",
+    "claimedBy": "{name} claimed this experience",
+    "about": "About this idea",
+    "location": "Location",
+    "when": "When",
+    "address": "Address",
+    "fee": "Fee",
+    "free": "Free",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "openOnMap": "Open on map",
+    "notFound": "Idea not found"
   },
   "common": {
-    "loading": "Chargement…",
-    "seeAll": "Tout voir"
+    "loading": "Loading…"
   }
 }
