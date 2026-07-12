@@ -1,42 +1,44 @@
 # Supp (嘛呢)
 
-An experience idea database — search for interesting ideas to participate in.
+Experience idea database — discover ideas worth joining.
+
+## Live preview
+
+While the local server is running, the app is also exposed at a public Cloudflare tunnel URL (see chat for the current link). Permanent hosting: connect the GitHub repo to Vercel.
 
 ## Stack
 
-- [Next.js](https://nextjs.org) (App Router)
-- [next-intl](https://next-intl.dev) for i18n
-- Tailwind CSS
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS v4
+- next-intl (9 languages)
+- Leaflet maps — OpenStreetMap globally, Amap tiles for Chinese locale
+- Design language from Mockplus RP「嘛呢一期」
+
+## Navigation
+
+| Tab | Route | What it does |
+|-----|-------|----------------|
+| **Explore** | `/[locale]/explore` | Top 10 preference matches + filter search (city, weather, fee, duration, category) |
+| **Map** | `/[locale]/map` | Ideas with addresses as map pins; GO opens Google Maps or Amap (zh) |
+| **Me** | `/[locale]/me` | Profile, joined/saved ideas, similar friends, language |
+| **Idea detail** | `/[locale]/ideas/[id]` | Hero, actions (done/save/share/claim), tip card, comments |
 
 ## Languages
 
-English (default), 中文, Français, Español, العربية, Русский, 日本語, 한국어, Bahasa Indonesia
+English (default), 中文 (嘛呢), Français, Español, العربية, Русский, 日本語, 한국어, Bahasa Indonesia
 
-## Pages
-
-| Route | Description |
-|-------|-------------|
-| `/[locale]/explore` | Browse and search ideas |
-| `/[locale]/ideas/[id]` | Idea detail |
-| `/[locale]/me` | Saved & joined experiences |
-| `/[locale]/account` | Profile, language, settings |
-
-## Getting started
+## Develop
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:7502](http://localhost:7502) — you'll be redirected to `/en/explore`.
+Open [http://localhost:7502](http://localhost:7502).
 
-## Project structure
+## Deploy
 
+```bash
+npx vercel --prod
 ```
-src/
-├── app/[locale]/     # Localized routes
-├── components/       # UI components
-├── data/             # Mock data (replace with API later)
-├── i18n/             # Routing & navigation
-└── messages/         # Translation files
-```
+
+Or import https://github.com/hxyan2020/supp on [vercel.com/new](https://vercel.com/new).
