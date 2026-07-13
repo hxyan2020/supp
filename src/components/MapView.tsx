@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
-  ideasWithAddress,
   localizedIdea,
   type Idea,
 } from "@/data/mock-ideas";
@@ -17,10 +16,13 @@ function navigationUrl(idea: Idea, locale: string) {
   return `https://www.google.com/maps/dir/?api=1&destination=${idea.lat},${idea.lng}&travelmode=walking`;
 }
 
-export function MapView() {
+export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
   const t = useTranslations("map");
   const locale = useLocale();
-  const ideas = useMemo(() => ideasWithAddress(), []);
+  const ideas = useMemo(
+    () => allIdeas.filter((idea) => Number.isFinite(idea.lat) && Number.isFinite(idea.lng)),
+    [allIdeas],
+  );
   const [selected, setSelected] = useState<Idea | null>(ideas[0] ?? null);
   const [query, setQuery] = useState("");
   const [MapInner, setMapInner] = useState<React.ComponentType<{

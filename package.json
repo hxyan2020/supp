@@ -6,15 +6,18 @@
     "dev": "next dev -p 7502",
     "build": "next build",
     "start": "next start -p 7502",
-    "lint": "eslint"
+    "lint": "eslint",
+    "scrape": "node scripts/scrape-events.mjs"
   },
   "dependencies": {
+    "cheerio": "^1.2.0",
     "leaflet": "^1.9.4",
     "next": "16.2.10",
     "next-intl": "^4.13.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
