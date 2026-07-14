@@ -41,6 +41,12 @@ export async function POST(
     lat: body.lat ?? scraped.lat ?? 0,
     lng: body.lng ?? scraped.lng ?? 0,
     date: body.date || scraped.startDate || "TBD",
+    startsAt: body.startsAt || (scraped.startDate && !Number.isNaN(Date.parse(scraped.startDate))
+      ? new Date(scraped.startDate).toISOString()
+      : undefined),
+    endsAt: body.endsAt || (scraped.endDate && !Number.isNaN(Date.parse(scraped.endDate))
+      ? new Date(scraped.endDate).toISOString()
+      : undefined),
     durationMin: body.durationMin || 90,
     fee: body.fee || 0,
     weather: "any",

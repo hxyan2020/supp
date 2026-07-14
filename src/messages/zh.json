@@ -54,6 +54,35 @@
       "culture": "文化",
       "adrenaline": "肾上腺素",
       "wellness": "身心"
+    },
+    "smartTitle": "智能体验推荐",
+    "manualSearch": "手动搜索",
+    "createHint": "没有找到让你心动的点子？花 0 元创建属于你的体验，还能赚点外快！",
+    "createIdea": "创建新的体验点子",
+    "experiencedCount": "已体验：{count}",
+    "favoritedCount": "收藏：{count}",
+    "markExperienced": "已体验",
+    "markFavorite": "收藏",
+    "back": "返回",
+    "greetMorning": "早上好。",
+    "greetAfternoon": "下午好。",
+    "greetEvening": "晚上好。",
+    "greetNight": "夜深了。",
+    "briefTodayIs": "今天是",
+    "briefComma": "，",
+    "briefPeriod": "。",
+    "briefOnThisDay": "历史上的今天——",
+    "briefYouAreIn": "你在",
+    "briefWeatherSep": "，天气：",
+    "briefWeatherOnly": "当前天气：",
+    "briefClose": "为你挑选了此刻适合的点子。",
+    "liveWeather": {
+      "clear": "晴",
+      "cloudy": "多云",
+      "rain": "雨",
+      "snow": "雪",
+      "showers": "阵雨",
+      "storm": "雷暴"
     }
   },
   "map": {
@@ -62,7 +91,17 @@
     "go": "GO",
     "locate": "定位",
     "providerGoogle": "使用 Google 地图导航",
-    "providerChina": "使用高德地图导航"
+    "providerChina": "使用高德地图导航",
+    "experienced": "已体验",
+    "collected": "已收藏",
+    "ticket": "票价",
+    "distance": "距离",
+    "time": "时间",
+    "noUpcoming": "未来 14 小时内暂无活动",
+    "distanceLocating": "定位中…",
+    "distanceUnknown": "未开启定位",
+    "closeCard": "关闭",
+    "window24hCount": "未来 24 小时内共 {count} 个点子"
   },
   "me": {
     "editProfile": "编辑头像与用户名",
@@ -81,7 +120,11 @@
     "savedTitle": "我收藏 / 喜欢的点子",
     "friendsTitle": "相似的灵魂",
     "friendsSub": "收藏口味接近你的人",
-    "language": "语言"
+    "language": "语言",
+    "settings": "设置",
+    "closeSettings": "关闭设置",
+    "currency": "货币",
+    "currencyHint": "用于地图上的票价显示"
   },
   "idea": {
     "back": "返回",
@@ -105,7 +148,17 @@
     "comments": "评论",
     "writeComment": "写评论",
     "openOnMap": "在地图中打开",
-    "notFound": "未找到该点子"
+    "notFound": "未找到该点子",
+    "experiencedBy": "体验过的人",
+    "like": "赞",
+    "reply": "回复",
+    "addImages": "添加图片",
+    "removeImage": "移除图片",
+    "commentPlaceholder": "聊聊你的体验…",
+    "postComment": "发布",
+    "cancel": "取消",
+    "replyingTo": "回复 {name}",
+    "cancelReply": "取消回复"
   },
   "common": {
     "loading": "加载中…"

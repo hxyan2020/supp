@@ -27,6 +27,10 @@ export type Idea = {
   lat: number;
   lng: number;
   date: string;
+  /** ISO start time — used by map upcoming filter */
+  startsAt: string;
+  /** ISO end time — pin disappears after this */
+  endsAt: string;
   durationMin: number;
   fee: number;
   weather: "sunny" | "cloudy" | "rainy" | "any";
@@ -69,7 +73,7 @@ export const sensationMeta: Record<
   intense: { label: "Intense", labelZh: "强烈" },
 };
 
-export const mockIdeas: Idea[] = [
+export const mockIdeaSeeds: Omit<Idea, "startsAt" | "endsAt">[] = [
   {
     id: "eavesdrop-headphones",
     title: "Turn down headphones & eavesdrop",
@@ -501,6 +505,35 @@ export const mockIdeas: Idea[] = [
   },
 ];
 
+/** Hours from “now” when each demo idea starts (keeps the map populated). */
+const START_OFFSET_HOURS = [1, 2.5, 4, 6, 9, 11, 13, 16, 20, -0.5, 3, 8];
+
+export function withSchedule(
+  idea: Omit<Idea, "startsAt" | "endsAt"> &
+    Partial<Pick<Idea, "startsAt" | "endsAt">>,
+  index = 0,
+  nowMs = Date.now(),
+): Idea {
+  if (idea.startsAt && idea.endsAt) {
+    const end = Date.parse(idea.endsAt);
+    if (Number.isFinite(end) && end > nowMs) {
+      return idea as Idea;
+    }
+  }
+  const offsetH = START_OFFSET_HOURS[index % START_OFFSET_HOURS.length];
+  const startMs = nowMs + offsetH * 60 * 60 * 1000;
+  const endMs = startMs + Math.max(idea.durationMin, 45) * 60 * 1000;
+  return {
+    ...idea,
+    startsAt: new Date(startMs).toISOString(),
+    endsAt: new Date(endMs).toISOString(),
+  };
+}
+
+export const mockIdeas: Idea[] = mockIdeaSeeds.map((idea, i) =>
+  withSchedule(idea, i),
+);
+
 export type Friend = {
   id: string;
   name: string;
@@ -540,6 +573,137 @@ export const mockFriends: Friend[] = [
     bioZh: "味蕾猎人，想找夜市搭子。",
   },
 ];
+
+export type ExperiencedUser = {
+  id: string;
+  name: string;
+  nameZh: string;
+  avatar: string;
+};
+
+/** Pool of people who have marked ideas as experienced */
+export const mockExperiencedUsers: ExperiencedUser[] = [
+  { id: "eu1", name: "Mira Zhou", nameZh: "周米拉", avatar: "/images/avatar-1.png" },
+  { id: "eu2", name: "Theo Park", nameZh: "朴西奥", avatar: "/images/persona.png" },
+  { id: "eu3", name: "Sana Ali", nameZh: "萨娜", avatar: "/images/avatar-user.jpg" },
+  {
+    id: "eu4",
+    name: "Kai Wong",
+    nameZh: "黄凯",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu5",
+    name: "Lina Chen",
+    nameZh: "陈丽娜",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu6",
+    name: "Noah Kim",
+    nameZh: "金诺亚",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu7",
+    name: "Aya Sato",
+    nameZh: "佐藤彩",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu8",
+    name: "Diego Ruiz",
+    nameZh: "迭戈",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu9",
+    name: "Hana Lee",
+    nameZh: "李荷娜",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu10",
+    name: "Omar Hassan",
+    nameZh: "奥马尔",
+    avatar:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu11",
+    name: "Yuna Park",
+    nameZh: "朴宥娜",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu12",
+    name: "Ben Carter",
+    nameZh: "本·卡特",
+    avatar:
+      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu13",
+    name: "Mei Lin",
+    nameZh: "林美",
+    avatar:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu14",
+    name: "Ravi Patel",
+    nameZh: "拉维",
+    avatar:
+      "https://images.unsplash.com/photo-1507591064344-4c6ce005bff4?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu15",
+    name: "Sofia Berg",
+    nameZh: "索菲亚",
+    avatar:
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu16",
+    name: "Jun Wei",
+    nameZh: "俊伟",
+    avatar:
+      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu17",
+    name: "Elena Rossi",
+    nameZh: "埃琳娜",
+    avatar:
+      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+  {
+    id: "eu18",
+    name: "Tom Hughes",
+    nameZh: "汤姆",
+    avatar:
+      "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=96&h=96&q=80",
+  },
+];
+
+/** Deterministic experienced-user list for an idea (scrollable on detail page). */
+export function getExperiencedUsersForIdea(ideaId: string): ExperiencedUser[] {
+  const seed = [...ideaId].reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+  const count = 8 + (seed % 9); // 8–16 people
+  const start = seed % mockExperiencedUsers.length;
+  const list: ExperiencedUser[] = [];
+  for (let i = 0; i < count; i++) {
+    list.push(mockExperiencedUsers[(start + i) % mockExperiencedUsers.length]);
+  }
+  return list;
+}
 
 export const mockUser = {
   name: "Guoqiang",

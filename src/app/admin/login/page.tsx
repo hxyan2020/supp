@@ -33,7 +33,16 @@ export default function AdminLoginPage() {
         onSubmit={onSubmit}
         className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#171a21] p-6"
       >
-        <h1 className="text-xl font-bold">Supp Admin</h1>
+        <h1 className="flex items-center gap-2.5 text-xl font-bold">
+          <img
+            src="/logo.jpg"
+            alt=""
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-sm object-cover"
+          />
+          Supp Admin
+        </h1>
         <p className="mt-1 text-sm text-white/55">
           Manage ideas, users, and scraped events
         </p>

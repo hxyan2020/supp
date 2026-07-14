@@ -1,0 +1,22 @@
+name: supp
+region: sgp
+services:
+  - name: web
+    github:
+      repo: hxyan2020/supp
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    health_check:
+      http_path: /en/explore
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_PASSWORD
+        scope: RUN_TIME
+        type: SECRET
+      - key: PORT
+        value: "8080"

@@ -54,6 +54,35 @@
       "culture": "Culture",
       "adrenaline": "Adrenaline",
       "wellness": "Wellness"
+    },
+    "smartTitle": "Smart recommendations",
+    "manualSearch": "Manual search",
+    "createHint": "Didn't find something that moves you? Create your own experience for free and earn extra income.",
+    "createIdea": "Create a new experience idea",
+    "experiencedCount": "Experienced: {count}",
+    "favoritedCount": "Favorites: {count}",
+    "markExperienced": "Done",
+    "markFavorite": "Save",
+    "back": "Back",
+    "greetMorning": "Good morning.",
+    "greetAfternoon": "Good afternoon.",
+    "greetEvening": "Good evening.",
+    "greetNight": "Still up?",
+    "briefTodayIs": "Today is",
+    "briefComma": ", ",
+    "briefPeriod": ".",
+    "briefOnThisDay": "On this day in history —",
+    "briefYouAreIn": "You are in",
+    "briefWeatherSep": " — weather:",
+    "briefWeatherOnly": "Current weather:",
+    "briefClose": "Here are ideas that fit the moment.",
+    "liveWeather": {
+      "clear": "Clear",
+      "cloudy": "Cloudy",
+      "rain": "Rain",
+      "snow": "Snow",
+      "showers": "Showers",
+      "storm": "Storm"
     }
   },
   "map": {
@@ -62,7 +91,17 @@
     "go": "GO",
     "locate": "My location",
     "providerGoogle": "Navigate with Google Maps",
-    "providerChina": "Navigate with Amap"
+    "providerChina": "Navigate with Amap",
+    "experienced": "체험",
+    "collected": "저장",
+    "ticket": "티켓",
+    "distance": "거리",
+    "time": "시간",
+    "noUpcoming": "앞으로 14시간 내 이벤트가 없습니다",
+    "distanceLocating": "위치 확인 중…",
+    "distanceUnknown": "위치 꺼짐",
+    "closeCard": "닫기",
+    "window24hCount": "앞으로 24시간 아이디어 {count}개"
   },
   "me": {
     "editProfile": "Edit avatar & username",
@@ -81,7 +120,11 @@
     "savedTitle": "Saved / liked ideas",
     "friendsTitle": "Similar souls",
     "friendsSub": "People who collect ideas like yours",
-    "language": "Language"
+    "language": "Language",
+    "settings": "설정",
+    "closeSettings": "설정 닫기",
+    "currency": "통화",
+    "currencyHint": "지도 티켓 가격에 사용"
   },
   "idea": {
     "back": "Back",
@@ -105,7 +148,17 @@
     "comments": "Comments",
     "writeComment": "Write a comment",
     "openOnMap": "Open on map",
-    "notFound": "Idea not found"
+    "notFound": "Idea not found",
+    "experiencedBy": "체험한 사람들",
+    "like": "Like",
+    "reply": "Reply",
+    "addImages": "Add photos",
+    "removeImage": "Remove photo",
+    "commentPlaceholder": "Share how it went…",
+    "postComment": "Post",
+    "cancel": "Cancel",
+    "replyingTo": "Replying to {name}",
+    "cancelReply": "Cancel reply"
   },
   "common": {
     "loading": "Loading…"

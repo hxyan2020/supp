@@ -39,6 +39,8 @@ export async function POST(req: Request) {
     lat: Number(body.lat) || 0,
     lng: Number(body.lng) || 0,
     date: body.date || "",
+    startsAt: body.startsAt,
+    endsAt: body.endsAt,
     durationMin: Number(body.durationMin) || 60,
     fee: Number(body.fee) || 0,
     weather: body.weather || "any",

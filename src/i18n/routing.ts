@@ -26,6 +26,19 @@ export const localeLabels: Record<Locale, string> = {
   id: "Bahasa Indonesia",
 };
 
+/** ISO 3166-1 alpha-2 codes for language option flags */
+export const localeFlagCodes: Record<Locale, string> = {
+  en: "us",
+  zh: "cn",
+  fr: "fr",
+  es: "es",
+  ar: "sa",
+  ru: "ru",
+  ja: "jp",
+  ko: "kr",
+  id: "id",
+};
+
 export const routing = defineRouting({
   locales,
   defaultLocale: "en",

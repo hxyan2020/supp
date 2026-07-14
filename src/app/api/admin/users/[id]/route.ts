@@ -20,7 +20,22 @@ export async function PUT(
   const body = (await req.json()) as Partial<UserRecord>;
   const existing = (await listUsers()).find((u) => u.id === id);
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  return NextResponse.json({ user: await upsertUser({ ...existing, ...body, id }) });
+  return NextResponse.json({
+    user: await upsertUser({
+      ...existing,
+      ...body,
+      id,
+      experienced:
+        body.experienced != null ? Number(body.experienced) : existing.experienced,
+      favorited:
+        body.favorited != null ? Number(body.favorited) : existing.favorited,
+      claimed: body.claimed != null ? Number(body.claimed) : existing.claimed,
+      favoritedIds: body.favoritedIds ?? existing.favoritedIds,
+      experiencedIds: body.experiencedIds ?? existing.experiencedIds,
+      joinedIds: body.joinedIds ?? existing.joinedIds,
+      updatedAt: new Date().toISOString(),
+    }),
+  });
 }
 
 export async function DELETE(

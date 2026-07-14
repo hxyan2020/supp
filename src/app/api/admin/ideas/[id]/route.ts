@@ -21,7 +21,37 @@ export async function PUT(
   const ideas = await listAllIdeas();
   const existing = ideas.find((i) => i.id === id);
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  const saved = await upsertIdea({ ...existing, ...body, id });
+  const saved = await upsertIdea({
+    ...existing,
+    ...body,
+    id,
+    lat: body.lat != null ? Number(body.lat) : existing.lat,
+    lng: body.lng != null ? Number(body.lng) : existing.lng,
+    durationMin:
+      body.durationMin != null ? Number(body.durationMin) : existing.durationMin,
+    fee: body.fee != null ? Number(body.fee) : existing.fee,
+    experiencedCount:
+      body.experiencedCount != null
+        ? Number(body.experiencedCount)
+        : existing.experiencedCount,
+    favoritedCount:
+      body.favoritedCount != null
+        ? Number(body.favoritedCount)
+        : existing.favoritedCount,
+    participantCount:
+      body.participantCount != null
+        ? Number(body.participantCount)
+        : existing.participantCount,
+    maxParticipants:
+      body.maxParticipants != null
+        ? Number(body.maxParticipants)
+        : existing.maxParticipants,
+    relevance:
+      body.relevance != null ? Number(body.relevance) : existing.relevance,
+    tags: body.tags ?? existing.tags,
+    categories: body.categories ?? existing.categories,
+    updatedAt: new Date().toISOString(),
+  });
   return NextResponse.json({ idea: saved });
 }
 

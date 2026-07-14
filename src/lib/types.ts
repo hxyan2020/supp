@@ -17,6 +17,8 @@ export type IdeaRecord = {
   lat: number;
   lng: number;
   date: string;
+  startsAt?: string;
+  endsAt?: string;
   durationMin: number;
   fee: number;
   weather: "sunny" | "cloudy" | "rainy" | "any";

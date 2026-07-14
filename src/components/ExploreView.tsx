@@ -1,323 +1,352 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { localizedIdea, type Idea, type SearchFilters } from "@/data/mock-ideas";
+import { localizedIdea, type Idea } from "@/data/mock-ideas";
 
-function filterIdeas(ideas: Idea[], filters: SearchFilters) {
-  const q = filters.query?.trim().toLowerCase() ?? "";
-  return ideas.filter((idea) => {
-    if (q) {
-      const hay = [
-        idea.title,
-        idea.titleZh,
-        idea.summary,
-        idea.summaryZh,
-        idea.location,
-        idea.locationZh,
-        ...idea.tags,
-        ...idea.categories,
-      ]
-        .join(" ")
-        .toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    if (filters.city && filters.city !== "any" && idea.city !== filters.city) return false;
-    if (
-      filters.weather &&
-      filters.weather !== "any" &&
-      idea.weather !== "any" &&
-      idea.weather !== filters.weather
-    )
-      return false;
-    if (filters.category && filters.category !== "any") {
-      if (!idea.categories.includes(filters.category as Idea["categories"][number]))
-        return false;
-    }
-    if (filters.fee && filters.fee !== "any") {
-      if (filters.fee === "free" && idea.fee !== 0) return false;
-      if (filters.fee === "under100" && !(idea.fee > 0 && idea.fee <= 100)) return false;
-      if (filters.fee === "over100" && !(idea.fee > 100)) return false;
-    }
-    if (filters.duration && filters.duration !== "any") {
-      if (filters.duration === "short" && idea.durationMin > 30) return false;
-      if (
-        filters.duration === "medium" &&
-        !(idea.durationMin > 30 && idea.durationMin <= 120)
-      )
-        return false;
-      if (filters.duration === "long" && idea.durationMin <= 120) return false;
-    }
-    return true;
-  });
-}
+type BriefPayload = {
+  locationLabel: string | null;
+  weatherKey: string | null;
+  tempC: number | null;
+  historyEvent: string | null;
+  historyYear: number | null;
+};
 
-const cities = ["any", "Hong Kong", "Shanghai", "Tokyo"] as const;
-const weathers = ["any", "sunny", "cloudy", "rainy"] as const;
-const fees = ["any", "free", "under100", "over100"] as const;
-const durations = ["any", "short", "medium", "long"] as const;
-const categories = [
-  "any",
-  "comfort",
-  "taste",
-  "outdoors",
-  "creative",
-  "social",
-  "culture",
-  "adrenaline",
-  "wellness",
-] as const;
+type HighlightPart = { text: string; accent?: boolean };
 
 export function ExploreView({ ideas }: { ideas: Idea[] }) {
   const t = useTranslations("explore");
   const locale = useLocale();
-  const [mode, setMode] = useState<"home" | "results">("home");
-  const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState<SearchFilters>({
-    city: "any",
-    weather: "any",
-    fee: "any",
-    duration: "any",
-    category: "any",
-  });
+  const [now, setNow] = useState(() => new Date());
+  const [brief, setBrief] = useState<BriefPayload | null>(null);
+  const [experienced, setExperienced] = useState<Record<string, boolean>>({});
+  const [favorited, setFavorited] = useState<Record<string, boolean>>({});
 
   const top10 = useMemo(
     () => [...ideas].sort((a, b) => b.relevance - a.relevance).slice(0, 10),
     [ideas],
   );
-  const results = useMemo(
-    () => filterIdeas(ideas, { ...filters, query }),
-    [ideas, filters, query],
-  );
 
-  function startExplore() {
-    setMode("results");
-  }
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 30_000);
+    return () => window.clearInterval(id);
+  }, []);
 
-  if (mode === "results") {
-    return (
-      <div className="min-h-full bg-[#f3f3f3] text-supp-ink">
-        <div className="sticky top-12 z-20 flex items-center gap-3 border-b border-black/10 bg-[#ececec] px-4 py-3">
-          <button
-            type="button"
-            onClick={() => setMode("home")}
-            className="text-lg leading-none text-black/70"
-            aria-label="Back"
-          >
-            ←
-          </button>
-          <h1 className="text-sm font-semibold tracking-wide">{t("resultsTitle")}</h1>
-        </div>
+  useEffect(() => {
+    let cancelled = false;
 
-        <ul className="divide-y divide-black/8 bg-white">
-          {results.length === 0 ? (
-            <li className="px-5 py-16 text-center text-sm text-supp-muted">{t("empty")}</li>
-          ) : (
-            results.map((idea) => {
-              const L = localizedIdea(idea, locale);
-              return (
-                <li key={idea.id}>
-                  <Link
-                    href={`/ideas/${idea.id}`}
-                    className="flex items-center gap-3 px-4 py-3.5 transition hover:bg-black/[0.03]"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[15px] font-medium leading-snug">{L.title}</p>
-                      <p className="mt-0.5 truncate text-xs text-supp-muted">
-                        {L.categories.join(" · ")} · {idea.durationMin}
-                        {t("minutesShort")}
-                      </p>
-                    </div>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-black/20 text-black/50">
-                      ✓
-                    </span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full text-supp-red">
-                      ♥
-                    </span>
-                  </Link>
-                </li>
-              );
-            })
-          )}
-        </ul>
+    async function loadBrief(coords?: { lat: number; lng: number }) {
+      const params = new URLSearchParams({ locale });
+      if (coords) {
+        params.set("lat", String(coords.lat));
+        params.set("lng", String(coords.lng));
+      }
+      try {
+        const res = await fetch(`/api/explore-brief?${params}`);
+        if (!res.ok) return;
+        const data = (await res.json()) as BriefPayload;
+        if (!cancelled) setBrief(data);
+      } catch {
+        // keep partial UI without brief extras
+      }
+    }
 
-        <div className="relative mt-2 h-40 overflow-hidden">
-          <Image
-            src="/images/hero-mountain.jpg"
-            alt=""
-            fill
-            className="object-cover opacity-90"
-            sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        </div>
-      </div>
+    // Always load history; attach weather/location if permitted
+    void loadBrief();
+
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        void loadBrief({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      () => {
+        // location denied — brief already loaded without it
+      },
+      { enableHighAccuracy: false, timeout: 12_000, maximumAge: 300_000 },
     );
-  }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const dateLabel = now.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
+  const timeLabel = now.toLocaleTimeString(locale, {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  const weatherLabel = brief?.weatherKey
+    ? [
+        t(`liveWeather.${brief.weatherKey}`),
+        brief.tempC != null ? `${brief.tempC}°C` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ")
+    : null;
+
+  const briefParts = buildBriefParts({
+    greeting: greetingForHour(now.getHours(), t),
+    dateLabel,
+    timeLabel,
+    locationLabel: brief?.locationLabel ?? null,
+    weatherLabel,
+    historyEvent: brief?.historyEvent ?? null,
+    historyYear: brief?.historyYear ?? null,
+    t,
+  });
 
   return (
-    <div className="relative min-h-[calc(100dvh-7.5rem)] overflow-hidden">
+    <div className="relative min-h-[calc(100dvh-7.5rem)] overflow-hidden bg-supp-black text-white">
       <Image
         src="/images/hero-mountain.jpg"
         alt=""
         fill
         priority
-        className="object-cover"
+        className="object-cover opacity-55"
         sizes="500px"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/85 to-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85" />
 
-      <div className="relative z-10 space-y-5 px-4 pb-8 pt-5 animate-fade-up">
-        <div className="relative">
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="w-full rounded-full border-0 bg-[#d9d9d9] py-3.5 pe-12 ps-5 text-sm text-black outline-none placeholder:text-black/45"
-          />
-          <button
-            type="button"
-            onClick={startExplore}
-            className="absolute end-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black text-white"
-            aria-label={t("start")}
+      <div className="relative z-10 px-4 pb-10 pt-5 animate-fade-up">
+        <h1 className="text-xl font-semibold tracking-wide">{t("smartTitle")}</h1>
+
+        <div className="mt-3 rounded-2xl bg-black/45 px-3.5 py-3 text-[13px] leading-relaxed text-white/90 backdrop-blur-md">
+          {briefParts.map((part, i) =>
+            part.accent ? (
+              <span key={i} className="font-semibold text-supp-red">
+                {part.text}
+              </span>
+            ) : (
+              <span key={i}>{part.text}</span>
+            ),
+          )}
+        </div>
+
+        <ul className="mt-5 space-y-5 overflow-x-hidden px-1 pb-2">
+          {top10.map((idea, index) => {
+            const L = localizedIdea(idea, locale);
+            const done = !!experienced[idea.id];
+            const saved = !!favorited[idea.id];
+            const experiencedCount =
+              idea.experiencedCount + (done ? 1 : 0);
+            const favoritedCount = idea.favoritedCount + (saved ? 1 : 0);
+            const scatter = scatterStyle(idea.id, index);
+
+            return (
+              <li
+                key={idea.id}
+                className="origin-center transition-transform duration-300 hover:z-10 hover:rotate-0 hover:scale-[1.02]"
+                style={scatter}
+              >
+                <div className="relative min-h-[7.5rem] overflow-hidden rounded-2xl border border-white/10 shadow-[0_10px_28px_rgba(0,0,0,0.45)]">
+                  <Image
+                    src={idea.image}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="500px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/45" />
+                  <div className="relative z-10 p-4">
+                    <Link href={`/ideas/${idea.id}`} className="block">
+                      <p className="text-[15px] font-semibold leading-snug text-white">
+                        {L.title}
+                      </p>
+                    </Link>
+                    <div className="mt-3 flex items-center justify-between gap-2">
+                      <p className="text-[11px] text-white/75">
+                        {t("experiencedCount", { count: experiencedCount })}
+                        <span className="mx-1.5 text-white/35">|</span>
+                        {t("favoritedCount", { count: favoritedCount })}
+                      </p>
+                      <div className="flex shrink-0 items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setExperienced((s) => ({
+                              ...s,
+                              [idea.id]: !s[idea.id],
+                            }))
+                          }
+                          className={`flex items-center gap-1 text-[11px] ${
+                            done ? "text-supp-red" : "text-white/70"
+                          }`}
+                        >
+                          <CheckIcon filled={done} />
+                          {t("markExperienced")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setFavorited((s) => ({
+                              ...s,
+                              [idea.id]: !s[idea.id],
+                            }))
+                          }
+                          className={`flex items-center gap-1 text-[11px] ${
+                            saved ? "text-supp-red" : "text-white/70"
+                          }`}
+                        >
+                          <HeartIcon filled={saved} />
+                          {t("markFavorite")}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="mt-6 space-y-4 text-center">
+          <Link
+            href="/explore/search"
+            className="mx-auto flex w-[78%] items-center justify-center rounded-full bg-white py-3 text-sm font-semibold text-supp-ink shadow-lg transition hover:bg-white/95"
           >
-            ⌕
-          </button>
+            {t("manualSearch")}
+          </Link>
+
+          <p className="mx-auto max-w-sm text-[12px] leading-relaxed text-white/70">
+            {t("createHint")}
+          </p>
+
+          <Link
+            href="/explore/search"
+            className="mx-auto flex w-[88%] items-center justify-center rounded-full bg-supp-red py-3.5 text-sm font-semibold text-white shadow-lg shadow-red-900/40 transition hover:bg-supp-red-dark"
+          >
+            {t("createIdea")}
+          </Link>
         </div>
-
-        <div className="space-y-2.5">
-          <FilterRow
-            label={t("city")}
-            value={filters.city ?? "any"}
-            options={cities.map((c) => ({
-              value: c,
-              label: c === "any" ? t("any") : c,
-            }))}
-            onChange={(city) => setFilters((f) => ({ ...f, city }))}
-          />
-          <FilterRow
-            label={t("weather")}
-            value={filters.weather ?? "any"}
-            options={weathers.map((w) => ({
-              value: w,
-              label: t(`weatherOptions.${w}`),
-            }))}
-            onChange={(weather) => setFilters((f) => ({ ...f, weather }))}
-          />
-          <FilterRow
-            label={t("fee")}
-            value={filters.fee ?? "any"}
-            options={fees.map((fee) => ({
-              value: fee,
-              label: t(`feeOptions.${fee}`),
-            }))}
-            onChange={(fee) => setFilters((f) => ({ ...f, fee }))}
-          />
-          <FilterRow
-            label={t("duration")}
-            value={filters.duration ?? "any"}
-            options={durations.map((d) => ({
-              value: d,
-              label: t(`durationOptions.${d}`),
-            }))}
-            onChange={(duration) => setFilters((f) => ({ ...f, duration }))}
-          />
-          <FilterRow
-            label={t("category")}
-            value={filters.category ?? "any"}
-            options={categories.map((c) => ({
-              value: c,
-              label: c === "any" ? t("any") : t(`categories.${c}`),
-            }))}
-            onChange={(category) => setFilters((f) => ({ ...f, category }))}
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={startExplore}
-          className="mx-auto block w-[70%] rounded-full bg-supp-red py-3.5 text-center text-base font-semibold text-white shadow-lg shadow-red-900/30 transition hover:bg-supp-red-dark animate-soft-pulse"
-        >
-          {t("start")}
-        </button>
-
-        <div className="space-y-1 pt-2 text-center text-[12px] leading-relaxed text-white/85">
-          <p>{t("stats.database", { count: "32,187" })}</p>
-          <p>{t("stats.mine", { count: 45 })}</p>
-          <p>{t("stats.remaining", { count: 3 })}</p>
-        </div>
-
-        <section className="rounded-2xl bg-black/45 p-4 backdrop-blur-sm">
-          <div className="mb-3 flex items-end justify-between">
-            <div>
-              <h2 className="text-base font-semibold">{t("forYou")}</h2>
-              <p className="text-xs text-white/60">{t("forYouSub")}</p>
-            </div>
-            <span className="text-xs text-white/50">Top 10</span>
-          </div>
-          <div className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {top10.map((idea, index) => {
-              const L = localizedIdea(idea, locale);
-              return (
-                <Link
-                  key={idea.id}
-                  href={`/ideas/${idea.id}`}
-                  className="relative w-40 shrink-0 overflow-hidden rounded-xl"
-                >
-                  <div className="relative h-28">
-                    <Image
-                      src={idea.image}
-                      alt={L.title}
-                      fill
-                      className="object-cover"
-                      sizes="160px"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <span className="absolute left-2 top-2 rounded-full bg-supp-red px-2 py-0.5 text-[10px] font-bold">
-                      #{index + 1}
-                    </span>
-                  </div>
-                  <div className="bg-black/70 p-2.5">
-                    <p className="line-clamp-2 text-xs font-medium leading-snug">{L.title}</p>
-                    <p className="mt-1 text-[10px] text-white/55">{idea.relevance}% match</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
       </div>
     </div>
   );
 }
 
-function FilterRow({
-  label,
-  value,
-  options,
-  onChange,
+function scatterStyle(id: string, index: number): React.CSSProperties {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
+  hash = (hash + index * 97) >>> 0;
+  const tilt = ((hash % 13) - 6) * 0.9; // about -5.4° … 5.4°
+  const shiftX = ((hash >> 4) % 17) - 8; // about -8 … 8 px
+  const shiftY = ((hash >> 8) % 9) - 4;
+  return {
+    transform: `rotate(${tilt.toFixed(2)}deg) translate(${shiftX}px, ${shiftY}px)`,
+  };
+}
+
+function greetingForHour(hour: number, t: (key: string) => string) {
+  if (hour < 5) return t("greetNight");
+  if (hour < 12) return t("greetMorning");
+  if (hour < 18) return t("greetAfternoon");
+  return t("greetEvening");
+}
+
+function buildBriefParts({
+  greeting,
+  dateLabel,
+  timeLabel,
+  locationLabel,
+  weatherLabel,
+  historyEvent,
+  historyYear,
+  t,
 }: {
-  label: string;
-  value: string;
-  options: { value: string; label: string }[];
-  onChange: (value: string) => void;
-}) {
+  greeting: string;
+  dateLabel: string;
+  timeLabel: string;
+  locationLabel: string | null;
+  weatherLabel: string | null;
+  historyEvent: string | null;
+  historyYear: number | null;
+  t: (key: string) => string;
+}): HighlightPart[] {
+  const parts: HighlightPart[] = [
+    { text: `${greeting} ` },
+    { text: t("briefTodayIs") },
+    { text: " " },
+    { text: dateLabel, accent: true },
+    { text: t("briefComma") },
+    { text: timeLabel, accent: true },
+    { text: t("briefPeriod") },
+  ];
+
+  if (historyEvent) {
+    parts.push({ text: " " });
+    parts.push({ text: t("briefOnThisDay") });
+    parts.push({ text: " " });
+    if (historyYear != null) {
+      parts.push({ text: String(historyYear), accent: true });
+      parts.push({ text: ": " });
+    }
+    parts.push({ text: historyEvent, accent: true });
+    parts.push({ text: t("briefPeriod") });
+  }
+
+  if (locationLabel) {
+    parts.push({ text: " " });
+    parts.push({ text: t("briefYouAreIn") });
+    parts.push({ text: " " });
+    parts.push({ text: locationLabel, accent: true });
+    if (weatherLabel) {
+      parts.push({ text: t("briefWeatherSep") });
+      parts.push({ text: weatherLabel, accent: true });
+    }
+    parts.push({ text: t("briefPeriod") });
+  } else if (weatherLabel) {
+    parts.push({ text: " " });
+    parts.push({ text: t("briefWeatherOnly") });
+    parts.push({ text: " " });
+    parts.push({ text: weatherLabel, accent: true });
+    parts.push({ text: t("briefPeriod") });
+  }
+
+  parts.push({ text: " " });
+  parts.push({ text: t("briefClose") });
+
+  return parts;
+}
+
+function CheckIcon({ filled }: { filled: boolean }) {
   return (
-    <label className="flex items-center gap-3">
-      <span className="w-24 shrink-0 text-sm text-white/90">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-10 flex-1 appearance-none rounded-lg border-0 bg-[#d9d9d9] px-3 text-sm text-black outline-none"
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    </label>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="12" cy="12" r="8.5" fill={filled ? "currentColor" : "none"} />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke={filled ? "#141414" : "currentColor"}
+        d="m8.5 12.2 2.3 2.3 4.7-4.8"
+      />
+    </svg>
+  );
+}
+
+function HeartIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 7.5a3.8 3.8 0 0 1 7 3.3C19 15.6 12 20 12 20z"
+      />
+    </svg>
   );
 }

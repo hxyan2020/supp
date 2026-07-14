@@ -54,6 +54,35 @@
       "culture": "Culture",
       "adrenaline": "Adrenaline",
       "wellness": "Wellness"
+    },
+    "smartTitle": "Smart recommendations",
+    "manualSearch": "Manual search",
+    "createHint": "Didn't find something that moves you? Create your own experience for free and earn extra income.",
+    "createIdea": "Create a new experience idea",
+    "experiencedCount": "Experienced: {count}",
+    "favoritedCount": "Favorites: {count}",
+    "markExperienced": "Done",
+    "markFavorite": "Save",
+    "back": "Back",
+    "greetMorning": "Good morning.",
+    "greetAfternoon": "Good afternoon.",
+    "greetEvening": "Good evening.",
+    "greetNight": "Still up?",
+    "briefTodayIs": "Today is",
+    "briefComma": ", ",
+    "briefPeriod": ".",
+    "briefOnThisDay": "On this day in history —",
+    "briefYouAreIn": "You are in",
+    "briefWeatherSep": " — weather:",
+    "briefWeatherOnly": "Current weather:",
+    "briefClose": "Here are ideas that fit the moment.",
+    "liveWeather": {
+      "clear": "Clear",
+      "cloudy": "Cloudy",
+      "rain": "Rain",
+      "snow": "Snow",
+      "showers": "Showers",
+      "storm": "Storm"
     }
   },
   "map": {
@@ -62,7 +91,17 @@
     "go": "GO",
     "locate": "My location",
     "providerGoogle": "Navigate with Google Maps",
-    "providerChina": "Navigate with Amap"
+    "providerChina": "Navigate with Amap",
+    "experienced": "Vividos",
+    "collected": "Guardados",
+    "ticket": "Entrada",
+    "distance": "Distancia",
+    "time": "Horario",
+    "noUpcoming": "No hay eventos en las próximas 14 horas",
+    "distanceLocating": "Ubicando…",
+    "distanceUnknown": "Sin ubicación",
+    "closeCard": "Cerrar",
+    "window24hCount": "{count} ideas en las próximas 24 horas"
   },
   "me": {
     "editProfile": "Edit avatar & username",
@@ -81,7 +120,11 @@
     "savedTitle": "Saved / liked ideas",
     "friendsTitle": "Similar souls",
     "friendsSub": "People who collect ideas like yours",
-    "language": "Language"
+    "language": "Language",
+    "settings": "Ajustes",
+    "closeSettings": "Cerrar ajustes",
+    "currency": "Moneda",
+    "currencyHint": "Para precios en el mapa"
   },
   "idea": {
     "back": "Back",
@@ -105,7 +148,17 @@
     "comments": "Comments",
     "writeComment": "Write a comment",
     "openOnMap": "Open on map",
-    "notFound": "Idea not found"
+    "notFound": "Idea not found",
+    "experiencedBy": "Quienes lo vivieron",
+    "like": "Like",
+    "reply": "Reply",
+    "addImages": "Add photos",
+    "removeImage": "Remove photo",
+    "commentPlaceholder": "Share how it went…",
+    "postComment": "Post",
+    "cancel": "Cancel",
+    "replyingTo": "Replying to {name}",
+    "cancelReply": "Cancel reply"
   },
   "common": {
     "loading": "Loading…"

@@ -19,7 +19,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="mx-auto flex min-h-full w-full max-w-md flex-col bg-supp-black text-white sm:max-w-lg">
       {!hideNav && (
         <header className="sticky top-0 z-30 flex h-12 items-center justify-between border-b border-white/10 bg-black/80 px-4 backdrop-blur-md">
-          <Link href="/explore" className="text-[15px] font-semibold tracking-[0.08em]">
+          <Link
+            href="/explore"
+            className="flex items-center gap-2 text-[15px] font-semibold tracking-[0.08em]"
+          >
+            <img
+              src="/logo.jpg"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 rounded-sm object-cover"
+            />
             {tBrand("name")}
           </Link>
           <span className="text-[11px] tracking-wide text-white/55">{tBrand("tagline")}</span>

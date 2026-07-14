@@ -5,21 +5,22 @@ import {
   getTopRecommendations as getMockTop,
   searchIdeas as searchMock,
   localizedIdea,
+  withSchedule,
   type Idea,
   type SearchFilters,
 } from "@/data/mock-ideas";
 import type { IdeaRecord } from "@/lib/types";
 
-function toIdea(record: IdeaRecord): Idea {
+function toIdea(record: IdeaRecord, index = 0): Idea {
   const { published, sourceUrl, sourcePlatform, country, createdAt, updatedAt, ...idea } =
     record;
-  return idea;
+  return withSchedule(idea, index);
 }
 
 export async function getPublishedIdeas(): Promise<Idea[]> {
   try {
     const rows = await listPublishedIdeas();
-    if (rows.length) return rows.map(toIdea);
+    if (rows.length) return rows.map((row, i) => toIdea(row, i));
   } catch {
     // fallback during build without writable data dir
   }

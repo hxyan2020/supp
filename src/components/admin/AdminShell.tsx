@@ -24,7 +24,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="border-b border-white/10 bg-[#12151b]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-6">
-            <Link href="/admin" className="text-sm font-bold tracking-wide text-supp-red">
+            <Link
+              href="/admin"
+              className="flex items-center gap-2 text-sm font-bold tracking-wide text-supp-red"
+            >
+              <img
+                src="/logo.jpg"
+                alt=""
+                width={24}
+                height={24}
+                className="h-6 w-6 rounded-sm object-cover"
+              />
               Supp Admin
             </Link>
             <nav className="hidden gap-1 sm:flex">

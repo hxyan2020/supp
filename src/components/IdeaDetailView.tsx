@@ -1,10 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { localizedIdea, type Idea } from "@/data/mock-ideas";
+import { IdeaComments } from "@/components/IdeaComments";
+import { hasMappableAddress } from "@/lib/map-address";
+import {
+  getExperiencedUsersForIdea,
+  localizedIdea,
+  mockUser,
+  type Idea,
+} from "@/data/mock-ideas";
 
 export function IdeaDetailView({ idea }: { idea: Idea }) {
   const t = useTranslations("idea");
@@ -12,6 +19,32 @@ export function IdeaDetailView({ idea }: { idea: Idea }) {
   const L = localizedIdea(idea, locale);
   const [favorited, setFavorited] = useState(false);
   const [experienced, setExperienced] = useState(false);
+  const zh = locale === "zh";
+
+  const experiencedUsers = useMemo(() => {
+    const base = getExperiencedUsersForIdea(idea.id);
+    if (!experienced) return base;
+    const self = {
+      id: "self",
+      name: mockUser.name,
+      nameZh: mockUser.nameZh,
+      avatar: mockUser.avatar,
+    };
+    return [self, ...base.filter((u) => u.avatar !== mockUser.avatar)];
+  }, [idea.id, experienced]);
+
+  const showMap = hasMappableAddress(idea);
+  const [MapSnippet, setMapSnippet] = useState<React.ComponentType<{
+    idea: Idea;
+    locale: string;
+  }> | null>(null);
+
+  useEffect(() => {
+    if (!showMap) return;
+    void import("./IdeaMapSnippet").then((mod) =>
+      setMapSnippet(() => mod.IdeaMapSnippet),
+    );
+  }, [showMap]);
 
   return (
     <article className="min-h-full bg-[#2a2a2a] text-white">
@@ -78,6 +111,39 @@ export function IdeaDetailView({ idea }: { idea: Idea }) {
           <span className="mx-2">|</span>
           {t("favorite")}: {idea.favoritedCount + (favorited ? 1 : 0)}
         </p>
+
+        <div className="border-b border-black/8 px-4 py-3">
+          <p className="mb-2 text-[11px] font-medium text-supp-muted">
+            {t("experiencedBy")}
+          </p>
+          <div
+            className="flex gap-2.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            role="list"
+            aria-label={t("experiencedBy")}
+          >
+            {experiencedUsers.map((user) => (
+              <div
+                key={user.id}
+                role="listitem"
+                className="flex w-12 shrink-0 flex-col items-center gap-1"
+                title={zh ? user.nameZh : user.name}
+              >
+                <div className="relative h-11 w-11 overflow-hidden rounded-full border border-black/10 bg-supp-soft">
+                  <Image
+                    src={user.avatar}
+                    alt={zh ? user.nameZh : user.name}
+                    fill
+                    className="object-cover"
+                    sizes="44px"
+                  />
+                </div>
+                <span className="w-full truncate text-center text-[9px] text-supp-muted">
+                  {zh ? user.nameZh : user.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-4 px-4 py-5">
@@ -125,35 +191,19 @@ export function IdeaDetailView({ idea }: { idea: Idea }) {
               </dd>
             </div>
           </dl>
+          {showMap && MapSnippet && (
+            <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
+              <div className="h-40 w-full">
+                <MapSnippet idea={idea} locale={locale} />
+              </div>
+              <p className="border-t border-white/10 bg-black/30 px-3 py-2 text-[11px] text-white/60">
+                {L.address}
+              </p>
+            </div>
+          )}
         </section>
 
-        <section className="rounded-2xl bg-white/5 p-4">
-          <h2 className="text-sm font-semibold">{t("comments")}</h2>
-          <div className="mt-3 space-y-3">
-            <Comment
-              name={locale === "zh" ? "史蒂芬的未具名基友" : "Stephen's unnamed buddy"}
-              body={
-                locale === "zh"
-                  ? "试过一次，真的会被旁边的对话吸住注意力。"
-                  : "Tried it once — the nearby chatter really pulls you in."
-              }
-            />
-            <Comment
-              name={locale === "zh" ? "米拉" : "Mira"}
-              body={
-                locale === "zh"
-                  ? "记得假装看手机，不然很容易穿帮。"
-                  : "Pretend to check your phone or you'll get caught."
-              }
-            />
-          </div>
-          <button
-            type="button"
-            className="mt-4 w-full rounded-xl border border-white/15 py-2.5 text-sm text-white/80"
-          >
-            {t("writeComment")}
-          </button>
-        </section>
+        <IdeaComments ideaId={idea.id} />
 
         <Link
           href="/map"
@@ -204,14 +254,5 @@ function ActionButton({
         </span>
       )}
     </button>
-  );
-}
-
-function Comment({ name, body }: { name: string; body: string }) {
-  return (
-    <div className="rounded-xl bg-black/25 px-3 py-2.5">
-      <p className="text-xs font-medium text-white/90">{name}</p>
-      <p className="mt-1 text-sm leading-relaxed text-white/65">{body}</p>
-    </div>
   );
 }
