@@ -5,6 +5,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import { localizedIdea, type Idea } from "@/data/mock-ideas";
+import { UserAvatar } from "@/components/UserAvatar";
+import { DEFAULT_AVATAR } from "@/lib/avatar";
 
 export type SoulReportUser = {
   id: string;
@@ -79,6 +81,11 @@ export function SoulReportModal({
   );
   const experiencedShow = experiencedFlat.slice(0, 8);
   const similarShow = similar.slice(0, 5);
+  const hasActivity =
+    user.experienced > 0 ||
+    user.favorited > 0 ||
+    collectedShow.length > 0 ||
+    experiencedShow.length > 0;
 
   useEffect(() => {
     if (!open || !shareUrl) return;
@@ -117,13 +124,13 @@ export function SoulReportModal({
   }, [open, onClose]);
 
   useEffect(() => {
-    if (!open || !qrDataUrl || busy || previewUrl) return;
+    if (!open || !hasActivity || !qrDataUrl || busy || previewUrl) return;
     const timer = window.setTimeout(() => {
       void generate();
     }, 350);
     return () => window.clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, qrDataUrl]);
+  }, [open, qrDataUrl, hasActivity]);
 
   async function waitForImages(node: HTMLElement) {
     const imgs = Array.from(node.querySelectorAll("img"));
@@ -156,7 +163,7 @@ export function SoulReportModal({
       const dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#0c0c0c",
+        backgroundColor: "#1a1024",
         filter: (el) => {
           if (!(el instanceof HTMLElement)) return true;
           return !el.dataset.ignoreCapture;
@@ -189,7 +196,7 @@ export function SoulReportModal({
       const dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#0c0c0c",
+        backgroundColor: "#1a1024",
       });
       setPreviewUrl(dataUrl);
       setReady(true);
@@ -253,59 +260,74 @@ export function SoulReportModal({
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-          {busy && !previewUrl && (
-            <p className="mb-3 text-center text-xs text-white/60">
-              {t("soulReportGenerating")}
-            </p>
-          )}
-          {error && (
-            <p className="mb-3 rounded-xl border border-red-400/30 bg-red-500/15 px-3 py-2 text-xs text-red-100">
-              {error}
-            </p>
-          )}
-
-          {previewUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={previewUrl}
-              alt=""
-              className="mx-auto w-full max-w-[360px] rounded-2xl border border-white/10 shadow-xl"
-            />
-          ) : (
-            <div className="mx-auto flex h-[420px] max-w-[360px] items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.03]">
-              <p className="px-6 text-center text-xs text-white/45">
-                {busy ? t("soulReportGenerating") : t("soulReportHint")}
+          {!hasActivity ? (
+            <div className="mx-auto max-w-[360px] rounded-2xl border border-amber-400/30 bg-amber-500/10 px-4 py-6 text-center">
+              <p className="text-sm font-semibold text-amber-50">
+                {t("soulReportNeedActivityTitle")}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-white/70">
+                {t("soulReportNeedActivity")}
               </p>
             </div>
+          ) : (
+            <>
+              {busy && !previewUrl && (
+                <p className="mb-3 text-center text-xs text-white/60">
+                  {t("soulReportGenerating")}
+                </p>
+              )}
+              {error && (
+                <p className="mb-3 rounded-xl border border-red-400/30 bg-red-500/15 px-3 py-2 text-xs text-red-100">
+                  {error}
+                </p>
+              )}
+
+              {previewUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={previewUrl}
+                  alt=""
+                  className="mx-auto w-full max-w-[360px] rounded-2xl border border-white/10 shadow-xl"
+                />
+              ) : (
+                <div className="mx-auto flex h-[420px] max-w-[360px] items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.03]">
+                  <p className="px-6 text-center text-xs text-white/45">
+                    {busy ? t("soulReportGenerating") : t("soulReportHint")}
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
 
         {/* Capture source — always mounted at full size offscreen */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed -left-[9999px] top-0 z-[-1]"
-        >
-          <ReportCard
-            cardRef={cardRef}
-            user={user}
-            zh={zh}
-            t={t}
-            tBrand={tBrand}
-            locale={locale}
-            personaName={personaName}
-            personaDesc={personaDesc}
-            collectedShow={collectedShow}
-            experiencedShow={experiencedShow}
-            similarShow={similarShow}
-            monthLabel={monthLabel}
-            qrDataUrl={qrDataUrl}
-          />
-        </div>
+        {hasActivity && (
+          <div
+            aria-hidden
+            className="pointer-events-none fixed -left-[9999px] top-0 z-[-1]"
+          >
+            <ReportCard
+              cardRef={cardRef}
+              user={user}
+              zh={zh}
+              t={t}
+              tBrand={tBrand}
+              locale={locale}
+              personaName={personaName}
+              personaDesc={personaDesc}
+              collectedShow={collectedShow}
+              experiencedShow={experiencedShow}
+              similarShow={similarShow}
+              monthLabel={monthLabel}
+              qrDataUrl={qrDataUrl}
+            />
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-2 border-t border-white/10 p-4">
           <button
             type="button"
-            disabled={busy || !ready}
+            disabled={busy || !ready || !hasActivity}
             onClick={() => void download()}
             className="rounded-xl border border-white/15 py-3 text-sm font-semibold text-white/90 disabled:opacity-40"
           >
@@ -313,7 +335,7 @@ export function SoulReportModal({
           </button>
           <button
             type="button"
-            disabled={busy || !ready}
+            disabled={busy || !ready || !hasActivity}
             onClick={() => void share()}
             className="rounded-xl bg-supp-red py-3 text-sm font-semibold text-white disabled:opacity-40"
           >
@@ -357,22 +379,29 @@ function ReportCard({
   return (
     <div
       ref={cardRef}
-      className="relative w-[720px] overflow-hidden bg-[#0c0c0c] text-white"
+      className="relative w-[720px] overflow-hidden text-white"
       style={{
         fontFamily:
           'var(--font-noto-sans), "Noto Sans SC", "PingFang SC", sans-serif',
+        background:
+          "linear-gradient(165deg, #2a1030 0%, #1a1a48 28%, #0f2a3a 58%, #1a1820 100%)",
       }}
     >
-      {/* Atmosphere */}
+      {/* Atmosphere — colorful washes */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "radial-gradient(ellipse 80% 40% at 20% -10%, rgba(227,27,35,0.35), transparent 55%), radial-gradient(ellipse 60% 35% at 100% 20%, rgba(255,255,255,0.06), transparent 50%)",
+          background: [
+            "radial-gradient(ellipse 90% 45% at 8% -5%, rgba(227,27,35,0.55), transparent 55%)",
+            "radial-gradient(ellipse 70% 40% at 95% 8%, rgba(255,140,50,0.38), transparent 52%)",
+            "radial-gradient(ellipse 65% 45% at 50% 45%, rgba(40,200,190,0.28), transparent 55%)",
+            "radial-gradient(ellipse 55% 35% at 85% 85%, rgba(255,70,140,0.32), transparent 50%)",
+            "radial-gradient(ellipse 50% 30% at 10% 90%, rgba(90,120,255,0.28), transparent 48%)",
+          ].join(", "),
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -381,7 +410,7 @@ function ReportCard({
 
       <div className="relative px-10 pb-10 pt-12">
         <p
-          className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#e31b23]"
+          className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#ff6b6b]"
           style={{ fontFamily: "var(--font-syne), Syne, sans-serif" }}
         >
           {t("soulReportEyebrow")}
@@ -392,17 +421,14 @@ function ReportCard({
         >
           {t("soulReportHeadline")}
         </h1>
-        <p className="mt-2 text-[15px] text-white/55">{t("soulReportSub")}</p>
+        <p className="mt-2 text-[15px] text-white/70">{t("soulReportSub")}</p>
 
         {/* Profile */}
         <div className="mt-10 flex items-center gap-5">
-          <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border-2 border-white/25 bg-white/10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={user.avatar || "/images/avatar-1.png"}
-              alt=""
+          <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border-2 border-white/35 bg-white/10 shadow-[0_0_24px_rgba(255,100,80,0.35)]">
+            <UserAvatar
+              src={user.avatar || DEFAULT_AVATAR}
               crossOrigin="anonymous"
-              className="h-full w-full object-cover"
             />
           </div>
           <div className="min-w-0">
@@ -412,7 +438,7 @@ function ReportCard({
             >
               {user.nickname}
             </p>
-            <p className="mt-1 text-[13px] text-white/45">
+            <p className="mt-1 text-[13px] text-white/55">
               {t("userIdLabel", { id: user.id.slice(0, 12) })}
             </p>
           </div>
@@ -428,14 +454,14 @@ function ReportCard({
           />
         </div>
 
-        <p className="mt-6 text-[16px] leading-relaxed text-white/75">
+        <p className="mt-6 text-[16px] leading-relaxed text-white/80">
           {t("summaryLead")}{" "}
           {t("summaryExperienced", { count: user.experienced })} ·{" "}
           {t("summarySaved", { count: user.favorited })} ·{" "}
           {t("summaryPercentile", { pct: user.percentile })}
         </p>
         <p
-          className="mt-3 text-[28px] leading-snug tracking-wide text-white/80"
+          className="mt-3 text-[28px] leading-snug tracking-wide text-white/85"
           style={{
             fontFamily: zh
               ? 'var(--font-ma-shan), "Ma Shan Zheng", cursive'
@@ -446,7 +472,7 @@ function ReportCard({
         </p>
 
         {/* Persona */}
-        <section className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <section className="mt-10 overflow-hidden rounded-3xl border border-white/15 bg-white/[0.08] p-6 shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
           <div className="flex items-start gap-4">
             <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-white/10">
               {user.personaUnlocked && user.personaAvatar ? (
@@ -466,7 +492,7 @@ function ReportCard({
             <div className="min-w-0 flex-1">
               {user.personaUnlocked && personaName ? (
                 <>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#e31b23]">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff8a65]">
                     {t("soulReportPersonaLabel")}
                   </p>
                   <p
@@ -475,7 +501,7 @@ function ReportCard({
                   >
                     {t("personaTitle", { persona: personaName })}
                   </p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/60">
+                  <p className="mt-2 text-[14px] leading-relaxed text-white/70">
                     {personaDesc}
                   </p>
                 </>
@@ -484,7 +510,7 @@ function ReportCard({
                   <p className="text-[18px] font-semibold">
                     {t("personaLockedTitle")}
                   </p>
-                  <p className="mt-2 text-[14px] text-white/55">
+                  <p className="mt-2 text-[14px] text-white/60">
                     {t("personaLockedDesc")}
                   </p>
                 </>
@@ -493,40 +519,39 @@ function ReportCard({
           </div>
         </section>
 
-        {/* Collected */}
-        <section className="mt-10">
-          <SectionHead
-            title={t("collectedTitle")}
-            count={t("collectedCount", { count: user.favorited })}
-          />
-          {collectedShow.length === 0 ? (
-            <p className="mt-3 text-[14px] text-white/40">{t("emptyCollected")}</p>
-          ) : (
+        {/* Collected — omit section when empty */}
+        {collectedShow.length > 0 && (
+          <section className="mt-10">
+            <SectionHead
+              title={t("collectedTitle")}
+              count={t("collectedCount", { count: user.favorited })}
+            />
             <div className="mt-4 grid grid-cols-2 gap-3">
               {collectedShow.map((idea) => (
-                <IdeaTile key={idea.id} idea={idea} locale={locale} badge={t("collected")} />
+                <IdeaTile
+                  key={idea.id}
+                  idea={idea}
+                  locale={locale}
+                  badge={t("collected")}
+                />
               ))}
             </div>
-          )}
-        </section>
+          </section>
+        )}
 
-        {/* Experienced */}
-        <section className="mt-10">
-          <SectionHead
-            title={t("experiencedTitle")}
-            count={t("experiencedCountLabel", {
-              count: user.experienced,
-            })}
-          />
-          {experiencedShow.length === 0 ? (
-            <p className="mt-3 text-[14px] text-white/40">
-              {t("emptyExperienced")}
-            </p>
-          ) : (
+        {/* Experienced — omit section when empty */}
+        {experiencedShow.length > 0 && (
+          <section className="mt-10">
+            <SectionHead
+              title={t("experiencedTitle")}
+              count={t("experiencedCountLabel", {
+                count: user.experienced,
+              })}
+            />
             <div className="mt-4 space-y-4">
               {groupByMonth(experiencedShow).map(([month, items]) => (
                 <div key={month}>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
                     {monthLabel(month)}
                   </p>
                   <div className="space-y-2">
@@ -535,7 +560,7 @@ function ReportCard({
                       return (
                         <div
                           key={idea.id}
-                          className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-2"
+                          className="flex items-center gap-3 rounded-2xl border border-white/12 bg-white/[0.07] p-2"
                         >
                           <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -546,7 +571,7 @@ function ReportCard({
                               className="h-full w-full object-cover"
                             />
                           </div>
-                          <p className="min-w-0 flex-1 truncate text-[14px] font-medium text-white/85">
+                          <p className="min-w-0 flex-1 truncate text-[14px] font-medium text-white/90">
                             {L.title}
                           </p>
                         </div>
@@ -556,30 +581,22 @@ function ReportCard({
                 </div>
               ))}
             </div>
-          )}
-        </section>
+          </section>
+        )}
 
-        {/* Similar souls — not followers / following */}
-        <section className="mt-10">
-          <SectionHead title={t("friendsTitle")} count="" />
-          <p className="mt-1 text-[13px] text-white/45">{t("friendsSub")}</p>
-          {similarShow.length === 0 ? (
-            <p className="mt-3 text-[14px] text-white/40">{t("emptySimilar")}</p>
-          ) : (
+        {/* Similar souls — only when there are matches */}
+        {similarShow.length > 0 && (
+          <section className="mt-10">
+            <SectionHead title={t("friendsTitle")} count="" />
+            <p className="mt-1 text-[13px] text-white/55">{t("friendsSub")}</p>
             <div className="mt-4 space-y-3">
               {similarShow.map((friend) => (
                 <div
                   key={friend.id}
-                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-2.5"
+                  className="flex items-center gap-3 rounded-2xl border border-white/12 bg-white/[0.07] px-3 py-2.5"
                 >
                   <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-white/10">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={friend.avatar}
-                      alt=""
-                      crossOrigin="anonymous"
-                      className="h-full w-full object-cover"
-                    />
+                    <UserAvatar src={friend.avatar} crossOrigin="anonymous" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[15px] font-semibold">
@@ -587,7 +604,7 @@ function ReportCard({
                         ? friend.nicknameZh || friend.nickname
                         : friend.nickname}
                     </p>
-                    <p className="truncate text-[12px] text-white/45">
+                    <p className="truncate text-[12px] text-white/50">
                       {zh
                         ? friend.personaZh || friend.persona
                         : friend.persona}{" "}
@@ -597,11 +614,11 @@ function ReportCard({
                 </div>
               ))}
             </div>
-          )}
-        </section>
+          </section>
+        )}
 
         {/* Footer: logo + QR */}
-        <footer className="mt-12 flex items-end justify-between gap-6 border-t border-white/10 pt-8">
+        <footer className="mt-12 flex items-end justify-between gap-6 border-t border-white/15 pt-8">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -613,17 +630,21 @@ function ReportCard({
               />
               <div>
                 <p
-                  className="text-[26px] font-extrabold leading-none tracking-tight"
-                  style={{ fontFamily: "var(--font-syne), Syne, sans-serif" }}
+                  className="text-[28px] font-semibold leading-none tracking-normal"
+                  style={{
+                    fontFamily: zh
+                      ? 'var(--font-ma-shan), "Ma Shan Zheng", cursive'
+                      : 'var(--font-caveat), Caveat, cursive',
+                  }}
                 >
                   {tBrand("name")}
                 </p>
-                <p className="mt-1 text-[12px] text-white/45">
+                <p className="mt-1 text-[12px] text-white/55">
                   {tBrand("tagline")}
                 </p>
               </div>
             </div>
-            <p className="mt-4 max-w-[320px] text-[13px] leading-relaxed text-white/40">
+            <p className="mt-4 max-w-[320px] text-[13px] leading-relaxed text-white/50">
               {t("soulReportFooter")}
             </p>
           </div>
@@ -636,7 +657,7 @@ function ReportCard({
                 <div className="h-[120px] w-[120px] animate-pulse bg-neutral-200" />
               )}
             </div>
-            <p className="mt-2 text-[11px] font-medium tracking-wide text-white/50">
+            <p className="mt-2 text-[11px] font-medium tracking-wide text-white/55">
               {t("soulReportScan")}
             </p>
           </div>
@@ -648,14 +669,14 @@ function ReportCard({
 
 function StatBlock({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-4 text-center">
+    <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/[0.14] to-white/[0.04] px-3 py-4 text-center shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
       <p
         className="text-[28px] font-extrabold tracking-tight text-white"
         style={{ fontFamily: "var(--font-syne), Syne, sans-serif" }}
       >
         {value}
       </p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/45">
+      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/55">
         {label}
       </p>
     </div>

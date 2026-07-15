@@ -40,6 +40,55 @@ async function fetchWeather(lat: number, lng: number) {
   };
 }
 
+function clientIp(req: Request): string | null {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  const real = req.headers.get("x-real-ip")?.trim();
+  return real || null;
+}
+
+async function resolveCoordsFromIp(req: Request): Promise<{
+  lat: number;
+  lng: number;
+  city: string | null;
+  country: string | null;
+} | null> {
+  const ip = clientIp(req);
+  const url = ip
+    ? `https://ipapi.co/${encodeURIComponent(ip)}/json/`
+    : "https://ipapi.co/json/";
+
+  try {
+    const res = await fetch(url, {
+      headers: { Accept: "application/json", "User-Agent": "SuppExplore/1.0" },
+      next: { revalidate: 1800 },
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      latitude?: number;
+      longitude?: number;
+      city?: string;
+      country_name?: string;
+      error?: boolean;
+    };
+    if (data.error) return null;
+    if (!Number.isFinite(data.latitude) || !Number.isFinite(data.longitude)) {
+      return null;
+    }
+    return {
+      lat: data.latitude as number,
+      lng: data.longitude as number,
+      city: data.city || null,
+      country: data.country_name || null,
+    };
+  } catch {
+    return null;
+  }
+}
+
 async function fetchPlace(lat: number, lng: number, locale: string) {
   const url = new URL("https://nominatim.openstreetmap.org/reverse");
   url.searchParams.set("format", "jsonv2");
@@ -78,9 +127,9 @@ async function fetchPlace(lat: number, lng: number, locale: string) {
   else if (country) locationLabel = country;
 
   if (district && city && district !== city) {
-    locationLabel = locationLabel
-      ? `${city} · ${district}, ${country || ""}`.replace(/,\s*$/, "")
-      : `${district}`;
+    locationLabel = country
+      ? `${city} (${district}), ${country}`
+      : `${city} (${district})`;
   }
 
   return { city, country, district, locationLabel };
@@ -142,6 +191,8 @@ function pickHistory(data: unknown): { text: string; year: number | null } | nul
   // Crisp: first sentence, max ~110 chars
   text = text.split(/(?<=[.!?。！？])\s/)[0] ?? text;
   if (text.length > 110) text = `${text.slice(0, 107).trim()}…`;
+  // Drop ending punctuation — UI adds a single period
+  text = text.replace(/[.。！？!?…]+$/u, "").trim();
   return { text, year: pick.year ?? null };
 }
 
@@ -150,9 +201,19 @@ export async function GET(req: Request) {
   const locale = searchParams.get("locale") || "en";
   const latRaw = searchParams.get("lat");
   const lngRaw = searchParams.get("lng");
-  const lat = latRaw != null ? Number(latRaw) : NaN;
-  const lng = lngRaw != null ? Number(lngRaw) : NaN;
-  const hasCoords = Number.isFinite(lat) && Number.isFinite(lng);
+  let lat = latRaw != null ? Number(latRaw) : NaN;
+  let lng = lngRaw != null ? Number(lngRaw) : NaN;
+  let hasCoords = Number.isFinite(lat) && Number.isFinite(lng);
+
+  let ipPlace: Awaited<ReturnType<typeof resolveCoordsFromIp>> = null;
+  if (!hasCoords) {
+    ipPlace = await resolveCoordsFromIp(req);
+    if (ipPlace) {
+      lat = ipPlace.lat;
+      lng = ipPlace.lng;
+      hasCoords = true;
+    }
+  }
 
   const historyPromise = fetchOnThisDay(locale);
   const weatherPromise = hasCoords
@@ -169,9 +230,13 @@ export async function GET(req: Request) {
   ]);
 
   return NextResponse.json({
-    city: place?.city ?? null,
-    country: place?.country ?? null,
-    locationLabel: place?.locationLabel ?? null,
+    city: place?.city ?? ipPlace?.city ?? null,
+    country: place?.country ?? ipPlace?.country ?? null,
+    locationLabel:
+      place?.locationLabel ??
+      (ipPlace?.city && ipPlace?.country
+        ? `${ipPlace.city}, ${ipPlace.country}`
+        : ipPlace?.city ?? ipPlace?.country ?? null),
     weatherKey: weather?.key ?? null,
     tempC: weather?.tempC ?? null,
     historyEvent: history?.text ?? null,

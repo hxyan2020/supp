@@ -139,7 +139,7 @@ export function blankIdeaDraft(
     imageAssignedFromRepo: partial.imageAssignedFromRepo,
     organizer: partial.organizer || "Supp",
     organizerZh: partial.organizerZh || "嘛呢",
-    organizerAvatar: partial.organizerAvatar || "/images/avatar-1.png",
+    organizerAvatar: partial.organizerAvatar || "/avatars/default.svg",
     experiencedCount: partial.experiencedCount ?? 0,
     favoritedCount: partial.favoritedCount ?? 0,
     participantCount: partial.participantCount ?? 0,

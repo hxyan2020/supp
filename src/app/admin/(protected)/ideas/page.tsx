@@ -55,7 +55,7 @@ const emptyIdea = (): Partial<IdeaRecord> => ({
   image: "/images/event-park.jpg",
   organizer: "Supp",
   organizerZh: "嘛呢",
-  organizerAvatar: "/images/avatar-1.png",
+  organizerAvatar: "/avatars/default.svg",
   experiencedCount: 0,
   favoritedCount: 0,
   participantCount: 0,

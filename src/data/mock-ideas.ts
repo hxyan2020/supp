@@ -571,13 +571,14 @@ const IDEA_EXTRAS: Record<
     socialEmbeds: [
       {
         platform: "tiktok",
-        url: "https://www.tiktok.com/",
+        url: "https://www.tiktok.com/@scout2015/video/6718339390082518274",
+        embedUrl: "https://www.tiktok.com/embed/v2/6718339390082518274",
         title: "City listening challenge",
         titleZh: "城市偷听挑战",
       },
       {
         platform: "xiaohongshu",
-        url: "https://www.xiaohongshu.com/",
+        url: "https://www.xiaohongshu.com/explore",
         title: "Station people-watching",
         titleZh: "车站人来人往观察笔记",
       },
@@ -600,8 +601,9 @@ const IDEA_EXTRAS: Record<
     needsZh: ["旧衣服或围裙", "发绳", "手机（拍参考图）"],
     socialEmbeds: [
       {
-        platform: "instagram",
-        url: "https://www.instagram.com/",
+        platform: "tiktok",
+        url: "https://www.tiktok.com/@scout2015/video/6718339390082518274",
+        embedUrl: "https://www.tiktok.com/embed/v2/6718339390082518274",
         title: "First bowl on the wheel",
         titleZh: "第一次拉坯成碗",
       },
@@ -623,13 +625,14 @@ const IDEA_EXTRAS: Record<
     socialEmbeds: [
       {
         platform: "tiktok",
-        url: "https://www.tiktok.com/",
+        url: "https://www.tiktok.com/@scout2015/video/6718339390082518274",
+        embedUrl: "https://www.tiktok.com/embed/v2/6718339390082518274",
         title: "HK night market route",
         titleZh: "香港夜市路线",
       },
       {
         platform: "xiaohongshu",
-        url: "https://www.xiaohongshu.com/",
+        url: "https://www.xiaohongshu.com/explore",
         title: "Temple Street bites",
         titleZh: "庙街小吃清单",
       },

@@ -1,14 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState, useEffectEvent } from "react";
+import { useEffect, useMemo, useState, useEffectEvent, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { SoulReportModal } from "@/components/SoulReportModal";
-import { getIdeaById, localizedIdea, type Idea } from "@/data/mock-ideas";
+import { UserAvatar } from "@/components/UserAvatar";
+import { localizedIdea, type Idea } from "@/data/mock-ideas";
 import { scatterStyle } from "@/lib/scatter";
+import {
+  ME_LISTS_EVENT,
+  applyMeListChange,
+  readPendingMeListChange,
+  type MeListChange,
+} from "@/lib/me-lists-sync";
+import { usePathname } from "@/i18n/navigation";
 
 type MeUser = {
   id: string;
@@ -61,6 +69,7 @@ export function MeView() {
   const t = useTranslations("me");
   const locale = useLocale();
   const zh = locale === "zh";
+  const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [user, setUser] = useState<MeUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -69,13 +78,71 @@ export function MeView() {
   const [followers, setFollowers] = useState<SocialCard[]>([]);
   const [dimming, setDimming] = useState<Record<string, boolean>>({});
   const [soulReportOpen, setSoulReportOpen] = useState(false);
+  const [soulGateOpen, setSoulGateOpen] = useState(false);
+  const [ideasTotal, setIdeasTotal] = useState(0);
+  const [collectedIdeas, setCollectedIdeas] = useState<Idea[]>([]);
+  const [experiencedIdeas, setExperiencedIdeas] = useState<Idea[]>([]);
+  const [experiencedAt, setExperiencedAt] = useState<Record<string, string>>(
+    {},
+  );
+  const listsRef = useRef({
+    collected: [] as Idea[],
+    experienced: [] as Idea[],
+    at: {} as Record<string, string>,
+  });
+  listsRef.current = {
+    collected: collectedIdeas,
+    experienced: experiencedIdeas,
+    at: experiencedAt,
+  };
+
+  const applyLocalChange = useEffectEvent((change: MeListChange) => {
+    const next = applyMeListChange(
+      change,
+      listsRef.current.collected,
+      listsRef.current.experienced,
+      listsRef.current.at,
+    );
+    listsRef.current = {
+      collected: next.collected,
+      experienced: next.experienced,
+      at: next.experiencedAt,
+    };
+    setCollectedIdeas(next.collected);
+    setExperiencedIdeas(next.experienced);
+    setExperiencedAt(next.experiencedAt);
+    setUser((u) => {
+      if (!u) return u;
+      const fav = new Set(u.favoritedIds ?? []);
+      const exp = new Set(u.experiencedIds ?? []);
+      const at = { ...(u.experiencedAt ?? {}) };
+      if (change.action === "favorite") {
+        if (change.active) fav.add(change.idea.id);
+        else fav.delete(change.idea.id);
+      } else if (change.active) {
+        exp.add(change.idea.id);
+        at[change.idea.id] = change.at || new Date().toISOString();
+      } else {
+        exp.delete(change.idea.id);
+        delete at[change.idea.id];
+      }
+      return {
+        ...u,
+        favoritedIds: [...fav],
+        experiencedIds: [...exp],
+        experiencedAt: at,
+        favorited: fav.size,
+        experienced: exp.size,
+      };
+    });
+  });
 
   const loadMe = useEffectEvent(async () => {
     setLoading(true);
     try {
       const [meRes, socialRes] = await Promise.all([
-        fetch("/api/me"),
-        fetch("/api/me/social"),
+        fetch("/api/me", { cache: "no-store" }),
+        fetch("/api/me/social", { cache: "no-store" }),
       ]);
       const meData = await meRes.json();
       const socialData = await socialRes.json();
@@ -88,8 +155,30 @@ export function MeView() {
     }
   });
 
+  const loadIdeas = useEffectEvent(async () => {
+    try {
+      const res = await fetch("/api/me/ideas", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        total?: number;
+        collected?: Idea[];
+        experienced?: Idea[];
+        experiencedAt?: Record<string, string>;
+      };
+      if (typeof data.total === "number") setIdeasTotal(data.total);
+      setCollectedIdeas(data.collected ?? []);
+      setExperiencedIdeas(data.experienced ?? []);
+      setExperiencedAt(data.experiencedAt ?? {});
+    } catch {
+      // keep last known list
+    }
+  });
+
   useEffect(() => {
+    const pending = readPendingMeListChange();
+    if (pending) applyLocalChange(pending);
     void loadMe();
+    void loadIdeas();
     const params = new URLSearchParams(window.location.search);
     if (params.get("authError")) {
       setAuthError(params.get("authError") || t("authError"));
@@ -99,6 +188,50 @@ export function MeView() {
       setSettingsOpen(true);
     }
   }, [t]);
+
+  useEffect(() => {
+    // Refresh whenever user lands on Me (including client navigations)
+    if (pathname !== "/me") return;
+    const pending = readPendingMeListChange();
+    if (pending) applyLocalChange(pending);
+    void loadMe();
+    void loadIdeas();
+  }, [pathname]);
+
+  useEffect(() => {
+    const onChange = (event: Event) => {
+      const detail = (event as CustomEvent<MeListChange>).detail;
+      if (detail) applyLocalChange(detail);
+      void loadMe();
+      void loadIdeas();
+    };
+    window.addEventListener(ME_LISTS_EVENT, onChange);
+    return () => window.removeEventListener(ME_LISTS_EVENT, onChange);
+  }, []);
+
+  useEffect(() => {
+    const poll = window.setInterval(() => {
+      void loadIdeas();
+      void loadMe();
+    }, 5_000);
+    const onFocus = () => {
+      void loadIdeas();
+      void loadMe();
+    };
+    const onVis = () => {
+      if (document.visibilityState === "visible") {
+        void loadIdeas();
+        void loadMe();
+      }
+    };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      window.clearInterval(poll);
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
 
   useEffect(() => {
     if (!settingsOpen) return;
@@ -114,21 +247,14 @@ export function MeView() {
     };
   }, [settingsOpen]);
 
-  const collectedIdeas = useMemo(
-    () =>
-      (user?.favoritedIds ?? [])
-        .map((id) => getIdeaById(id))
-        .filter((x): x is Idea => Boolean(x)),
-    [user?.favoritedIds],
-  );
-
   const experiencedByMonth = useMemo(() => {
-    const at = user?.experiencedAt ?? {};
     const groups = new Map<string, Idea[]>();
-    for (const id of user?.experiencedIds ?? []) {
-      const idea = getIdeaById(id);
-      if (!idea) continue;
-      const iso = at[id] || idea.startsAt || idea.date || new Date().toISOString();
+    for (const idea of experiencedIdeas) {
+      const iso =
+        experiencedAt[idea.id] ||
+        idea.startsAt ||
+        idea.date ||
+        new Date().toISOString();
       const d = new Date(iso);
       const key = Number.isNaN(d.getTime())
         ? "Unknown"
@@ -138,7 +264,7 @@ export function MeView() {
       groups.set(key, list);
     }
     return [...groups.entries()].sort((a, b) => b[0].localeCompare(a[0]));
-  }, [user?.experiencedIds, user?.experiencedAt]);
+  }, [experiencedIdeas, experiencedAt]);
 
   async function cancelIdea(
     ideaId: string,
@@ -156,7 +282,8 @@ export function MeView() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed");
       setUser(data.user);
-      const socialRes = await fetch("/api/me/social");
+      void loadIdeas();
+      const socialRes = await fetch("/api/me/social", { cache: "no-store" });
       const socialData = await socialRes.json();
       setSimilar(socialData.similar || []);
       setFollowers(socialData.followers || []);
@@ -205,7 +332,7 @@ export function MeView() {
   }
 
   return (
-    <div className="min-h-full bg-[#f5f5f5] text-supp-ink">
+    <div className="min-h-full bg-[#f5f5f5] pb-10 text-supp-ink">
       <section className="relative overflow-hidden bg-black text-white">
         <Image
           src="/images/me-bg.jpg"
@@ -224,17 +351,7 @@ export function MeView() {
                 onClick={() => setSettingsOpen(true)}
                 className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-white/70 bg-white/10"
               >
-                {user?.avatar ? (
-                  // Animal SVGs + arbitrary URLs — keep as native img
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={user.avatar}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="block h-full w-full animate-pulse bg-white/20" />
-                )}
+                <UserAvatar src={user?.avatar} />
               </button>
               <div>
                 <div className="flex items-center gap-2">
@@ -250,7 +367,6 @@ export function MeView() {
                     <SettingsIcon className="h-3.5 w-3.5" />
                   </button>
                 </div>
-                <p className="text-[11px] text-white/65">{t("editProfile")}</p>
                 {user?.isGuest && (
                   <p className="mt-0.5 text-[10px] text-amber-200/90">
                     {t("guestBadge")}
@@ -284,23 +400,22 @@ export function MeView() {
             <p>{t("summaryLead")}</p>
             <p>{t("summaryExperienced", { count: user?.experienced ?? 0 })}</p>
             <p>{t("summarySaved", { count: user?.favorited ?? 0 })}</p>
-            <p>
-              {t("summaryPercentile", { pct: user?.percentile ?? 0 })}
-            </p>
-            <p
-              className={`pt-1 text-[22px] leading-snug tracking-wide text-white/85 ${
-                zh ? "font-hand-zh" : "font-hand"
-              }`}
-            >
-              {t("summaryQuote")}
-            </p>
+            <p>{t("summaryPercentile", { pct: user?.percentile ?? 0 })}</p>
           </div>
         </div>
       </section>
 
       <button
         type="button"
-        onClick={() => setSoulReportOpen(true)}
+        onClick={() => {
+          const experienced = user?.experienced ?? 0;
+          const favorited = user?.favorited ?? 0;
+          if (experienced < 1 && favorited < 1) {
+            setSoulGateOpen(true);
+            return;
+          }
+          setSoulReportOpen(true);
+        }}
         disabled={!user || loading}
         className="relative mx-4 -mt-3 flex items-center gap-3 overflow-hidden rounded-xl bg-supp-red px-3 py-3 text-left text-white shadow-lg transition hover:brightness-110 disabled:opacity-50"
       >
@@ -309,6 +424,45 @@ export function MeView() {
         </div>
         <span className="text-sm font-semibold leading-snug">{t("soulReport")}</span>
       </button>
+
+      {soulGateOpen && (
+        <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center">
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/55"
+            aria-label={t("soulReportClose")}
+            onClick={() => setSoulGateOpen(false)}
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="relative z-10 mx-4 mb-8 w-full max-w-sm rounded-2xl bg-white p-5 text-supp-ink shadow-2xl sm:mb-0"
+          >
+            <h2 className="text-base font-semibold">
+              {t("soulReportNeedActivityTitle")}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-supp-muted">
+              {t("soulReportNeedActivity")}
+            </p>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setSoulGateOpen(false)}
+                className="flex-1 rounded-xl border border-black/10 py-2.5 text-sm font-semibold"
+              >
+                {t("soulReportClose")}
+              </button>
+              <Link
+                href="/explore"
+                onClick={() => setSoulGateOpen(false)}
+                className="flex flex-1 items-center justify-center rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white"
+              >
+                {t("soulReportGoExplore")}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {user && (
         <SoulReportModal
@@ -368,6 +522,14 @@ export function MeView() {
         id="me-collected"
         className="mx-4 mt-4 scroll-mt-16 overflow-hidden rounded-2xl bg-white p-4 shadow-sm"
       >
+        <div className="mb-3 flex items-baseline justify-between gap-2 border-b border-black/5 pb-3">
+          <p className="text-xs font-medium text-supp-muted">
+            {t("ideasTotalLabel")}
+          </p>
+          <p className="text-sm font-bold tabular-nums text-supp-ink">
+            {t("ideasTotal", { count: ideasTotal })}
+          </p>
+        </div>
         <div className="flex items-end justify-between gap-2">
           <div>
             <h2 className="text-sm font-semibold">{t("collectedTitle")}</h2>
@@ -447,12 +609,12 @@ export function MeView() {
           </div>
           <p className="text-xs font-semibold text-supp-red">
             {t("experiencedCountLabel", {
-              count: user?.experiencedIds?.length ?? 0,
+              count: experiencedIdeas.length,
             })}
           </p>
         </div>
 
-        {(user?.experiencedIds?.length ?? 0) === 0 && (
+        {(experiencedIdeas.length === 0) && (
           <p className="mt-3 text-xs text-supp-muted">{t("emptyExperienced")}</p>
         )}
 
@@ -539,12 +701,7 @@ export function MeView() {
                 href={`/users/${friend.id}`}
                 className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-supp-soft"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={friend.avatar}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                <UserAvatar src={friend.avatar} />
               </Link>
               <div className="min-w-0 flex-1">
                 <Link
@@ -596,12 +753,7 @@ export function MeView() {
                 href={`/users/${person.id}`}
                 className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-supp-soft"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={person.avatar}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                <UserAvatar src={person.avatar} />
               </Link>
               <div className="min-w-0 flex-1">
                 <Link
@@ -689,6 +841,10 @@ function SettingsSheet({
   const [googleEnabled, setGoogleEnabled] = useState(false);
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [activityOpen, setActivityOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<
+    "profile" | "account" | "prefs" | "help"
+  >("profile");
 
   useEffect(() => {
     void fetch("/api/auth/providers")
@@ -720,6 +876,15 @@ function SettingsSheet({
     void loadAnimals(0, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (activityOpen) {
+    return (
+      <MyActivitySheet
+        onBack={() => setActivityOpen(false)}
+        onClose={onClose}
+      />
+    );
+  }
 
   async function saveProfile() {
     setSaving(true);
@@ -852,239 +1017,481 @@ function SettingsSheet({
           </button>
         </div>
 
-        <div className="space-y-6 overflow-y-auto px-4 py-4">
-          <section>
-            <h3 className="mb-1 text-sm font-semibold text-supp-ink">
-              {t("profileSection")}
-            </h3>
-            <p className="mb-3 text-[11px] text-supp-muted">
-              {t("userIdLabel", { id: user.id })}
-            </p>
+        <div
+          role="tablist"
+          aria-label={t("settings")}
+          className="flex gap-1 overflow-x-auto border-b border-black/5 px-2"
+        >
+          {(
+            [
+              ["profile", "settingsTabProfile"],
+              ["account", "settingsTabAccount"],
+              ["prefs", "settingsTabPrefs"],
+              ["help", "settingsTabHelp"],
+            ] as const
+          ).map(([id, labelKey]) => {
+            const active = settingsTab === id;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                id={`settings-tab-${id}`}
+                onClick={() => setSettingsTab(id)}
+                className={`shrink-0 px-3 py-2.5 text-xs font-semibold transition ${
+                  active
+                    ? "border-b-2 border-supp-red text-supp-ink"
+                    : "border-b-2 border-transparent text-supp-muted hover:text-supp-ink"
+                }`}
+              >
+                {t(labelKey)}
+              </button>
+            );
+          })}
+        </div>
 
-            <div className="mb-3 flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={avatarPreview}
-                alt=""
-                className="h-14 w-14 rounded-full border border-black/10 object-cover"
-              />
-              <div className="min-w-0 flex-1">
-                <label className="text-xs text-supp-muted">{t("nickname")}</label>
-                <input
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                  maxLength={32}
-                  className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm outline-none ring-supp-red focus:ring-2"
+        <div
+          role="tabpanel"
+          aria-labelledby={`settings-tab-${settingsTab}`}
+          className="space-y-5 overflow-y-auto px-4 py-4"
+        >
+          {settingsTab === "profile" && (
+            <section>
+              <p className="mb-3 text-[11px] text-supp-muted">
+                {t("userIdLabel", { id: user.id })}
+              </p>
+
+              <div className="mb-3 flex items-center gap-3">
+                <UserAvatar
+                  src={avatarPreview}
+                  className="h-14 w-14 rounded-full border border-black/10 object-cover"
                 />
-                <p className="mt-1 text-[11px] text-supp-muted">
-                  {t("nicknameHint")}
-                </p>
-              </div>
-            </div>
-
-            <h4 className="mb-2 text-xs font-semibold text-supp-ink">
-              {t("changeAvatar")}
-            </h4>
-            <div className="mb-2 flex gap-2">
-              <input
-                value={avatarQ}
-                onChange={(e) => setAvatarQ(e.target.value)}
-                placeholder={t("searchAvatars")}
-                className="min-w-0 flex-1 rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm outline-none ring-supp-red focus:ring-2"
-              />
-              <button
-                type="button"
-                onClick={() => void loadAnimals(0, false)}
-                className="rounded-xl bg-black px-3 py-2 text-xs font-semibold text-white"
-              >
-                Go
-              </button>
-            </div>
-            <div className="grid max-h-48 grid-cols-6 gap-2 overflow-y-auto rounded-xl bg-[#f7f7f7] p-2">
-              {animals.map((a) => {
-                const active = a.id === avatarAnimalId;
-                return (
-                  <button
-                    key={a.id}
-                    type="button"
-                    title={a.nicknameHint}
-                    onClick={() => {
-                      setAvatarAnimalId(a.id);
-                      setAvatarPreview(a.path);
-                    }}
-                    className={`overflow-hidden rounded-full border-2 ${
-                      active ? "border-supp-red" : "border-transparent"
-                    }`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={a.path} alt={a.nicknameHint} className="h-full w-full" />
-                  </button>
-                );
-              })}
-            </div>
-            {animals.length < totalAnimals && (
-              <button
-                type="button"
-                disabled={loadingAnimals}
-                onClick={() => void loadAnimals(animals.length, true)}
-                className="mt-2 w-full rounded-xl border border-black/10 py-2 text-xs font-medium text-supp-ink"
-              >
-                {t("loadMoreAvatars")}
-              </button>
-            )}
-
-            <button
-              type="button"
-              disabled={saving}
-              onClick={() => void saveProfile()}
-              className="mt-3 w-full rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white disabled:opacity-60"
-            >
-              {t("saveProfile")}
-            </button>
-            {savedMsg && (
-              <p className="mt-2 text-xs text-supp-muted">{savedMsg}</p>
-            )}
-          </section>
-
-          <section>
-            <h3 className="mb-1 text-sm font-semibold text-supp-ink">
-              {t("signInSection")}
-            </h3>
-            <p className="mb-3 text-xs text-supp-muted">{t("signInHint")}</p>
-
-            {user.isGuest ? (
-              <div className="space-y-3">
-                {googleEnabled ? (
-                  <a
-                    href={`/api/auth/google?locale=${encodeURIComponent(locale)}`}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-black/10 bg-white py-2.5 text-sm font-semibold text-supp-ink transition hover:bg-black/[0.03]"
-                  >
-                    <GoogleGlyph />
-                    {t("googleSignIn")}
-                  </a>
-                ) : (
-                  <p className="text-[11px] text-supp-muted">
-                    {t("googleUnavailable")}
-                  </p>
-                )}
-
-                <div className="rounded-xl border border-black/8 bg-[#f7f7f7] p-3">
-                  <p className="text-xs font-semibold text-supp-ink">
-                    {t("passwordSignIn")}
-                  </p>
-                  <label className="mt-2 block text-xs text-supp-muted">
-                    {t("username")}
-                    <input
-                      value={loginUsername}
-                      onChange={(e) => setLoginUsername(e.target.value)}
-                      autoComplete="username"
-                      className="mt-1 w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
-                      placeholder="demo001"
-                    />
-                  </label>
-                  <label className="mt-2 block text-xs text-supp-muted">
-                    {t("password")}
-                    <input
-                      type="password"
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      autoComplete="current-password"
-                      className="mt-1 w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
-                      placeholder="Demo001!"
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    disabled={
-                      authBusy ||
-                      !loginUsername.trim() ||
-                      !loginPassword.trim()
-                    }
-                    onClick={() => void submitPasswordLogin()}
-                    className="mt-3 w-full rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white disabled:opacity-50"
-                  >
-                    {t("passwordSignInAction")}
-                  </button>
-                </div>
-
-                <label className="block text-xs text-supp-muted">
-                  {t("email")}
+                <div className="min-w-0 flex-1">
+                  <label className="text-xs text-supp-muted">{t("nickname")}</label>
                   <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    maxLength={32}
+                    className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm outline-none ring-supp-red focus:ring-2"
                   />
-                </label>
-                {!codeSent ? (
-                  <button
-                    type="button"
-                    disabled={authBusy || !email.trim()}
-                    onClick={() => void sendCode()}
-                    className="w-full rounded-xl bg-black py-2.5 text-sm font-semibold text-white disabled:opacity-50"
-                  >
-                    {t("sendCode")}
-                  </button>
-                ) : (
-                  <>
-                    <label className="block text-xs text-supp-muted">
-                      {t("code")}
-                      <input
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        inputMode="numeric"
-                        maxLength={6}
-                        className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm tracking-[0.3em] text-supp-ink outline-none ring-supp-red focus:ring-2"
-                      />
-                    </label>
-                    {devCode && (
-                      <p className="rounded-lg bg-amber-50 px-2 py-1.5 font-mono text-xs text-amber-800">
-                        Dev code: {devCode}
-                      </p>
-                    )}
-                    <button
-                      type="button"
-                      disabled={authBusy || code.trim().length < 6}
-                      onClick={() => void verifyCode()}
-                      className="w-full rounded-xl bg-black py-2.5 text-sm font-semibold text-white disabled:opacity-50"
-                    >
-                      {t("verifyCode")}
-                    </button>
-                  </>
-                )}
+                  <p className="mt-1 text-[11px] text-supp-muted">
+                    {t("nicknameHint")}
+                  </p>
+                </div>
               </div>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-xs text-supp-muted">
-                  {user.email || user.authProvider}
-                </p>
+
+              <h4 className="mb-2 text-xs font-semibold text-supp-ink">
+                {t("changeAvatar")}
+              </h4>
+              <div className="mb-2 flex gap-2">
+                <input
+                  value={avatarQ}
+                  onChange={(e) => setAvatarQ(e.target.value)}
+                  placeholder={t("searchAvatars")}
+                  className="min-w-0 flex-1 rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm outline-none ring-supp-red focus:ring-2"
+                />
                 <button
                   type="button"
-                  onClick={() => void signOut()}
-                  className="w-full rounded-xl border border-black/10 py-2.5 text-sm font-semibold text-supp-ink"
+                  onClick={() => void loadAnimals(0, false)}
+                  className="rounded-xl bg-black px-3 py-2 text-xs font-semibold text-white"
                 >
-                  {t("signOut")}
+                  Go
                 </button>
               </div>
-            )}
-            {authMsg && (
-              <p className="mt-2 text-xs text-supp-muted">{authMsg}</p>
-            )}
-          </section>
+              <div className="grid max-h-48 grid-cols-6 gap-2 overflow-y-auto rounded-xl bg-[#f7f7f7] p-2">
+                {animals.map((a) => {
+                  const active = a.id === avatarAnimalId;
+                  return (
+                    <button
+                      key={a.id}
+                      type="button"
+                      title={a.nicknameHint}
+                      onClick={() => {
+                        setAvatarAnimalId(a.id);
+                        setAvatarPreview(a.path);
+                      }}
+                      className={`overflow-hidden rounded-full border-2 ${
+                        active ? "border-supp-red" : "border-transparent"
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={a.path} alt={a.nicknameHint} className="h-full w-full" />
+                    </button>
+                  );
+                })}
+              </div>
+              {animals.length < totalAnimals && (
+                <button
+                  type="button"
+                  disabled={loadingAnimals}
+                  onClick={() => void loadAnimals(animals.length, true)}
+                  className="mt-2 w-full rounded-xl border border-black/10 py-2 text-xs font-medium text-supp-ink"
+                >
+                  {t("loadMoreAvatars")}
+                </button>
+              )}
 
-          <section>
-            <h3 className="mb-2 text-sm font-semibold text-supp-ink">
-              {t("language")}
-            </h3>
-            <LanguageSwitcher onLocaleChange={onClose} />
-          </section>
-          <section>
-            <h3 className="mb-1 text-sm font-semibold text-supp-ink">
-              {t("currency")}
-            </h3>
-            <p className="mb-2 text-xs text-supp-muted">{t("currencyHint")}</p>
-            <CurrencySwitcher />
-          </section>
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => void saveProfile()}
+                className="mt-3 w-full rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+              >
+                {t("saveProfile")}
+              </button>
+              {savedMsg && (
+                <p className="mt-2 text-xs text-supp-muted">{savedMsg}</p>
+              )}
+            </section>
+          )}
+
+          {settingsTab === "account" && (
+            <section>
+              <p className="mb-3 text-xs text-supp-muted">{t("signInHint")}</p>
+
+              {user.isGuest ? (
+                <div className="space-y-3">
+                  {googleEnabled ? (
+                    <a
+                      href={`/api/auth/google?locale=${encodeURIComponent(locale)}`}
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-black/10 bg-white py-2.5 text-sm font-semibold text-supp-ink transition hover:bg-black/[0.03]"
+                    >
+                      <GoogleGlyph />
+                      {t("googleSignIn")}
+                    </a>
+                  ) : (
+                    <p className="text-[11px] text-supp-muted">
+                      {t("googleUnavailable")}
+                    </p>
+                  )}
+
+                  <div className="rounded-xl border border-black/8 bg-[#f7f7f7] p-3">
+                    <p className="text-xs font-semibold text-supp-ink">
+                      {t("passwordSignIn")}
+                    </p>
+                    <label className="mt-2 block text-xs text-supp-muted">
+                      {t("username")}
+                      <input
+                        value={loginUsername}
+                        onChange={(e) => setLoginUsername(e.target.value)}
+                        autoComplete="username"
+                        className="mt-1 w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
+                        placeholder="demo001"
+                      />
+                    </label>
+                    <label className="mt-2 block text-xs text-supp-muted">
+                      {t("password")}
+                      <input
+                        type="password"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        autoComplete="current-password"
+                        className="mt-1 w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
+                        placeholder="Demo001!"
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      disabled={
+                        authBusy ||
+                        !loginUsername.trim() ||
+                        !loginPassword.trim()
+                      }
+                      onClick={() => void submitPasswordLogin()}
+                      className="mt-3 w-full rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                    >
+                      {t("passwordSignInAction")}
+                    </button>
+                  </div>
+
+                  <label className="block text-xs text-supp-muted">
+                    {t("email")}
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm text-supp-ink outline-none ring-supp-red focus:ring-2"
+                    />
+                  </label>
+                  {!codeSent ? (
+                    <button
+                      type="button"
+                      disabled={authBusy || !email.trim()}
+                      onClick={() => void sendCode()}
+                      className="w-full rounded-xl bg-black py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                    >
+                      {t("sendCode")}
+                    </button>
+                  ) : (
+                    <>
+                      <label className="block text-xs text-supp-muted">
+                        {t("code")}
+                        <input
+                          value={code}
+                          onChange={(e) => setCode(e.target.value)}
+                          inputMode="numeric"
+                          maxLength={6}
+                          className="mt-1 w-full rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-2 text-sm tracking-[0.3em] text-supp-ink outline-none ring-supp-red focus:ring-2"
+                        />
+                      </label>
+                      {devCode && (
+                        <p className="rounded-lg bg-amber-50 px-2 py-1.5 font-mono text-xs text-amber-800">
+                          Dev code: {devCode}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        disabled={authBusy || code.trim().length < 6}
+                        onClick={() => void verifyCode()}
+                        className="w-full rounded-xl bg-black py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                      >
+                        {t("verifyCode")}
+                      </button>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-xs text-supp-muted">
+                    {user.email || user.authProvider}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => void signOut()}
+                    className="w-full rounded-xl border border-black/10 py-2.5 text-sm font-semibold text-supp-ink"
+                  >
+                    {t("signOut")}
+                  </button>
+                </div>
+              )}
+              {authMsg && (
+                <p className="mt-2 text-xs text-supp-muted">{authMsg}</p>
+              )}
+            </section>
+          )}
+
+          {settingsTab === "prefs" && (
+            <div className="space-y-5">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold text-supp-ink">
+                  {t("language")}
+                </h3>
+                <LanguageSwitcher onLocaleChange={onClose} />
+              </section>
+              <section>
+                <h3 className="mb-1 text-sm font-semibold text-supp-ink">
+                  {t("currency")}
+                </h3>
+                <p className="mb-2 text-xs text-supp-muted">{t("currencyHint")}</p>
+                <CurrencySwitcher />
+              </section>
+            </div>
+          )}
+
+          {settingsTab === "help" && (
+            <div className="space-y-5">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold text-supp-ink">
+                  {t("activitySection")}
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setActivityOpen(true)}
+                  className="flex w-full items-center justify-between rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-3 text-sm font-medium text-supp-ink transition hover:bg-black/[0.03]"
+                >
+                  <span>{t("myActivity")}</span>
+                  <span className="text-supp-muted" aria-hidden>
+                    →
+                  </span>
+                </button>
+                <p className="mt-1.5 text-[11px] text-supp-muted">
+                  {t("myActivityHint")}
+                </p>
+              </section>
+
+              <section>
+                <h3 className="mb-2 text-sm font-semibold text-supp-ink">
+                  {t("customerService")}
+                </h3>
+                <div className="space-y-2 rounded-xl border border-black/10 bg-[#f7f7f7] p-3">
+                  <a
+                    href="https://t.me/+6588023346"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start justify-between gap-3 text-sm text-supp-ink transition hover:opacity-80"
+                  >
+                    <span className="text-supp-muted">{t("contactTelegram")}</span>
+                    <span className="text-right font-medium">+65 88023346</span>
+                  </a>
+                  <a
+                    href="mailto:hola@supp.com"
+                    className="flex items-start justify-between gap-3 text-sm text-supp-ink transition hover:opacity-80"
+                  >
+                    <span className="text-supp-muted">{t("contactEmail")}</span>
+                    <span className="text-right font-medium">hola@supp.com</span>
+                  </a>
+                </div>
+              </section>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type ActivityItem = {
+  id: string;
+  type: "comment" | "like";
+  at: string;
+  ideaId: string;
+  ideaTitle: string;
+  ideaTitleZh: string;
+  body: string;
+  bodyZh: string;
+  commentId: string;
+};
+
+function formatActivityDate(iso: string, locale: string) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleString(locale.startsWith("zh") ? "zh-CN" : locale, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function MyActivitySheet({
+  onBack,
+  onClose,
+}: {
+  onBack: () => void;
+  onClose: () => void;
+}) {
+  const t = useTranslations("me");
+  const locale = useLocale();
+  const zh = locale === "zh";
+  const [items, setItems] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    void fetch("/api/me/activity")
+      .then((r) => r.json())
+      .then((data) => {
+        if (cancelled) return;
+        setItems(Array.isArray(data.items) ? data.items : []);
+      })
+      .catch(() => {
+        if (!cancelled) setItems([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+      <button
+        type="button"
+        className="absolute inset-0 bg-black/55"
+        aria-label={t("closeSettings")}
+        onClick={onClose}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="me-activity-title"
+        className="relative z-10 flex max-h-[90vh] w-full max-w-md flex-col rounded-t-2xl bg-white shadow-2xl sm:max-w-lg sm:rounded-2xl"
+      >
+        <div className="flex items-center justify-between border-b border-black/5 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onBack}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-supp-muted hover:bg-black/5 hover:text-supp-ink"
+              aria-label={t("activityBack")}
+            >
+              <span aria-hidden className="text-lg leading-none">
+                ←
+              </span>
+            </button>
+            <h2 id="me-activity-title" className="text-base font-semibold">
+              {t("myActivity")}
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-supp-muted hover:bg-black/5 hover:text-supp-ink"
+            aria-label={t("closeSettings")}
+          >
+            <CloseIcon className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto px-4 py-4">
+          {loading ? (
+            <p className="text-sm text-supp-muted">{t("activityLoading")}</p>
+          ) : items.length === 0 ? (
+            <p className="text-sm text-supp-muted">{t("activityEmpty")}</p>
+          ) : (
+            <ul className="space-y-3">
+              {items.map((item) => {
+                const title = zh ? item.ideaTitleZh : item.ideaTitle;
+                const body = (zh ? item.bodyZh : item.body).trim();
+                return (
+                  <li
+                    key={item.id}
+                    className="rounded-xl border border-black/8 bg-[#f7f7f7] p-3"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                          item.type === "like"
+                            ? "bg-supp-red/10 text-supp-red"
+                            : "bg-black/8 text-supp-ink"
+                        }`}
+                      >
+                        {item.type === "like"
+                          ? t("activityLike")
+                          : t("activityComment")}
+                      </span>
+                      <time
+                        dateTime={item.at}
+                        className="shrink-0 text-[11px] text-supp-muted"
+                      >
+                        {formatActivityDate(item.at, locale)}
+                      </time>
+                    </div>
+                    <p className="mt-2 text-xs font-semibold text-supp-ink">
+                      {title}
+                    </p>
+                    {body ? (
+                      <p className="mt-1 line-clamp-3 text-sm leading-relaxed text-supp-muted">
+                        {body}
+                      </p>
+                    ) : null}
+                    <Link
+                      href={`/ideas/${item.ideaId}`}
+                      onClick={onClose}
+                      className="mt-2 inline-block text-xs font-semibold text-supp-red"
+                    >
+                      {t("openIdea")}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>
     </div>

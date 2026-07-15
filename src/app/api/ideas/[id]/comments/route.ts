@@ -21,7 +21,7 @@ async function ideaExists(id: string) {
   return Boolean(getMockIdeaById(id));
 }
 
-function toClientComment(c: CommentRecord) {
+function toClientComment(c: CommentRecord, likedByMe = false) {
   return {
     id: c.id,
     ideaId: c.ideaId,
@@ -39,6 +39,7 @@ function toClientComment(c: CommentRecord) {
     postedAt: c.postedAt,
     images: c.images,
     likes: c.likes,
+    likedByMe,
   };
 }
 
@@ -48,13 +49,17 @@ export async function GET(
 ) {
   const { id } = await params;
   const stored = await listPublishedComments(id);
+  const sessionId = await getSessionUserId();
+  const me = sessionId ? await getUserById(sessionId) : null;
+  const likedSet = new Set(me?.likedCommentIds ?? []);
+
   const mock = getCommentsForIdea(id).map((c) => ({
     ...c,
-    likedByMe: false,
+    likedByMe: likedSet.has(c.id),
   }));
   const seen = new Set(stored.map((c) => c.id));
   const merged = [
-    ...stored.map(toClientComment),
+    ...stored.map((c) => toClientComment(c, likedSet.has(c.id))),
     ...mock.filter((c) => !seen.has(c.id)),
   ].sort(
     (a, b) =>
@@ -111,7 +116,7 @@ export async function POST(
       userId: sessionId || undefined,
       authorName: "blocked",
       authorNameZh: "blocked",
-      authorAvatar: "/images/avatar-1.png",
+      authorAvatar: "/avatars/default.svg",
       city: "",
       cityZh: "",
       country: "",
@@ -147,7 +152,7 @@ export async function POST(
     userId: user?.id,
     authorName: user?.name || "Guest",
     authorNameZh: user?.nameZh || user?.name || "访客",
-    authorAvatar: user?.avatar || "/images/avatar-1.png",
+    authorAvatar: user?.avatar || "/avatars/default.svg",
     city: user?.city || "Hong Kong",
     cityZh: user?.city || "香港",
     country: user?.country || "China",

@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     image: body.image || "/images/event-park.jpg",
     organizer: body.organizer || "Supp",
     organizerZh: body.organizerZh || "嘛呢",
-    organizerAvatar: body.organizerAvatar || "/images/avatar-1.png",
+    organizerAvatar: body.organizerAvatar || "/avatars/default.svg",
     experiencedCount: Number(body.experiencedCount) || 0,
     favoritedCount: Number(body.favoritedCount) || 0,
     participantCount: Number(body.participantCount) || 0,

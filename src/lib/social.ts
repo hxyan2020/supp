@@ -1,4 +1,5 @@
 import { listUsers, upsertUser, getUserById } from "@/lib/db";
+import { resolveAvatar } from "@/lib/avatar";
 import type { UserRecord } from "@/lib/types";
 
 export type SocialCard = {
@@ -30,7 +31,7 @@ function toCard(
     id: other.id,
     nickname: other.name,
     nicknameZh: other.nameZh,
-    avatar: other.avatar,
+    avatar: resolveAvatar(other.avatar),
     persona: other.persona,
     personaZh: other.personaZh,
     overlapCount,

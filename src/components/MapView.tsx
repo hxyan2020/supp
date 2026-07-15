@@ -31,6 +31,7 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
   const [nowMs, setNowMs] = useState(() => Date.now());
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [locateError, setLocateError] = useState(false);
+  const [locating, setLocating] = useState(true);
 
   const geoIdeas = useMemo(
     () =>
@@ -80,19 +81,89 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
     return () => window.clearInterval(id);
   }, []);
 
+  async function fallbackIpLocation() {
+    try {
+      const res = await fetch("/api/geo", { cache: "no-store" });
+      if (!res.ok) return false;
+      const data = (await res.json()) as { lat?: number; lng?: number };
+      if (!Number.isFinite(data.lat) || !Number.isFinite(data.lng)) return false;
+      setUserLocation({ lat: data.lat as number, lng: data.lng as number });
+      setLocateError(false);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function applyPosition(pos: GeolocationPosition) {
+    setUserLocation({
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+    });
+    setLocateError(false);
+    setLocating(false);
+  }
+
   useEffect(() => {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setUserLocation({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        });
-        setLocateError(false);
-      },
-      () => setLocateError(true),
-      { enableHighAccuracy: true, maximumAge: 60_000, timeout: 10_000 },
-    );
+    let watchId: number | null = null;
+    let cancelled = false;
+
+    async function start() {
+      setLocating(true);
+      if (!navigator.geolocation) {
+        const ok = await fallbackIpLocation();
+        if (!cancelled) {
+          setLocateError(!ok);
+          setLocating(false);
+        }
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          if (cancelled) return;
+          applyPosition(pos);
+        },
+        () => {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              if (cancelled) return;
+              applyPosition(pos);
+            },
+            () => {
+              void fallbackIpLocation().then((ok) => {
+                if (cancelled) return;
+                setLocateError(!ok);
+                setLocating(false);
+              });
+            },
+            {
+              enableHighAccuracy: false,
+              timeout: 12_000,
+              maximumAge: 120_000,
+            },
+          );
+        },
+        { enableHighAccuracy: true, timeout: 18_000, maximumAge: 30_000 },
+      );
+
+      watchId = navigator.geolocation.watchPosition(
+        (pos) => {
+          if (cancelled) return;
+          applyPosition(pos);
+        },
+        () => {
+          /* keep last good fix */
+        },
+        { enableHighAccuracy: true, maximumAge: 15_000, timeout: 20_000 },
+      );
+    }
+
+    void start();
+    return () => {
+      cancelled = true;
+      if (watchId != null) navigator.geolocation.clearWatch(watchId);
+    };
   }, []);
 
   const filtered = useMemo(() => {
@@ -119,20 +190,23 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
   }, [filtered, cardDismissed]);
 
   function requestLocate() {
+    setLocating(true);
     if (!navigator.geolocation) {
-      setLocateError(true);
+      void fallbackIpLocation().then((ok) => {
+        setLocateError(!ok);
+        setLocating(false);
+      });
       return;
     }
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setUserLocation({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+      (pos) => applyPosition(pos),
+      () => {
+        void fallbackIpLocation().then((ok) => {
+          setLocateError(!ok);
+          setLocating(false);
         });
-        setLocateError(false);
       },
-      () => setLocateError(true),
-      { enableHighAccuracy: true, timeout: 10_000 },
+      { enableHighAccuracy: true, timeout: 15_000, maximumAge: 0 },
     );
   }
 
@@ -144,9 +218,13 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
             lng: selected.lng,
           }),
         )
-      : locateError
-        ? t("distanceUnknown")
-        : t("distanceLocating");
+      : locating
+        ? t("distanceLocating")
+        : locateError
+          ? t("distanceUnknown")
+          : t("distanceLocating");
+
+  const L = selected ? localizedIdea(selected, locale) : null;
 
   return (
     <div className="relative h-[calc(100dvh-7.5rem)] overflow-hidden bg-[#e8e8e8] text-supp-ink">
@@ -195,80 +273,82 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
         </button>
       </div>
 
-      {selected && (
-        <div className="absolute inset-x-3 bottom-24 z-20 animate-fade-up rounded-2xl border border-white/10 bg-[#141414]/70 p-3 text-white shadow-xl backdrop-blur-sm">
+      {selected && L && (
+        <div className="absolute inset-x-3 bottom-24 z-20 animate-fade-up rounded-2xl border border-white/10 bg-[#141414]/75 p-2.5 text-white shadow-xl backdrop-blur-sm">
           <button
             type="button"
             onClick={() => {
               setCardDismissed(true);
               setSelected(null);
             }}
-            className="absolute end-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-sm leading-none text-white/80 transition hover:bg-black/60 hover:text-white"
+            className="absolute end-1.5 top-1.5 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/45 text-xs leading-none text-white/80 transition hover:bg-black/60 hover:text-white"
             aria-label={t("closeCard")}
           >
             ×
           </button>
-          <Link href={`/ideas/${selected.id}`} className="flex gap-3 pe-7">
-            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
+
+          <Link href={`/ideas/${selected.id}`} className="flex gap-2.5 pe-7">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg">
               <Image
                 src={selected.image}
                 alt=""
                 fill
                 className="object-cover"
-                sizes="64px"
+                sizes="48px"
               />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold">
-                {localizedIdea(selected, locale).title}
+              <p className="truncate text-[13px] font-semibold leading-tight">
+                {L.title}
               </p>
-              <p className="mt-0.5 truncate text-xs text-white/55">
-                {localizedIdea(selected, locale).address}
+              <p className="mt-0.5 truncate text-[11px] text-white/50">
+                {L.address}
               </p>
             </div>
           </Link>
 
-          <a
-            href={navigationUrl(selected, locale)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 flex w-full items-center justify-center rounded-xl bg-supp-red py-3 text-sm font-semibold text-white shadow-lg shadow-red-900/30 transition hover:bg-supp-red-dark"
-          >
-            {t("navigate")}
-          </a>
+          <div className="mt-2 flex items-end gap-2 border-t border-white/10 pt-2">
+            <div className="grid min-w-0 flex-1 grid-cols-3 gap-x-2 gap-y-1.5 text-[10px] text-white/80">
+              <MetaCompact
+                icon={<UsersIcon />}
+                label={t("experienced")}
+                value={String(selected.experiencedCount)}
+              />
+              <MetaCompact
+                icon={<BookmarkIcon />}
+                label={t("collected")}
+                value={String(selected.favoritedCount)}
+              />
+              <MetaCompact
+                icon={<TicketIcon />}
+                label={t("ticket")}
+                value={formatFee(selected.fee, currency, tIdea("free"))}
+              />
+              <MetaCompact
+                icon={<PinIcon />}
+                label={t("distance")}
+                value={distanceLabel}
+              />
+              <MetaCompact
+                icon={<BoltIcon />}
+                label={t("engagement")}
+                value={t(`engagementLevels.${engagementForIdea(selected)}`)}
+              />
+              <MetaCompact
+                icon={<ClockIcon />}
+                label={t("time")}
+                value={`${formatEventDate(selected.startsAt, locale)} · ${formatTimeRange(selected.startsAt, selected.endsAt, locale)}`}
+              />
+            </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-3 text-[11px] text-white/80">
-            <MetaRow
-              icon={<UsersIcon />}
-              label={t("experienced")}
-              value={String(selected.experiencedCount)}
-            />
-            <MetaRow
-              icon={<BookmarkIcon />}
-              label={t("collected")}
-              value={String(selected.favoritedCount)}
-            />
-            <MetaRow
-              icon={<TicketIcon />}
-              label={t("ticket")}
-              value={formatFee(selected.fee, currency, tIdea("free"))}
-            />
-            <MetaRow
-              icon={<PinIcon />}
-              label={t("distance")}
-              value={distanceLabel}
-            />
-            <MetaRow
-              icon={<BoltIcon />}
-              label={t("engagement")}
-              value={t(`engagementLevels.${engagementForIdea(selected)}`)}
-            />
-            <MetaRow
-              icon={<ClockIcon />}
-              label={t("time")}
-              value={`${formatEventDate(selected.startsAt, locale)} · ${formatTimeRange(selected.startsAt, selected.endsAt, locale)}`}
-              className="col-span-2"
-            />
+            <a
+              href={navigationUrl(selected, locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 self-end rounded-xl bg-supp-red px-3.5 py-2.5 text-xs font-semibold text-white shadow-md shadow-red-900/30 transition hover:bg-supp-red-dark"
+            >
+              {t("navigate")}
+            </a>
           </div>
         </div>
       )}
@@ -282,33 +362,29 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
   );
 }
 
-function MetaRow({
+function MetaCompact({
   icon,
   label,
   value,
-  className = "",
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
-  className?: string;
 }) {
   return (
-    <div className={`flex items-start gap-2 ${className}`}>
-      <span className="mt-0.5 text-supp-red">{icon}</span>
-      <div className="min-w-0">
-        <p className="text-[10px] uppercase tracking-wide text-white/40">
-          {label}
-        </p>
-        <p className="truncate font-medium text-white/90">{value}</p>
-      </div>
+    <div className="min-w-0">
+      <p className="flex items-center gap-1 text-[9px] uppercase tracking-wide text-white/40">
+        <span className="text-supp-red">{icon}</span>
+        {label}
+      </p>
+      <p className="truncate font-medium leading-tight text-white/90">{value}</p>
     </div>
   );
 }
 
 function UsersIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path strokeLinecap="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
       <circle cx="9" cy="7" r="3.5" />
       <path strokeLinecap="round" d="M22 21v-2a3.5 3.5 0 0 0-2.5-3.35M16.5 3.6a3.5 3.5 0 0 1 0 6.8" />
@@ -318,7 +394,7 @@ function UsersIcon() {
 
 function BookmarkIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path strokeLinecap="round" strokeLinejoin="round" d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1z" />
     </svg>
   );
@@ -326,7 +402,7 @@ function BookmarkIcon() {
 
 function TicketIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 0 0 2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 0 2 2v6a2 2 0 0 0-2 2v1a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2V9z" />
       <path strokeLinecap="round" d="M10 8v8M14 8v8" />
     </svg>
@@ -335,7 +411,7 @@ function TicketIcon() {
 
 function PinIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11z" />
       <circle cx="12" cy="10" r="2.2" />
     </svg>
@@ -344,7 +420,7 @@ function PinIcon() {
 
 function ClockIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <circle cx="12" cy="12" r="8.5" />
       <path strokeLinecap="round" d="M12 7.5V12l3 2" />
     </svg>
@@ -353,7 +429,7 @@ function ClockIcon() {
 
 function BoltIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path strokeLinecap="round" strokeLinejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
     </svg>
   );

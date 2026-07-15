@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
+import { resolveAvatar } from "@/lib/avatar";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { localizedIdea, type Idea } from "@/data/mock-ideas";
@@ -68,7 +69,7 @@ export function IdeaMap({
         <Marker
           key={idea.id}
           position={[idea.lat, idea.lng]}
-          icon={createAvatarIcon(idea.organizerAvatar)}
+          icon={createAvatarIcon(resolveAvatar(idea.organizerAvatar))}
           eventHandlers={{
             click: () => onSelect(idea),
           }}

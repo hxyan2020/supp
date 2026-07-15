@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { UserAvatar } from "@/components/UserAvatar";
 import {
   formatCommentTime,
   type IdeaComment,
@@ -31,6 +32,20 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
   const [composerOpen, setComposerOpen] = useState(false);
   const [posting, setPosting] = useState(false);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function showToast(message: string) {
+    setToast(message);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(""), 2000);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,10 +77,13 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
   }
 
   function toggleLike(id: string) {
+    const target = comments.find((c) => c.id === id);
+    if (!target) return;
+    const liked = !target.likedByMe;
+    const prevLikes = target.likes;
     setComments((list) =>
       list.map((c) => {
         if (c.id !== id) return c;
-        const liked = !c.likedByMe;
         return {
           ...c,
           likedByMe: liked,
@@ -73,6 +91,36 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
         };
       }),
     );
+    if (liked) showToast(t("toastLiked"));
+
+    void fetch(`/api/ideas/${ideaId}/comments/${id}/like`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ active: liked }),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || "Failed");
+        if (typeof data.likes === "number") {
+          setComments((list) =>
+            list.map((c) =>
+              c.id === id
+                ? { ...c, likes: data.likes, likedByMe: Boolean(data.liked) }
+                : c,
+            ),
+          );
+        }
+      })
+      .catch(() => {
+        setComments((list) =>
+          list.map((c) =>
+            c.id === id
+              ? { ...c, likedByMe: !liked, likes: prevLikes }
+              : c,
+          ),
+        );
+        showToast(t("toastFailed"));
+      });
   }
 
   async function onPickImages(files: FileList | null) {
@@ -138,6 +186,7 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
       setDraftImages([]);
       setReplyTo(null);
       setComposerOpen(false);
+      showToast(t("toastCommented"));
     } catch {
       setError(t("toastFailed"));
     } finally {
@@ -157,6 +206,14 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
 
   return (
     <section className="rounded-2xl bg-white/5 p-4">
+      {toast && (
+        <div
+          role="status"
+          className="fixed inset-x-4 bottom-24 z-50 mx-auto max-w-md animate-fade-up rounded-2xl bg-black/90 px-4 py-3 text-center text-sm font-medium text-white shadow-xl backdrop-blur-sm"
+        >
+          {toast}
+        </div>
+      )}
       <h2 className="text-sm font-semibold">{t("comments")}</h2>
 
       {loading ? (
@@ -339,22 +396,10 @@ function CommentCard({
         >
           {comment.authorUserId ? (
             <Link href={`/users/${comment.authorUserId}`} className="absolute inset-0">
-              <Image
-                src={comment.authorAvatar}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="40px"
-              />
+              <UserAvatar src={comment.authorAvatar} />
             </Link>
           ) : (
-            <Image
-              src={comment.authorAvatar}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="40px"
-            />
+            <UserAvatar src={comment.authorAvatar} />
           )}
         </div>
         <div className="min-w-0 flex-1">
@@ -406,12 +451,16 @@ function CommentCard({
             <button
               type="button"
               onClick={onLike}
-              className={`text-[11px] font-medium ${
+              aria-label={t("like")}
+              aria-pressed={comment.likedByMe}
+              className={`inline-flex items-center gap-1 text-[11px] font-medium ${
                 comment.likedByMe ? "text-supp-red" : "text-white/55"
               }`}
             >
-              {t("like")}
-              {comment.likes > 0 ? ` · ${comment.likes}` : ""}
+              <HeartIcon filled={comment.likedByMe} />
+              {comment.likes > 0 ? (
+                <span className="tabular-nums">{comment.likes}</span>
+              ) : null}
             </button>
             <button
               type="button"
@@ -424,5 +473,25 @@ function CommentCard({
         </div>
       </div>
     </div>
+  );
+}
+
+function HeartIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 7.5a3.8 3.8 0 0 1 7 3.3C19 15.6 12 20 12 20z"
+      />
+    </svg>
   );
 }

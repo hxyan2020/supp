@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Supp",
-    "tagline": "Ваш первый удивительный опыт"
+    "tagline": "Ваш первый удивительный опыт",
+    "slogan": "Life begins where fear ends."
   },
   "nav": {
     "explore": "Обзор",
@@ -144,6 +145,9 @@
     "soulReportClose": "Close",
     "soulReportFailed": "Couldn’t generate the image — try again",
     "soulReportShareText": "{name}'s Interesting Soul Report on Supp",
+    "soulReportNeedActivityTitle": "Collect or experience first",
+    "soulReportNeedActivity": "Mark at least one idea as experienced or collect one — then you can generate your Interesting Soul Report.",
+    "soulReportGoExplore": "Go explore",
     "personaTitle": "You are a {persona}",
     "joinedTitle": "Experiences I've joined",
     "joinedHint": "*Show this screen on the day to check in",
@@ -153,6 +157,22 @@
     "language": "Language",
     "settings": "Настройки",
     "closeSettings": "Закрыть настройки",
+    "settingsTabProfile": "Profile",
+    "settingsTabAccount": "Account",
+    "settingsTabPrefs": "Prefs",
+    "settingsTabHelp": "Help",
+    "activitySection": "Activity",
+    "myActivity": "My activity",
+    "myActivityHint": "Your comment likes and posts, with dates",
+    "activityBack": "Back to settings",
+    "activityLoading": "Loading activity…",
+    "activityEmpty": "No likes or comments yet",
+    "activityLike": "Liked",
+    "activityComment": "Commented",
+    "customerService": "Customer service",
+    "contactUs": "Contact us",
+    "contactTelegram": "Telegram",
+    "contactEmail": "Email",
     "currency": "Валюта",
     "currencyHint": "Для цен билетов на карте",
     "guestBadge": "Browsing as guest",
@@ -187,6 +207,8 @@
     "personaUpdated": "Persona updated",
     "collected": "collected",
     "collectedTitle": "Ideas collected",
+    "ideasTotalLabel": "Ideas in catalog",
+    "ideasTotal": "{count} ideas",
     "collectedCount": "{count} collected",
     "experiencedTitle": "Ideas experienced",
     "experiencedCountLabel": "{count} experienced",
@@ -234,6 +256,8 @@
     "socialMedia": "Social media",
     "socialEmpty": "No video linked yet.",
     "watchVideo": "Watch the video",
+    "openOriginal": "Open",
+    "watchOnPlatform": "Watch on {platform}",
     "platforms": {
       "tiktok": "TikTok",
       "instagram": "Instagram",
@@ -245,6 +269,8 @@
     "notFound": "Idea not found",
     "experiencedBy": "Кто уже прошёл",
     "like": "Like",
+    "toastLiked": "Liked",
+    "toastCommented": "Comment posted",
     "reply": "Reply",
     "addImages": "Add photos",
     "removeImage": "Remove photo",
@@ -259,6 +285,16 @@
     "toastCollectOn": "Added to your collection",
     "toastCollectOff": "Removed from collection",
     "toastShared": "Shared (or link copied)",
+    "shareSheetTitle": "Share this idea",
+    "shareCopyLink": "Copy link",
+    "shareCopied": "Link copied",
+    "shareWhatsApp": "WhatsApp",
+    "shareX": "X",
+    "shareFacebook": "Facebook",
+    "shareTelegram": "Telegram",
+    "shareWeibo": "Weibo",
+    "shareMore": "More",
+    "shareCancel": "Cancel",
     "toastClaimedOn": "You claimed this idea — host it and earn",
     "toastClaimedOff": "Claim removed",
     "toastFailed": "Something went wrong — try again",
@@ -319,70 +355,86 @@
       "intense": "Intense"
     },
     "steps": {
-      "title": {
-        "title": "Idea name",
-        "hint": "Name the experience. We’ll check for similar ideas as you type."
+      "basics": {
+        "title": "Basics",
+        "hint": "Name your idea and add a short summary. We\\u2019ll check for similar ideas as you type."
       },
-      "summary": {
-        "title": "Short summary",
-        "hint": "A single sentence for cards and search."
+      "story": {
+        "title": "Story",
+        "hint": "Describe the experience and add a practical tip. AI can draft the description."
       },
-      "description": {
-        "title": "Description",
-        "hint": "Tell the story. Use AI if you need a draft."
+      "place": {
+        "title": "Place",
+        "hint": "Where people should go."
       },
-      "tip": {
-        "title": "Tip",
-        "hint": "One practical tip for people who try it."
+      "details": {
+        "title": "Details",
+        "hint": "Timing, duration, fee, and weather fit."
       },
-      "location": {
-        "title": "Location name",
-        "hint": "The place nickname people will recognize."
+      "vibe": {
+        "title": "Vibe",
+        "hint": "Categories and the feeling this experience tends to create."
       },
-      "address": {
-        "title": "Address",
-        "hint": "Where to go on a map."
-      },
-      "city": {
-        "title": "City & country",
-        "hint": "Where this experience lives."
-      },
-      "when": {
-        "title": "When",
-        "hint": "Time of day or schedule label."
-      },
-      "duration": {
-        "title": "Duration (minutes)",
-        "hint": "Rough time people should set aside."
-      },
-      "fee": {
-        "title": "Fee",
-        "hint": "0 for free. Amount in local currency units."
-      },
-      "categories": {
-        "title": "Categories",
-        "hint": "Pick one or more that fit."
-      },
-      "sensation": {
-        "title": "Sensation",
-        "hint": "How the experience tends to feel."
-      },
-      "steps": {
-        "title": "Steps",
-        "hint": "How to do it, one step per line. AI can help."
-      },
-      "needs": {
-        "title": "What you need",
-        "hint": "Tools or materials, one per line."
+      "howto": {
+        "title": "How to",
+        "hint": "Steps to follow and what to bring. AI can help with steps."
       },
       "cover": {
-        "title": "Cover photo",
-        "hint": "Upload or leave blank for an auto library cover."
+        "title": "Cover",
+        "hint": "Upload a photo or leave blank for an auto library cover."
       },
-      "review": {
-        "title": "Review & submit",
-        "hint": "Check once, then submit for screening."
+      "terms": {
+        "title": "Terms",
+        "hint": "Agree to the rules, then submit for screening."
       }
-    }
+    },
+    "termsRequired": "Please agree to the terms before submitting.",
+    "termsIntro": "Before publishing, please review and accept our community terms. Ideas that break the rules may be removed.",
+    "termsLinkLabel": "Read the full terms",
+    "termsAgree": "I have read and agree to the Terms of Use for sharing experience ideas.",
+    "quickReview": "Quick review",
+    "fieldTitle": "Title",
+    "fieldSummary": "Summary",
+    "fieldDescription": "Description",
+    "fieldTip": "Tip",
+    "fieldLocation": "Location",
+    "fieldAddress": "Address",
+    "fieldCity": "City",
+    "fieldCountry": "Country",
+    "fieldWhen": "When",
+    "fieldDuration": "Duration (minutes)",
+    "fieldFee": "Fee",
+    "fieldWeather": "Weather",
+    "fieldCategories": "Categories",
+    "fieldSensation": "Sensation",
+    "fieldSteps": "Steps",
+    "fieldNeeds": "What you need"
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "updated": "Last updated: July 2026",
+    "back": "Back",
+    "sections": [
+      {
+        "heading": "Sharing experience ideas",
+        "body": "Supp lets you publish ideas for real-world experiences. By submitting content, you confirm that you have the right to share it and that it is offered in good faith for others to try safely and respectfully."
+      },
+      {
+        "heading": "Community standards",
+        "body": "Do not post illegal activity, hate, harassment, sexual content involving minors, or instructions that could cause serious harm. Ideas that promote scams, discrimination, or invasion of privacy may be removed without notice."
+      },
+      {
+        "heading": "Safety & responsibility",
+        "body": "You are responsible for your own actions when trying or hosting an experience. Follow local laws, respect private property, and never pressure others into something they are uncomfortable with. Supp does not guarantee the accuracy or safety of user-submitted ideas."
+      },
+      {
+        "heading": "Moderation",
+        "body": "We may screen, edit, hide, or remove ideas that break these terms or our community guidelines. Repeated violations may lead to account restrictions."
+      },
+      {
+        "heading": "Contact",
+        "body": "If you have questions about these terms or need to report content, reach out through the support options in the Me section of the app."
+      }
+    ]
   }
 }

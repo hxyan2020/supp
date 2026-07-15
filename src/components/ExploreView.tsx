@@ -36,9 +36,17 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
     [ideas],
   );
 
-  const visibleCount = Math.min((batchIndex + 1) * BATCH_SIZE, ranked.length);
-  const visibleIdeas = ranked.slice(0, visibleCount);
-  const hasMore = visibleCount < ranked.length;
+  const batchCount = Math.max(1, Math.ceil(ranked.length / BATCH_SIZE));
+  const visibleIdeas = useMemo(() => {
+    if (!ranked.length) return [];
+    const start = (batchIndex % batchCount) * BATCH_SIZE;
+    const slice = ranked.slice(start, start + BATCH_SIZE);
+    if (slice.length >= BATCH_SIZE || ranked.length <= slice.length) return slice;
+    // Wrap leftovers so every batch stays full when possible
+    return [...slice, ...ranked.slice(0, BATCH_SIZE - slice.length)];
+  }, [ranked, batchIndex, batchCount]);
+
+  const listSwipeStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 30_000);
@@ -89,11 +97,6 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
     year: "numeric",
     month: "long",
     day: "numeric",
-    weekday: "long",
-  });
-  const timeLabel = now.toLocaleTimeString(locale, {
-    hour: "numeric",
-    minute: "2-digit",
   });
 
   const weatherLabel = brief?.weatherKey
@@ -113,7 +116,6 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
   const briefParts = buildBriefParts({
     greeting: greetingForHour(now.getHours(), t),
     dateLabel,
-    timeLabel,
     placeLabel,
     weatherLabel,
     historyEvent: brief?.historyEvent ?? null,
@@ -122,7 +124,7 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
   });
 
   function loadNextBatch() {
-    if (!hasMore) return;
+    if (!ranked.length) return;
     setBatchIndex((i) => i + 1);
     setSwipeHint(true);
     window.setTimeout(() => setSwipeHint(false), 900);
@@ -133,19 +135,34 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
     action: "experienced" | "favorite",
     next: boolean,
   ) {
+    const idea = ranked.find((i) => i.id === ideaId);
     if (action === "experienced") {
       setExperienced((s) => ({ ...s, [ideaId]: next }));
     } else {
       setFavorited((s) => ({ ...s, [ideaId]: next }));
     }
     try {
-      await fetch("/api/me/idea-actions", {
+      const res = await fetch("/api/me/idea-actions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ideaId, action, active: next }),
       });
+      if (!res.ok) throw new Error("failed");
+      if (idea) {
+        const { notifyMeListsChanged } = await import("@/lib/me-lists-sync");
+        notifyMeListsChanged({
+          action,
+          active: next,
+          idea,
+          at: next && action === "experienced" ? new Date().toISOString() : undefined,
+        });
+      }
     } catch {
-      // optimistic UI kept
+      if (action === "experienced") {
+        setExperienced((s) => ({ ...s, [ideaId]: !next }));
+      } else {
+        setFavorited((s) => ({ ...s, [ideaId]: !next }));
+      }
     }
   }
 
@@ -178,7 +195,19 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
           )}
         </div>
 
-        <ul className="mt-5 space-y-5 overflow-x-hidden px-1 pb-2">
+        <ul
+          className="mt-5 space-y-5 overflow-x-hidden px-1 pb-2 touch-pan-y"
+          onTouchStart={(e) => {
+            listSwipeStartX.current = e.changedTouches[0]?.clientX ?? null;
+          }}
+          onTouchEnd={(e) => {
+            const start = listSwipeStartX.current;
+            const end = e.changedTouches[0]?.clientX;
+            listSwipeStartX.current = null;
+            if (start == null || end == null) return;
+            if (end - start > 56) loadNextBatch();
+          }}
+        >
           {visibleIdeas.map((idea, index) => {
             const L = localizedIdea(idea, locale);
             const done = !!experienced[idea.id];
@@ -189,7 +218,7 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
 
             return (
               <li
-                key={idea.id}
+                key={`${idea.id}-${batchIndex}`}
                 className="origin-center transition-transform duration-300 hover:z-10 hover:rotate-0 hover:scale-[1.02]"
                 style={scatter}
               >
@@ -208,20 +237,22 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
                         {L.title}
                       </p>
                     </Link>
-                    <div className="mt-3 flex items-center justify-between gap-2">
-                      <p className="text-[11px] text-white/75">
+                    <div className="mt-3.5 space-y-2.5">
+                      <p className="text-[11px] leading-snug text-white/75">
                         {t("experiencedCount", { count: experiencedCount })}
                         <span className="mx-1.5 text-white/35">|</span>
                         {t("favoritedCount", { count: favoritedCount })}
                       </p>
-                      <div className="flex shrink-0 items-center gap-3">
+                      <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() =>
                             void toggleAction(idea.id, "experienced", !done)
                           }
-                          className={`flex items-center gap-1 text-[11px] ${
-                            done ? "text-supp-red" : "text-white/70"
+                          className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-[13px] font-semibold transition ${
+                            done
+                              ? "bg-white text-black"
+                              : "bg-white/10 text-white/85"
                           }`}
                         >
                           <CheckIcon filled={done} />
@@ -232,8 +263,10 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
                           onClick={() =>
                             void toggleAction(idea.id, "favorite", !saved)
                           }
-                          className={`flex items-center gap-1 text-[11px] ${
-                            saved ? "text-supp-red" : "text-white/70"
+                          className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-[13px] font-semibold transition ${
+                            saved
+                              ? "bg-supp-red text-white"
+                              : "bg-white/10 text-white/85"
                           }`}
                         >
                           <HeartIcon filled={saved} />
@@ -249,15 +282,11 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         </ul>
 
         <div className="mt-6 space-y-4 text-center">
-          {hasMore ? (
-            <SwipeLoadMore
-              label={t("swipeLoadMore")}
-              hintActive={swipeHint}
-              onSwipeRight={loadNextBatch}
-            />
-          ) : (
-            <p className="text-[12px] text-white/55">{t("noMoreIdeas")}</p>
-          )}
+          <SwipeLoadMore
+            label={t("swipeLoadMore")}
+            hintActive={swipeHint}
+            onSwipeRight={loadNextBatch}
+          />
 
           <Link
             href="/explore/search"
@@ -328,7 +357,6 @@ function greetingForHour(hour: number, t: (key: string) => string) {
 function buildBriefParts({
   greeting,
   dateLabel,
-  timeLabel,
   placeLabel,
   weatherLabel,
   historyEvent,
@@ -337,7 +365,6 @@ function buildBriefParts({
 }: {
   greeting: string;
   dateLabel: string;
-  timeLabel: string;
   placeLabel: string | null;
   weatherLabel: string | null;
   historyEvent: string | null;
@@ -349,8 +376,6 @@ function buildBriefParts({
     { text: t("briefTodayIs") },
     { text: " " },
     { text: dateLabel, accent: true },
-    { text: t("briefComma") },
-    { text: timeLabel, accent: true },
     { text: t("briefPeriod") },
   ];
 
@@ -371,6 +396,7 @@ function buildBriefParts({
   }
 
   if (historyEvent) {
+    const eventText = stripTrailingPunctuation(historyEvent);
     parts.push({ text: " " });
     parts.push({ text: t("briefOnThisDay") });
     parts.push({ text: " " });
@@ -378,7 +404,7 @@ function buildBriefParts({
       parts.push({ text: String(historyYear), accent: true });
       parts.push({ text: ": " });
     }
-    parts.push({ text: historyEvent, accent: true });
+    parts.push({ text: eventText, accent: true });
     parts.push({ text: t("briefPeriod") });
   }
 
@@ -388,14 +414,24 @@ function buildBriefParts({
   return parts;
 }
 
+function stripTrailingPunctuation(text: string) {
+  return text.replace(/[.。！？!?…]+$/u, "").trim();
+}
+
 function CheckIcon({ filled }: { filled: boolean }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="12" cy="12" r="8.5" fill={filled ? "currentColor" : "none"} />
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={filled ? 2.4 : 2}
+    >
+      <circle cx="12" cy="12" r="8.5" />
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        stroke={filled ? "#141414" : "currentColor"}
         d="m8.5 12.2 2.3 2.3 4.7-4.8"
       />
     </svg>
@@ -405,12 +441,12 @@ function CheckIcon({ filled }: { filled: boolean }) {
 function HeartIcon({ filled }: { filled: boolean }) {
   return (
     <svg
-      width="14"
-      height="14"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2"
     >
       <path
         strokeLinecap="round"

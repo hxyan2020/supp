@@ -57,7 +57,7 @@ export async function POST(
     image: body.image || scraped.imageUrl || "/images/event-park.jpg",
     organizer: body.organizer || scraped.organizer || "Supp",
     organizerZh: body.organizerZh || "嘛呢",
-    organizerAvatar: "/images/avatar-1.png",
+    organizerAvatar: "/avatars/default.svg",
     experiencedCount: 0,
     favoritedCount: 0,
     participantCount: 0,

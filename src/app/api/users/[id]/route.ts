@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getUserById, getUserByUsername } from "@/lib/db";
 import { ensureSessionUser } from "@/lib/user-auth";
 import { getSimilarSouls } from "@/lib/social";
+import { resolveAvatar } from "@/lib/avatar";
+import { mockExperiencedUsers } from "@/data/mock-ideas";
 
 export async function GET(
   _req: Request,
@@ -11,8 +13,41 @@ export async function GET(
   const me = await ensureSessionUser();
   const user =
     (await getUserById(id)) || (await getUserByUsername(id));
+
+  // Soft stub for seed/demo avatar chips so profile pages still open
   if (!user || user.status !== "active") {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const stub = mockExperiencedUsers.find((u) => u.id === id);
+    if (!stub) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    return NextResponse.json({
+      profile: {
+        id: stub.id,
+        nickname: stub.name,
+        nicknameZh: stub.nameZh,
+        avatar: resolveAvatar(stub.avatar),
+        persona: "",
+        personaZh: "",
+        personaDesc: "",
+        personaDescZh: "",
+        personaAvatar: null,
+        personaUnlocked: false,
+        personaRoleId: null,
+        experienced: 0,
+        favorited: 0,
+        percentile: 0,
+        favoritedIds: [],
+        experiencedIds: [],
+        experiencedAt: {},
+        followerCount: 0,
+        followingCount: 0,
+        overlapCount: 0,
+        commonIdeaIds: [],
+        isFollowing: false,
+        isSelf: false,
+        similar: [],
+      },
+    });
   }
 
   const myIdeas = new Set([
@@ -37,7 +72,7 @@ export async function GET(
       id: user.id,
       nickname: user.name,
       nicknameZh: user.nameZh,
-      avatar: user.avatar,
+      avatar: resolveAvatar(user.avatar),
       persona: user.persona,
       personaZh: user.personaZh,
       personaDesc: user.personaDesc ?? "",
@@ -63,7 +98,7 @@ export async function GET(
           id: s.id,
           nickname: s.nickname,
           nicknameZh: s.nicknameZh,
-          avatar: s.avatar,
+          avatar: resolveAvatar(s.avatar),
           persona: s.persona,
           personaZh: s.personaZh,
           overlapCount: s.overlapCount,

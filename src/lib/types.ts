@@ -89,6 +89,10 @@ export type UserRecord = {
   experiencedIds: string[];
   /** ISO timestamps for when an idea was marked experienced (for month grouping) */
   experiencedAt?: Record<string, string>;
+  /** Comment ids this user liked */
+  likedCommentIds?: string[];
+  /** ISO timestamps for when a comment was liked */
+  likedCommentAt?: Record<string, string>;
   joinedIds: string[];
   /** Users this account follows */
   followingIds?: string[];

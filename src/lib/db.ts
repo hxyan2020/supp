@@ -340,3 +340,57 @@ export async function addComment(
   await writeDb(db);
   return comment;
 }
+
+export async function getCommentById(
+  commentId: string,
+): Promise<CommentRecord | undefined> {
+  const db = await readDb();
+  return db.comments.find((c) => c.id === commentId);
+}
+
+export async function listCommentsByUser(
+  userId: string,
+): Promise<CommentRecord[]> {
+  const db = await readDb();
+  return db.comments.filter(
+    (c) => c.userId === userId && c.status === "published",
+  );
+}
+
+/** Toggle comment like for a user; updates user + comment like count. */
+export async function setCommentLiked(
+  userId: string,
+  commentId: string,
+  active: boolean,
+): Promise<{ user: UserRecord; comment: CommentRecord } | null> {
+  const db = await readDb();
+  const userIdx = db.users.findIndex((u) => u.id === userId);
+  const commentIdx = db.comments.findIndex((c) => c.id === commentId);
+  if (userIdx < 0 || commentIdx < 0) return null;
+
+  const user = db.users[userIdx];
+  const comment = db.comments[commentIdx];
+  if (comment.status !== "published") return null;
+
+  const ids = new Set(user.likedCommentIds ?? []);
+  const at = { ...(user.likedCommentAt ?? {}) };
+  const wasLiked = ids.has(commentId);
+
+  if (active && !wasLiked) {
+    ids.add(commentId);
+    at[commentId] = new Date().toISOString();
+    comment.likes += 1;
+  } else if (!active && wasLiked) {
+    ids.delete(commentId);
+    delete at[commentId];
+    comment.likes = Math.max(0, comment.likes - 1);
+  }
+
+  user.likedCommentIds = [...ids];
+  user.likedCommentAt = at;
+  user.updatedAt = new Date().toISOString();
+  db.users[userIdx] = user;
+  db.comments[commentIdx] = comment;
+  await writeDb(db);
+  return { user, comment };
+}

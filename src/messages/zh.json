@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "嘛呢",
-    "tagline": "探索你的第一次奇妙体验"
+    "tagline": "探索你的第一次奇妙体验",
+    "slogan": "生命始于恐惧消散之处。"
   },
   "nav": {
     "explore": "探索",
@@ -145,6 +146,9 @@
     "soulReportClose": "关闭",
     "soulReportFailed": "生成失败，请再试一次",
     "soulReportShareText": "{name} 的《有趣的灵魂报告》· 嘛呢",
+    "soulReportNeedActivityTitle": "先体验或收藏一个点子",
+    "soulReportNeedActivity": "请至少体验或收藏 1 个点子后，再生成《有趣的灵魂报告》。",
+    "soulReportGoExplore": "去逛逛",
     "personaTitle": "你是{persona}",
     "personaLockedTitle": "角色尚未解锁",
     "personaLockedDesc": "收藏或体验一个想法后，系统会为你匹配专属角色。",
@@ -157,6 +161,22 @@
     "language": "语言",
     "settings": "设置",
     "closeSettings": "关闭设置",
+    "settingsTabProfile": "资料",
+    "settingsTabAccount": "账号",
+    "settingsTabPrefs": "偏好",
+    "settingsTabHelp": "帮助",
+    "activitySection": "动态",
+    "myActivity": "我的动态",
+    "myActivityHint": "查看你的点赞与评论，含日期",
+    "activityBack": "返回设置",
+    "activityLoading": "加载中…",
+    "activityEmpty": "暂无点赞或评论",
+    "activityLike": "点赞",
+    "activityComment": "评论",
+    "customerService": "客服",
+    "contactUs": "联系我们",
+    "contactTelegram": "Telegram",
+    "contactEmail": "邮箱",
     "currency": "货币",
     "currencyHint": "用于地图上的票价显示",
     "guestBadge": "游客浏览中",
@@ -188,6 +208,8 @@
     "authError": "登录失败",
     "collected": "已收藏",
     "collectedTitle": "已收藏的想法",
+    "ideasTotalLabel": "想法库总数",
+    "ideasTotal": "共 {count} 个",
     "collectedCount": "共 {count} 个",
     "experiencedTitle": "已体验的想法",
     "experiencedCountLabel": "共 {count} 个",
@@ -234,6 +256,8 @@
     "socialMedia": "社交媒体",
     "socialEmpty": "暂未关联视频。",
     "watchVideo": "观看视频",
+    "openOriginal": "打开",
+    "watchOnPlatform": "在 {platform} 观看",
     "platforms": {
       "tiktok": "抖音 / TikTok",
       "instagram": "Instagram",
@@ -245,6 +269,8 @@
     "notFound": "未找到该点子",
     "experiencedBy": "体验过的人",
     "like": "赞",
+    "toastLiked": "点赞成功",
+    "toastCommented": "评论发布成功",
     "reply": "回复",
     "addImages": "添加图片",
     "removeImage": "移除图片",
@@ -259,6 +285,16 @@
     "toastCollectOn": "已加入收藏",
     "toastCollectOff": "已取消收藏",
     "toastShared": "已分享（或复制链接）",
+    "shareSheetTitle": "分享这个点子",
+    "shareCopyLink": "复制链接",
+    "shareCopied": "链接已复制",
+    "shareWhatsApp": "WhatsApp",
+    "shareX": "X",
+    "shareFacebook": "Facebook",
+    "shareTelegram": "Telegram",
+    "shareWeibo": "微博",
+    "shareMore": "更多",
+    "shareCancel": "取消",
     "toastClaimedOn": "你已认领这个点子，可以举办活动赚钱",
     "toastClaimedOff": "已取消认领",
     "toastFailed": "操作失败，请再试一次",
@@ -296,6 +332,27 @@
     "similarHint": "点开查看详情，避免重复已有点子。",
     "searching": "检索中…",
     "reviewNote": "提交后会进行敏感内容筛查。",
+    "termsRequired": "提交前请先同意条款。",
+    "termsIntro": "发布前请阅读并接受社区条款。违反规则的点子可能会被移除。",
+    "termsLinkLabel": "阅读完整条款",
+    "termsAgree": "我已阅读并同意体验点子分享的使用条款。",
+    "quickReview": "快速核对",
+    "fieldTitle": "标题",
+    "fieldSummary": "简介",
+    "fieldDescription": "描述",
+    "fieldTip": "小贴士",
+    "fieldLocation": "地点",
+    "fieldAddress": "地址",
+    "fieldCity": "城市",
+    "fieldCountry": "国家/地区",
+    "fieldWhen": "时间",
+    "fieldDuration": "时长（分钟）",
+    "fieldFee": "费用",
+    "fieldWeather": "天气",
+    "fieldCategories": "分类",
+    "fieldSensation": "感受",
+    "fieldSteps": "步骤",
+    "fieldNeeds": "你需要准备",
     "placeholders": {
       "title": "例如：将耳机音量调小偷听旁人谈话",
       "summary": "一句话概括",
@@ -316,23 +373,42 @@
       "intense": "强烈"
     },
     "steps": {
-      "title": { "title": "点子名称", "hint": "为体验命名。输入时会自动检索相似点子。" },
-      "summary": { "title": "一句话简介", "hint": "用于卡片与搜索的短句。" },
-      "description": { "title": "描述", "hint": "讲清楚故事。可用 AI 生成草稿。" },
-      "tip": { "title": "小贴士", "hint": "给尝试者的实用提醒。" },
-      "location": { "title": "地点名称", "hint": "大家会认的地方叫法。" },
-      "address": { "title": "地址", "hint": "方便导航的地址。" },
-      "city": { "title": "城市与国家", "hint": "体验所在地。" },
-      "when": { "title": "时间", "hint": "时段或简短排期说明。" },
-      "duration": { "title": "时长（分钟）", "hint": "大概需要多少时间。" },
-      "fee": { "title": "费用", "hint": "免费填 0。" },
-      "categories": { "title": "分类", "hint": "选一个或多个。" },
-      "sensation": { "title": "感受", "hint": "体验大致给人的情绪。" },
-      "steps": { "title": "步骤", "hint": "怎么做，每行一步。可用 AI。" },
-      "needs": { "title": "你需要准备", "hint": "工具/材料，每行一项。" },
-      "cover": { "title": "封面图", "hint": "可上传；不传则系统固定分配一张。" },
-      "review": { "title": "确认并提交", "hint": "检查后提交，进入内容筛查。" }
+      "basics": { "title": "基础信息", "hint": "为体验命名并写一句话简介。输入时会自动检索相似点子。" },
+      "story": { "title": "故事", "hint": "描述体验并添加实用提醒。可用 AI 生成描述草稿。" },
+      "place": { "title": "地点", "hint": "人们该去哪里。" },
+      "details": { "title": "细节", "hint": "时间、时长、费用与适合天气。" },
+      "vibe": { "title": "氛围", "hint": "分类，以及体验大致给人的感受。" },
+      "howto": { "title": "怎么做", "hint": "步骤与需要准备的物品。可用 AI 生成步骤。" },
+      "cover": { "title": "封面", "hint": "可上传封面；不传则系统从图库分配一张。" },
+      "terms": { "title": "条款", "hint": "同意规则后提交，进入内容筛查。" }
     }
+  },
+  "terms": {
+    "title": "使用条款",
+    "updated": "最近更新：2026 年 7 月",
+    "back": "返回",
+    "sections": [
+      {
+        "heading": "分享体验点子",
+        "body": "Supp 允许你发布现实世界中的体验点子。提交内容即表示你确认有权分享这些内容，并以善意供他人安全、尊重地尝试。"
+      },
+      {
+        "heading": "社区准则",
+        "body": "请勿发布违法活动、仇恨、骚扰、涉及未成年人的性内容，或可能导致严重伤害的指引。推广诈骗、歧视或侵犯隐私的点子可能会被直接移除。"
+      },
+      {
+        "heading": "安全与责任",
+        "body": "尝试或组织体验时，你需对自己的行为负责。请遵守当地法律，尊重私人财产，且不得强迫他人做令其不适的事。Supp 不保证用户提交点子的准确性或安全性。"
+      },
+      {
+        "heading": "内容审核",
+        "body": "我们可能对违反本条款或社区准则的点子进行筛查、编辑、隐藏或移除。屡次违规可能导致账号受限。"
+      },
+      {
+        "heading": "联系我们",
+        "body": "如对本条款有疑问，或需要举报内容，请通过应用内「我」页面的支持入口联系我们。"
+      }
+    ]
   },
   "common": {
     "loading": "加载中…"

@@ -3,6 +3,7 @@ import { createHmac, randomBytes, timingSafeEqual } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
 import { getAnimal, randomAnimal, randomNickname } from "@/lib/animals";
+import { resolveAvatar } from "@/lib/avatar";
 import {
   getUserByEmail,
   getUserByGoogleId,
@@ -100,6 +101,8 @@ function blankStats(
     favoritedIds: partial.favoritedIds ?? [],
     experiencedIds: partial.experiencedIds ?? [],
     experiencedAt: partial.experiencedAt ?? {},
+    likedCommentIds: partial.likedCommentIds ?? [],
+    likedCommentAt: partial.likedCommentAt ?? {},
     joinedIds: partial.joinedIds ?? [],
     followingIds: partial.followingIds ?? [],
     followerIds: partial.followerIds ?? [],
@@ -159,7 +162,7 @@ export function publicUser(user: UserRecord) {
   return {
     id: user.id,
     nickname: user.name,
-    avatar: user.avatar,
+    avatar: resolveAvatar(user.avatar),
     avatarAnimalId: user.avatarAnimalId ?? null,
     email: user.email || null,
     isGuest: Boolean(user.isGuest),

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import type { Category, Sensation } from "@/data/mock-ideas";
@@ -72,41 +72,33 @@ const emptyDraft = (): DraftState => ({
 });
 
 type StepId =
-  | "title"
-  | "summary"
-  | "description"
-  | "tip"
-  | "location"
-  | "address"
-  | "city"
-  | "when"
-  | "duration"
-  | "fee"
-  | "categories"
-  | "sensation"
-  | "steps"
-  | "needs"
+  | "basics"
+  | "story"
+  | "place"
+  | "details"
+  | "vibe"
+  | "howto"
   | "cover"
-  | "review";
+  | "terms";
 
+/** 7 content steps + final terms agreement */
 const STEPS: StepId[] = [
-  "title",
-  "summary",
-  "description",
-  "tip",
-  "location",
-  "address",
-  "city",
-  "when",
-  "duration",
-  "fee",
-  "categories",
-  "sensation",
-  "steps",
-  "needs",
+  "basics",
+  "story",
+  "place",
+  "details",
+  "vibe",
+  "howto",
   "cover",
-  "review",
+  "terms",
 ];
+
+const TERMS_PATH = "/terms";
+
+const WEATHER_OPTIONS = ["any", "sunny", "cloudy", "rainy"] as const;
+
+const inputClass =
+  "w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red";
 
 export function CreateIdeaView() {
   const t = useTranslations("createIdea");
@@ -123,6 +115,7 @@ export function CreateIdeaView() {
   const [aiBusy, setAiBusy] = useState(false);
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const searchTimer = useRef<number | null>(null);
 
@@ -134,7 +127,7 @@ export function CreateIdeaView() {
   }
 
   useEffect(() => {
-    if (stepId !== "title") return;
+    if (stepId !== "basics") return;
     const q = draft.title.trim();
     if (q.length < 2) {
       setMatches([]);
@@ -240,21 +233,34 @@ export function CreateIdeaView() {
 
   async function onNext() {
     setError("");
-    if (stepId === "title" && !draft.title.trim()) {
+    if (stepId === "basics" && !draft.title.trim()) {
       setError(t("titleRequired"));
       return;
     }
-    if (stepId === "description" && !draft.description.trim()) {
+    if (stepId === "story" && !draft.description.trim()) {
       setError(t("descriptionRequired"));
       return;
     }
+    if (stepId === "terms" && !termsAccepted) {
+      setError(t("termsRequired"));
+      return;
+    }
     // Autosave draft after title is known
-    if (draft.title.trim()) {
+    if (draft.title.trim() && stepId !== "terms") {
       await persist("save_draft");
     }
     if (stepIndex < STEPS.length - 1) {
       setStepIndex((i) => i + 1);
     }
+  }
+
+  async function onSubmit() {
+    setError("");
+    if (!termsAccepted) {
+      setError(t("termsRequired"));
+      return;
+    }
+    await persist("submit");
   }
 
   function onBack() {
@@ -374,204 +380,246 @@ export function CreateIdeaView() {
           <h1 className="text-lg font-semibold tracking-tight">{stepTitle}</h1>
           <p className="mt-1 text-sm text-white/55">{stepHint}</p>
 
-          <div className="relative mt-4">
-            {stepId === "title" && (
-              <input
-                value={draft.title}
-                onChange={(e) => patch({ title: e.target.value })}
-                placeholder={t("placeholders.title")}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "summary" && (
-              <input
-                value={draft.summary}
-                onChange={(e) => patch({ summary: e.target.value })}
-                placeholder={t("placeholders.summary")}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "description" && (
+          <div className="relative mt-4 space-y-3">
+            {stepId === "basics" && (
               <>
-                <textarea
-                  value={draft.description}
-                  onChange={(e) => patch({ description: e.target.value })}
-                  rows={7}
-                  placeholder={t("placeholders.description")}
-                  className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-3 pb-12 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                  autoFocus
-                />
-                <AiCornerButton
-                  label={t("aiGenerate")}
-                  busy={aiBusy}
-                  onClick={() => void runAi("description")}
-                />
+                <div>
+                  <FieldLabel>{t("fieldTitle")}</FieldLabel>
+                  <input
+                    value={draft.title}
+                    onChange={(e) => patch({ title: e.target.value })}
+                    placeholder={t("placeholders.title")}
+                    className={inputClass}
+                    autoFocus
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldSummary")}</FieldLabel>
+                  <input
+                    value={draft.summary}
+                    onChange={(e) => patch({ summary: e.target.value })}
+                    placeholder={t("placeholders.summary")}
+                    className={inputClass}
+                  />
+                </div>
               </>
             )}
 
-            {stepId === "tip" && (
-              <textarea
-                value={draft.tip}
-                onChange={(e) => patch({ tip: e.target.value })}
-                rows={4}
-                placeholder={t("placeholders.tip")}
-                className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "location" && (
-              <input
-                value={draft.location}
-                onChange={(e) => patch({ location: e.target.value })}
-                placeholder={t("placeholders.location")}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "address" && (
-              <input
-                value={draft.address}
-                onChange={(e) => patch({ address: e.target.value })}
-                placeholder={t("placeholders.address")}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "city" && (
-              <div className="space-y-3">
-                <input
-                  value={draft.city}
-                  onChange={(e) => patch({ city: e.target.value })}
-                  placeholder={t("placeholders.city")}
-                  className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                  autoFocus
-                />
-                <input
-                  value={draft.country}
-                  onChange={(e) => patch({ country: e.target.value })}
-                  placeholder={t("placeholders.country")}
-                  className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                />
-              </div>
-            )}
-
-            {stepId === "when" && (
-              <input
-                value={draft.date}
-                onChange={(e) => patch({ date: e.target.value })}
-                placeholder={t("placeholders.when")}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "duration" && (
-              <input
-                type="number"
-                min={5}
-                max={1440}
-                value={draft.durationMin}
-                onChange={(e) =>
-                  patch({ durationMin: Number(e.target.value) || 60 })
-                }
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "fee" && (
-              <input
-                type="number"
-                min={0}
-                value={draft.fee}
-                onChange={(e) => patch({ fee: Number(e.target.value) || 0 })}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none focus:border-supp-red"
-                autoFocus
-              />
-            )}
-
-            {stepId === "categories" && (
-              <div className="flex flex-wrap gap-2">
-                {CATEGORIES.map((cat) => {
-                  const on = draft.categories.includes(cat);
-                  return (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        const next = on
-                          ? draft.categories.filter((c) => c !== cat)
-                          : [...draft.categories, cat];
-                        patch({
-                          categories: next.length ? next : ["social"],
-                        });
-                      }}
-                      className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                        on
-                          ? "bg-supp-red text-white"
-                          : "bg-white/10 text-white/70"
-                      }`}
-                    >
-                      {tExplore(`categories.${cat}`)}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {stepId === "sensation" && (
-              <div className="grid grid-cols-2 gap-2">
-                {SENSATIONS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => patch({ sensation: s })}
-                    className={`rounded-xl border px-3 py-3 text-sm ${
-                      draft.sensation === s
-                        ? "border-supp-red bg-supp-red/20 text-white"
-                        : "border-white/10 bg-black/30 text-white/70"
-                    }`}
-                  >
-                    {t(`sensations.${s}`)}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {stepId === "steps" && (
+            {stepId === "story" && (
               <>
-                <textarea
-                  value={draft.stepsText}
-                  onChange={(e) => patch({ stepsText: e.target.value })}
-                  rows={7}
-                  placeholder={t("placeholders.steps")}
-                  className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-3 pb-12 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                  autoFocus
-                />
-                <AiCornerButton
-                  label={t("aiGenerate")}
-                  busy={aiBusy}
-                  onClick={() => void runAi("steps")}
-                />
+                <div className="relative">
+                  <FieldLabel>{t("fieldDescription")}</FieldLabel>
+                  <textarea
+                    value={draft.description}
+                    onChange={(e) => patch({ description: e.target.value })}
+                    rows={7}
+                    placeholder={t("placeholders.description")}
+                    className={`${inputClass} resize-none pb-12`}
+                    autoFocus
+                  />
+                  <AiCornerButton
+                    label={t("aiGenerate")}
+                    busy={aiBusy}
+                    onClick={() => void runAi("description")}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldTip")}</FieldLabel>
+                  <textarea
+                    value={draft.tip}
+                    onChange={(e) => patch({ tip: e.target.value })}
+                    rows={4}
+                    placeholder={t("placeholders.tip")}
+                    className={`${inputClass} resize-none`}
+                  />
+                </div>
               </>
             )}
 
-            {stepId === "needs" && (
-              <textarea
-                value={draft.needsText}
-                onChange={(e) => patch({ needsText: e.target.value })}
-                rows={5}
-                placeholder={t("placeholders.needs")}
-                className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-3 text-sm outline-none placeholder:text-white/35 focus:border-supp-red"
-                autoFocus
-              />
+            {stepId === "place" && (
+              <>
+                <div>
+                  <FieldLabel>{t("fieldLocation")}</FieldLabel>
+                  <input
+                    value={draft.location}
+                    onChange={(e) => patch({ location: e.target.value })}
+                    placeholder={t("placeholders.location")}
+                    className={inputClass}
+                    autoFocus
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldAddress")}</FieldLabel>
+                  <input
+                    value={draft.address}
+                    onChange={(e) => patch({ address: e.target.value })}
+                    placeholder={t("placeholders.address")}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldCity")}</FieldLabel>
+                  <input
+                    value={draft.city}
+                    onChange={(e) => patch({ city: e.target.value })}
+                    placeholder={t("placeholders.city")}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldCountry")}</FieldLabel>
+                  <input
+                    value={draft.country}
+                    onChange={(e) => patch({ country: e.target.value })}
+                    placeholder={t("placeholders.country")}
+                    className={inputClass}
+                  />
+                </div>
+              </>
+            )}
+
+            {stepId === "details" && (
+              <>
+                <div>
+                  <FieldLabel>{t("fieldWhen")}</FieldLabel>
+                  <input
+                    value={draft.date}
+                    onChange={(e) => patch({ date: e.target.value })}
+                    placeholder={t("placeholders.when")}
+                    className={inputClass}
+                    autoFocus
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldDuration")}</FieldLabel>
+                  <input
+                    type="number"
+                    min={5}
+                    max={1440}
+                    value={draft.durationMin}
+                    onChange={(e) =>
+                      patch({ durationMin: Number(e.target.value) || 60 })
+                    }
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldFee")}</FieldLabel>
+                  <input
+                    type="number"
+                    min={0}
+                    value={draft.fee}
+                    onChange={(e) => patch({ fee: Number(e.target.value) || 0 })}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldWeather")}</FieldLabel>
+                  <div className="mt-1.5 flex flex-wrap gap-2">
+                    {WEATHER_OPTIONS.map((w) => {
+                      const on = draft.weather === w;
+                      return (
+                        <button
+                          key={w}
+                          type="button"
+                          onClick={() => patch({ weather: w })}
+                          className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+                            on
+                              ? "bg-supp-red text-white"
+                              : "bg-white/10 text-white/70"
+                          }`}
+                        >
+                          {tExplore(`weatherOptions.${w}`)}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {stepId === "vibe" && (
+              <>
+                <div>
+                  <FieldLabel>{t("fieldCategories")}</FieldLabel>
+                  <div className="mt-1.5 flex flex-wrap gap-2">
+                    {CATEGORIES.map((cat) => {
+                      const on = draft.categories.includes(cat);
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            const next = on
+                              ? draft.categories.filter((c) => c !== cat)
+                              : [...draft.categories, cat];
+                            patch({
+                              categories: next.length ? next : ["social"],
+                            });
+                          }}
+                          className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+                            on
+                              ? "bg-supp-red text-white"
+                              : "bg-white/10 text-white/70"
+                          }`}
+                        >
+                          {tExplore(`categories.${cat}`)}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldSensation")}</FieldLabel>
+                  <div className="mt-1.5 grid grid-cols-2 gap-2">
+                    {SENSATIONS.map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => patch({ sensation: s })}
+                        className={`rounded-xl border px-3 py-3 text-sm ${
+                          draft.sensation === s
+                            ? "border-supp-red bg-supp-red/20 text-white"
+                            : "border-white/10 bg-black/30 text-white/70"
+                        }`}
+                      >
+                        {t(`sensations.${s}`)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {stepId === "howto" && (
+              <>
+                <div className="relative">
+                  <FieldLabel>{t("fieldSteps")}</FieldLabel>
+                  <textarea
+                    value={draft.stepsText}
+                    onChange={(e) => patch({ stepsText: e.target.value })}
+                    rows={7}
+                    placeholder={t("placeholders.steps")}
+                    className={`${inputClass} resize-none pb-12`}
+                    autoFocus
+                  />
+                  <AiCornerButton
+                    label={t("aiGenerate")}
+                    busy={aiBusy}
+                    onClick={() => void runAi("steps")}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>{t("fieldNeeds")}</FieldLabel>
+                  <textarea
+                    value={draft.needsText}
+                    onChange={(e) => patch({ needsText: e.target.value })}
+                    rows={5}
+                    placeholder={t("placeholders.needs")}
+                    className={`${inputClass} resize-none`}
+                  />
+                </div>
+              </>
             )}
 
             {stepId === "cover" && (
@@ -623,28 +671,42 @@ export function CreateIdeaView() {
                     {t("clearCover")}
                   </button>
                 )}
+                <div className="pt-2">
+                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-white/40">
+                    {t("quickReview")}
+                  </p>
+                  <div className="space-y-2">
+                    <ReviewRow label={t("fieldTitle")} value={draft.title} />
+                    <ReviewRow label={t("fieldLocation")} value={draft.location} />
+                    <ReviewRow
+                      label={t("fieldDescription")}
+                      value={draft.description}
+                    />
+                  </div>
+                </div>
               </div>
             )}
 
-            {stepId === "review" && (
-              <div className="space-y-3 text-sm text-white/75">
-                <ReviewRow label={t("steps.title.title")} value={draft.title} />
-                <ReviewRow label={t("steps.summary.title")} value={draft.summary} />
-                <ReviewRow
-                  label={t("steps.description.title")}
-                  value={draft.description}
-                />
-                <ReviewRow label={t("steps.location.title")} value={draft.location} />
-                <ReviewRow label={t("steps.address.title")} value={draft.address} />
-                <ReviewRow
-                  label={t("steps.steps.title")}
-                  value={draft.stepsText || "—"}
-                />
-                <ReviewRow
-                  label={t("steps.needs.title")}
-                  value={draft.needsText || "—"}
-                />
-                <p className="pt-1 text-xs text-white/45">{t("reviewNote")}</p>
+            {stepId === "terms" && (
+              <div className="space-y-4">
+                <p className="text-sm text-white/70">{t("termsIntro")}</p>
+                <Link
+                  href={TERMS_PATH}
+                  target="_blank"
+                  className="inline-block text-sm font-medium text-supp-red underline underline-offset-2"
+                >
+                  {t("termsLinkLabel")}
+                </Link>
+                <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
+                  <input
+                    type="checkbox"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--supp-red,#e11d48)]"
+                  />
+                  <span className="text-sm text-white/80">{t("termsAgree")}</span>
+                </label>
+                <p className="text-xs text-white/45">{t("reviewNote")}</p>
               </div>
             )}
           </div>
@@ -656,7 +718,7 @@ export function CreateIdeaView() {
           )}
         </section>
 
-        {stepId === "title" && (searching || matches.length > 0) && (
+        {stepId === "basics" && (searching || matches.length > 0) && (
           <section className="rounded-2xl bg-black/70 p-4 backdrop-blur-sm">
             <h2 className="text-sm font-semibold text-white/90">
               {t("similarTitle")}
@@ -700,11 +762,11 @@ export function CreateIdeaView() {
       </div>
 
       <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-md -translate-x-1/2 border-t border-white/10 bg-[#141414] p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:max-w-lg">
-        {stepId === "review" ? (
+        {stepId === "terms" ? (
           <button
             type="button"
-            disabled={busy}
-            onClick={() => void persist("submit")}
+            disabled={busy || !termsAccepted}
+            onClick={() => void onSubmit()}
             className="w-full rounded-xl bg-supp-red py-3 text-sm font-semibold text-white disabled:opacity-50"
           >
             {busy ? t("submitting") : t("submit")}
@@ -759,5 +821,13 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
         {value || "—"}
       </p>
     </div>
+  );
+}
+
+function FieldLabel({ children }: { children: ReactNode }) {
+  return (
+    <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-white/45">
+      {children}
+    </p>
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
+import { UserAvatar } from "@/components/UserAvatar";
 import { getIdeaById, localizedIdea, type Idea } from "@/data/mock-ideas";
 import { scatterStyle } from "@/lib/scatter";
 
@@ -185,12 +186,7 @@ export function UserProfileView({ userId }: { userId: string }) {
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-white/70 bg-white/10">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={profile.avatar}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                <UserAvatar src={profile.avatar} />
               </div>
               <div>
                 <p className="text-base font-semibold">{displayName}</p>
@@ -216,13 +212,6 @@ export function UserProfileView({ userId }: { userId: string }) {
             <p>{t("summaryExperienced", { count: profile.experienced })}</p>
             <p>{t("summarySaved", { count: profile.favorited })}</p>
             <p>{t("summaryPercentile", { pct: profile.percentile })}</p>
-            <p
-              className={`pt-1 text-[22px] leading-snug tracking-wide text-white/85 ${
-                zh ? "font-hand-zh" : "font-hand"
-              }`}
-            >
-              {t("summaryQuote")}
-            </p>
           </div>
 
           <button
@@ -405,12 +394,7 @@ export function UserProfileView({ userId }: { userId: string }) {
                 href={`/users/${friend.id}`}
                 className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-supp-soft"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={friend.avatar}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                <UserAvatar src={friend.avatar} />
               </Link>
               <div className="min-w-0 flex-1">
                 <Link
