@@ -51,6 +51,16 @@ export function isIdeaOnMap(
   );
 }
 
+export function formatEventDate(startsAtIso: string, locale: string): string {
+  const start = new Date(startsAtIso);
+  if (Number.isNaN(start.getTime())) return "—";
+  return start.toLocaleDateString(locale, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export function formatTimeRange(
   startsAtIso: string,
   endsAtIso: string,

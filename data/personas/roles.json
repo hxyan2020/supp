@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "roles": [
+    {
+      "id": "analyst",
+      "name": "Analyst / Thinker",
+      "nameZh": "分析者 / 思考者",
+      "description": "You value facts and detail. Experiences that involve observation and reasoning light you up.",
+      "descriptionZh": "你重视事实与细节。需要观察与推理的体验最能点亮你。",
+      "avatar": "/personas/roles/analyst.png",
+      "mbtiHint": "NT",
+      "weights": {
+        "categories": { "culture": 3, "creative": 2, "comfort": 1 },
+        "sensations": { "curious": 3, "calm": 2, "stimulating": 1 }
+      }
+    },
+    {
+      "id": "explorer",
+      "name": "Explorer / Adventurer",
+      "nameZh": "探索者 / 冒险家",
+      "description": "You value freedom and discovery. Experiences that involve movement and new terrain light you up.",
+      "descriptionZh": "你重视自由与发现。需要行动与新地形的体验最能点亮你。",
+      "avatar": "/personas/roles/explorer.png",
+      "mbtiHint": "SP",
+      "weights": {
+        "categories": { "outdoors": 3, "adrenaline": 3, "wellness": 1 },
+        "sensations": { "stimulating": 2, "intense": 2, "curious": 2 }
+      }
+    },
+    {
+      "id": "connector",
+      "name": "Connector / Host",
+      "nameZh": "连接者 / 社交者",
+      "description": "You value people and shared energy. Experiences that involve gathering and conversation light you up.",
+      "descriptionZh": "你重视人群与共享能量。需要聚会与交谈的体验最能点亮你。",
+      "avatar": "/personas/roles/connector.png",
+      "mbtiHint": "EF",
+      "weights": {
+        "categories": { "social": 3, "taste": 2, "culture": 1 },
+        "sensations": { "stimulating": 3, "curious": 1 }
+      }
+    },
+    {
+      "id": "creator",
+      "name": "Creator / Artist",
+      "nameZh": "创造者 / 艺术家",
+      "description": "You value expression and craft. Experiences that involve making and imagining light you up.",
+      "descriptionZh": "你重视表达与手作。需要创造与想象的体验最能点亮你。",
+      "avatar": "/personas/roles/creator.png",
+      "mbtiHint": "NFP",
+      "weights": {
+        "categories": { "creative": 3, "culture": 2, "comfort": 1 },
+        "sensations": { "curious": 2, "calm": 2, "stimulating": 1 }
+      }
+    },
+    {
+      "id": "guardian",
+      "name": "Guardian / Nurturer",
+      "nameZh": "守护者 / 关照者",
+      "description": "You value care and steadiness. Experiences that involve comfort and restoration light you up.",
+      "descriptionZh": "你重视关照与稳定。需要舒适与恢复的体验最能点亮你。",
+      "avatar": "/personas/roles/guardian.png",
+      "mbtiHint": "SJ",
+      "weights": {
+        "categories": { "comfort": 3, "wellness": 3, "social": 1 },
+        "sensations": { "calm": 3, "curious": 1 }
+      }
+    },
+    {
+      "id": "visionary",
+      "name": "Visionary / Idealist",
+      "nameZh": "远见者 / 理想家",
+      "description": "You value meaning and possibility. Experiences that involve wonder and reflection light you up.",
+      "descriptionZh": "你重视意义与可能。需要惊奇与反思的体验最能点亮你。",
+      "avatar": "/personas/roles/visionary.png",
+      "mbtiHint": "NF",
+      "weights": {
+        "categories": { "culture": 3, "wellness": 2, "creative": 2 },
+        "sensations": { "curious": 3, "calm": 2 }
+      }
+    },
+    {
+      "id": "energizer",
+      "name": "Energizer / Performer",
+      "nameZh": "能量者 / 表演者",
+      "description": "You value intensity and spotlight moments. Experiences that involve thrill and audience energy light you up.",
+      "descriptionZh": "你重视强度与高光时刻。需要刺激与人群能量的体验最能点亮你。",
+      "avatar": "/personas/roles/energizer.png",
+      "mbtiHint": "ESFP",
+      "weights": {
+        "categories": { "adrenaline": 3, "social": 3, "creative": 1 },
+        "sensations": { "intense": 3, "stimulating": 2 }
+      }
+    },
+    {
+      "id": "gourmet",
+      "name": "Gourmet / Sensor",
+      "nameZh": "享味者 / 感知者",
+      "description": "You value taste and texture. Experiences that involve flavor, scent, and the senses light you up.",
+      "descriptionZh": "你重视味道与触感。需要风味、气味与感官的体验最能点亮你。",
+      "avatar": "/personas/roles/gourmet.png",
+      "mbtiHint": "Sensing",
+      "weights": {
+        "categories": { "taste": 3, "culture": 2, "social": 1 },
+        "sensations": { "curious": 2, "stimulating": 2, "calm": 1 }
+      }
+    },
+    {
+      "id": "seeker",
+      "name": "Seeker / Wanderer",
+      "nameZh": "寻道者 / 漫游者",
+      "description": "You value quiet journeys inward. Experiences that involve solitude and soft landscapes light you up.",
+      "descriptionZh": "你重视向内的安静旅程。需要独处与柔软风景的体验最能点亮你。",
+      "avatar": "/personas/roles/seeker.png",
+      "mbtiHint": "INFP",
+      "weights": {
+        "categories": { "outdoors": 3, "wellness": 3, "comfort": 1 },
+        "sensations": { "calm": 3, "curious": 2 }
+      }
+    },
+    {
+      "id": "strategist",
+      "name": "Strategist / Builder",
+      "nameZh": "战略者 / 建造者",
+      "description": "You value systems and momentum. Experiences that involve planning, challenge, and progress light you up.",
+      "descriptionZh": "你重视系统与推进力。需要规划、挑战与进步的体验最能点亮你。",
+      "avatar": "/personas/roles/strategist.png",
+      "mbtiHint": "NTJ",
+      "weights": {
+        "categories": { "adrenaline": 2, "creative": 2, "culture": 2, "outdoors": 1 },
+        "sensations": { "stimulating": 3, "intense": 2, "curious": 1 }
+      }
+    }
+  ]
+}

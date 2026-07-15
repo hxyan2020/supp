@@ -10,6 +10,19 @@ export type Category =
 
 export type Sensation = "calm" | "curious" | "stimulating" | "intense";
 
+export type Engagement = "high" | "medium" | "low";
+
+export type SocialPlatform = "tiktok" | "instagram" | "xiaohongshu";
+
+export type SocialEmbed = {
+  platform: SocialPlatform;
+  url: string;
+  /** Optional iframe / player URL */
+  embedUrl?: string;
+  title?: string;
+  titleZh?: string;
+};
+
 export type Idea = {
   id: string;
   title: string;
@@ -37,16 +50,28 @@ export type Idea = {
   city: string;
   categories: Category[];
   sensation: Sensation;
+  /** How much social / energetic effort the experience asks for */
+  engagement: Engagement;
   image: string;
   organizer: string;
   organizerZh: string;
   organizerAvatar: string;
+  /** User id of the author when known (opens third-person Me) */
+  creatorUserId?: string;
   experiencedCount: number;
   favoritedCount: number;
   participantCount: number;
   maxParticipants: number;
   relevance: number;
   tags: string[];
+  /** Step-by-step how-to (may be empty) */
+  steps: string[];
+  stepsZh: string[];
+  /** Tools / materials needed (may be empty) */
+  needs: string[];
+  needsZh: string[];
+  /** Optional short-form video embeds */
+  socialEmbeds: SocialEmbed[];
 };
 
 export const categoryMeta: Record<
@@ -73,7 +98,10 @@ export const sensationMeta: Record<
   intense: { label: "Intense", labelZh: "强烈" },
 };
 
-export const mockIdeaSeeds: Omit<Idea, "startsAt" | "endsAt">[] = [
+export const mockIdeaSeeds: Omit<
+  Idea,
+  "startsAt" | "endsAt" | "engagement" | "steps" | "stepsZh" | "needs" | "needsZh" | "socialEmbeds"
+>[] = [
   {
     id: "eavesdrop-headphones",
     title: "Turn down headphones & eavesdrop",
@@ -508,16 +536,147 @@ export const mockIdeaSeeds: Omit<Idea, "startsAt" | "endsAt">[] = [
 /** Hours from “now” when each demo idea starts (keeps the map populated). */
 const START_OFFSET_HOURS = [1, 2.5, 4, 6, 9, 11, 13, 16, 20, -0.5, 3, 8];
 
+export function engagementForIdea(
+  idea: Pick<Idea, "sensation" | "categories"> & Partial<Pick<Idea, "engagement">>,
+): Engagement {
+  if (idea.engagement) return idea.engagement;
+  if (idea.categories.includes("adrenaline")) return "high";
+  if (idea.sensation === "intense" || idea.sensation === "stimulating") return "high";
+  if (idea.sensation === "curious") return "medium";
+  return "low";
+}
+
+/** Optional curated content — blank when missing. */
+const IDEA_EXTRAS: Record<
+  string,
+  Partial<
+    Pick<Idea, "steps" | "stepsZh" | "needs" | "needsZh" | "socialEmbeds">
+  >
+> = {
+  "eavesdrop-headphones": {
+    steps: [
+      "Pick a busy but safe public spot (station concourse, café queue).",
+      "Put headphones on and play soft music at a low volume.",
+      "Tune your attention to nearby conversations without staring.",
+      "After a few minutes, note one detail that changes how the city feels.",
+    ],
+    stepsZh: [
+      "选一个热闹又安全的公共空间（车站大厅、咖啡队列）。",
+      "戴上耳机，把音乐音量调低。",
+      "不盯着别人，轻轻捕捉周围对话。",
+      "几分钟后记下一个让你对这座城市感觉不一样的细节。",
+    ],
+    needs: ["Headphones", "A phone or music player", "5–10 free minutes"],
+    needsZh: ["耳机", "手机或播放器", "空闲 5–10 分钟"],
+    socialEmbeds: [
+      {
+        platform: "tiktok",
+        url: "https://www.tiktok.com/",
+        title: "City listening challenge",
+        titleZh: "城市偷听挑战",
+      },
+      {
+        platform: "xiaohongshu",
+        url: "https://www.xiaohongshu.com/",
+        title: "Station people-watching",
+        titleZh: "车站人来人往观察笔记",
+      },
+    ],
+  },
+  "pottery-bowl": {
+    steps: [
+      "Book a beginner wheel session and arrive 10 minutes early.",
+      "Wedge the clay until air pockets are gone.",
+      "Center on the wheel, then open and pull the walls evenly.",
+      "Trim, stamp your mark, and leave it for firing.",
+    ],
+    stepsZh: [
+      "预约新手拉坯课，提前 10 分钟到达。",
+      "揉泥排气，直到没有气泡。",
+      "泥条居中，再均匀开口拉高。",
+      "修坯、盖章，等待烧制。",
+    ],
+    needs: ["Old clothes / apron", "Hair tie", "Phone for reference photos"],
+    needsZh: ["旧衣服或围裙", "发绳", "手机（拍参考图）"],
+    socialEmbeds: [
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/",
+        title: "First bowl on the wheel",
+        titleZh: "第一次拉坯成碗",
+      },
+    ],
+  },
+  "night-market-crawl": {
+    steps: [
+      "Pick 3 stalls before you start so you don’t over-order.",
+      "Share plates if you go with friends; rotate one snack per stop.",
+      "End with a sweet drink and a short walk to settle.",
+    ],
+    stepsZh: [
+      "出发前先定 3 个摊位，避免点太多。",
+      "结伴就拼盘，每一站只吃一样。",
+      "用甜饮收尾，再散步消化。",
+    ],
+    needs: ["Cash / mobile pay", "Wet wipes", "Light appetite"],
+    needsZh: ["现金或移动支付", "湿纸巾", "留一点胃口"],
+    socialEmbeds: [
+      {
+        platform: "tiktok",
+        url: "https://www.tiktok.com/",
+        title: "HK night market route",
+        titleZh: "香港夜市路线",
+      },
+      {
+        platform: "xiaohongshu",
+        url: "https://www.xiaohongshu.com/",
+        title: "Temple Street bites",
+        titleZh: "庙街小吃清单",
+      },
+    ],
+  },
+};
+
 export function withSchedule(
-  idea: Omit<Idea, "startsAt" | "endsAt"> &
-    Partial<Pick<Idea, "startsAt" | "endsAt">>,
+  idea: Omit<
+    Idea,
+    "startsAt" | "endsAt" | "engagement" | "steps" | "stepsZh" | "needs" | "needsZh" | "socialEmbeds"
+  > &
+    Partial<
+      Pick<
+        Idea,
+        | "startsAt"
+        | "endsAt"
+        | "engagement"
+        | "steps"
+        | "stepsZh"
+        | "needs"
+        | "needsZh"
+        | "socialEmbeds"
+      >
+    >,
   index = 0,
   nowMs = Date.now(),
 ): Idea {
+  const engagement = engagementForIdea(idea);
+  const seeded = IDEA_EXTRAS[idea.id] ?? {};
+  const extras = {
+    engagement,
+    steps: idea.steps ?? seeded.steps ?? [],
+    stepsZh: idea.stepsZh ?? seeded.stepsZh ?? [],
+    needs: idea.needs ?? seeded.needs ?? [],
+    needsZh: idea.needsZh ?? seeded.needsZh ?? [],
+    socialEmbeds: idea.socialEmbeds ?? seeded.socialEmbeds ?? [],
+  };
   if (idea.startsAt && idea.endsAt) {
     const end = Date.parse(idea.endsAt);
     if (Number.isFinite(end) && end > nowMs) {
-      return idea as Idea;
+      return {
+        ...idea,
+        ...extras,
+        startsAt: idea.startsAt,
+        endsAt: idea.endsAt,
+      };
     }
   }
   const offsetH = START_OFFSET_HOURS[index % START_OFFSET_HOURS.length];
@@ -525,6 +684,7 @@ export function withSchedule(
   const endMs = startMs + Math.max(idea.durationMin, 45) * 60 * 1000;
   return {
     ...idea,
+    ...extras,
     startsAt: new Date(startMs).toISOString(),
     endsAt: new Date(endMs).toISOString(),
   };
@@ -583,109 +743,109 @@ export type ExperiencedUser = {
 
 /** Pool of people who have marked ideas as experienced */
 export const mockExperiencedUsers: ExperiencedUser[] = [
-  { id: "eu1", name: "Mira Zhou", nameZh: "周米拉", avatar: "/images/avatar-1.png" },
-  { id: "eu2", name: "Theo Park", nameZh: "朴西奥", avatar: "/images/persona.png" },
-  { id: "eu3", name: "Sana Ali", nameZh: "萨娜", avatar: "/images/avatar-user.jpg" },
+  { id: "f1", name: "Mira Zhou", nameZh: "周米拉", avatar: "/images/avatar-1.png" },
+  { id: "f2", name: "Theo Park", nameZh: "朴西奥", avatar: "/images/persona.png" },
+  { id: "f3", name: "Sana Ali", nameZh: "萨娜", avatar: "/images/avatar-user.jpg" },
   {
-    id: "eu4",
+    id: "demo001",
     name: "Kai Wong",
     nameZh: "黄凯",
     avatar:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu5",
+    id: "demo002",
     name: "Lina Chen",
     nameZh: "陈丽娜",
     avatar:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu6",
+    id: "demo003",
     name: "Noah Kim",
     nameZh: "金诺亚",
     avatar:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu7",
+    id: "demo004",
     name: "Aya Sato",
     nameZh: "佐藤彩",
     avatar:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu8",
+    id: "demo005",
     name: "Diego Ruiz",
     nameZh: "迭戈",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu9",
+    id: "demo006",
     name: "Hana Lee",
     nameZh: "李荷娜",
     avatar:
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu10",
+    id: "demo007",
     name: "Omar Hassan",
     nameZh: "奥马尔",
     avatar:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu11",
+    id: "demo008",
     name: "Yuna Park",
     nameZh: "朴宥娜",
     avatar:
       "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu12",
+    id: "demo009",
     name: "Ben Carter",
     nameZh: "本·卡特",
     avatar:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu13",
+    id: "demo010",
     name: "Mei Lin",
     nameZh: "林美",
     avatar:
       "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu14",
+    id: "demo011",
     name: "Ravi Patel",
     nameZh: "拉维",
     avatar:
       "https://images.unsplash.com/photo-1507591064344-4c6ce005bff4?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu15",
+    id: "demo012",
     name: "Sofia Berg",
     nameZh: "索菲亚",
     avatar:
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu16",
+    id: "demo013",
     name: "Jun Wei",
     nameZh: "俊伟",
     avatar:
       "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu17",
+    id: "demo014",
     name: "Elena Rossi",
     nameZh: "埃琳娜",
     avatar:
       "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=96&h=96&q=80",
   },
   {
-    id: "eu18",
+    id: "demo015",
     name: "Tom Hughes",
     nameZh: "汤姆",
     avatar:
@@ -744,6 +904,10 @@ export type SearchFilters = {
   fee?: string;
   duration?: string;
   category?: string;
+  /** Sightseeing, local food, gatherings for visitors */
+  travellerMode?: boolean;
+  /** Solo-friendly ideas that don't need a group */
+  introvertMode?: boolean;
 };
 
 export function searchIdeas(filters: SearchFilters = {}): Idea[] {
@@ -824,5 +988,7 @@ export function localizedIdea(idea: Idea, locale: string) {
     sensation: zh
       ? sensationMeta[idea.sensation].labelZh
       : sensationMeta[idea.sensation].label,
+    steps: (zh ? idea.stepsZh : idea.steps) ?? [],
+    needs: (zh ? idea.needsZh : idea.needs) ?? [],
   };
 }

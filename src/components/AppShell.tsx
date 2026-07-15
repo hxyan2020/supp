@@ -13,15 +13,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const t = useTranslations("nav");
   const tBrand = useTranslations("brand");
   const pathname = usePathname();
-  const hideNav = pathname.startsWith("/ideas/");
+  const isIdeaDetail = pathname.startsWith("/ideas/");
+  const isCreateIdea = pathname.startsWith("/explore/create");
+  const hideChrome = isIdeaDetail || isCreateIdea;
 
   return (
     <div className="mx-auto flex min-h-full w-full max-w-md flex-col bg-supp-black text-white sm:max-w-lg">
-      {!hideNav && (
+      {!hideChrome && (
         <header className="sticky top-0 z-30 flex h-12 items-center justify-between border-b border-white/10 bg-black/80 px-4 backdrop-blur-md">
           <Link
             href="/explore"
-            className="flex items-center gap-2 text-[15px] font-semibold tracking-[0.08em]"
+            className="flex items-center gap-2 font-display text-[17px] font-extrabold tracking-tight"
           >
             <img
               src="/logo.jpg"
@@ -36,9 +38,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </header>
       )}
 
-      <main className={`flex-1 ${hideNav ? "" : "pb-[72px]"}`}>{children}</main>
+      <main className={`flex-1 ${hideChrome ? "" : "pb-[72px]"}`}>{children}</main>
 
-      {!hideNav && (
+      {!hideChrome && (
         <nav className="fixed bottom-0 left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t border-white/10 bg-[#141414] pb-[env(safe-area-inset-bottom)] sm:max-w-lg">
           <div className="grid grid-cols-3">
             {navItems.map(({ href, key, icon: Icon }) => {

@@ -4,10 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import type { UserRecord } from "@/lib/types";
 import { locales } from "@/i18n/routing";
 
-const emptyUser = (): Partial<UserRecord> => ({
+const emptyUser = (): Partial<UserRecord> & { password?: string } => ({
   name: "",
   nameZh: "",
   email: "",
+  username: "",
+  password: "",
   avatar: "/images/avatar-user.jpg",
   locale: "en",
   city: "",
@@ -22,6 +24,17 @@ const emptyUser = (): Partial<UserRecord> => ({
   joinedIds: [],
   status: "active",
 });
+
+type AdminUser = UserRecord & { hasPassword?: boolean; password?: string };
+
+type DummyCredential = {
+  index: number;
+  id: string;
+  username: string;
+  password: string;
+  email: string;
+  nickname: string;
+};
 
 function Field({
   label,
@@ -55,14 +68,17 @@ function textToIds(value: string) {
 }
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<UserRecord[]>([]);
-  const [form, setForm] = useState<Partial<UserRecord>>(emptyUser);
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [form, setForm] = useState<Partial<AdminUser>>(emptyUser);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "suspended">("all");
   const [message, setMessage] = useState("");
+  const [credentials, setCredentials] = useState<DummyCredential[]>([]);
+  const [showCreds, setShowCreds] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -72,8 +88,15 @@ export default function AdminUsersPage() {
     setLoading(false);
   }
 
+  async function loadCredentials() {
+    const res = await fetch("/api/admin/users/seed-dummies");
+    const data = await res.json();
+    setCredentials(data.credentials || []);
+  }
+
   useEffect(() => {
     void load();
+    void loadCredentials();
   }, []);
 
   const filtered = useMemo(() => {
@@ -81,20 +104,52 @@ export default function AdminUsersPage() {
     return users.filter((u) => {
       if (statusFilter !== "all" && u.status !== statusFilter) return false;
       if (!q) return true;
-      return [u.id, u.name, u.nameZh, u.email, u.city, u.country, u.persona]
+      return [u.id, u.name, u.nameZh, u.email, u.username, u.city, u.country, u.persona]
         .join(" ")
         .toLowerCase()
         .includes(q);
     });
   }, [users, query, statusFilter]);
 
-  function set<K extends keyof UserRecord>(key: K, value: UserRecord[K]) {
+  function set<K extends keyof AdminUser>(key: K, value: AdminUser[K]) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  async function seedDummies() {
+    setSeeding(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/admin/users/seed-dummies", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Seed failed");
+      setCredentials(data.credentials || []);
+      setShowCreds(true);
+      setMessage(
+        `Seeded dummy users · created ${data.created}, refreshed ${data.refreshed}, total ${data.total}`,
+      );
+      await load();
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Seed failed");
+    } finally {
+      setSeeding(false);
+    }
+  }
+
+  function downloadCredentials() {
+    const blob = new Blob([JSON.stringify({ credentials }, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "supp-dummy-credentials.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   async function save() {
-    if (!form.name?.trim() && !form.email?.trim()) {
-      setMessage("Name or email is required");
+    if (!form.name?.trim() && !form.email?.trim() && !form.username?.trim()) {
+      setMessage("Name, username, or email is required");
       return;
     }
     setSaving(true);
@@ -113,7 +168,9 @@ export default function AdminUsersPage() {
       joinedIds: Array.isArray(form.joinedIds)
         ? form.joinedIds
         : textToIds(String(form.joinedIds || "")),
+      password: form.password?.trim() || undefined,
     };
+    delete (payload as { hasPassword?: boolean }).hasPassword;
     const method = editingId ? "PUT" : "POST";
     const url = editingId ? `/api/admin/users/${editingId}` : "/api/admin/users";
     const res = await fetch(url, {
@@ -142,21 +199,92 @@ export default function AdminUsersPage() {
     await load();
   }
 
-  function edit(u: UserRecord) {
+  function edit(u: AdminUser) {
     setEditingId(u.id);
-    setForm(u);
+    setForm({ ...u, password: "" });
     setMessage("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Users</h1>
-        <p className="text-sm text-white/55">
-          Manage profile, locale, persona, counters, and related idea IDs
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Users</h1>
+          <p className="text-sm text-white/55">
+            Manage login credentials, profile, locale, persona, and idea links
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => void seedDummies()}
+            disabled={seeding}
+            className="rounded-lg bg-supp-red px-3 py-2 text-sm font-semibold disabled:opacity-50"
+          >
+            {seeding ? "Seeding…" : "Seed 120 dummy users"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowCreds((v) => !v);
+              if (!credentials.length) void loadCredentials();
+            }}
+            className="rounded-lg border border-white/15 px-3 py-2 text-sm"
+          >
+            {showCreds ? "Hide credentials" : "Show dummy credentials"}
+          </button>
+          {credentials.length > 0 && (
+            <button
+              type="button"
+              onClick={downloadCredentials}
+              className="rounded-lg border border-white/15 px-3 py-2 text-sm"
+            >
+              Download JSON
+            </button>
+          )}
+        </div>
       </div>
+
+      {showCreds && (
+        <section className="rounded-2xl border border-white/10 bg-[#171a21] p-4">
+          <h2 className="font-semibold">Dummy login credentials</h2>
+          <p className="mt-1 text-xs text-white/50">
+            Pattern: username <code className="text-white/80">demo001…demo120</code>, password{" "}
+            <code className="text-white/80">Demo001!…Demo120!</code>
+          </p>
+          {credentials.length === 0 ? (
+            <p className="mt-3 text-sm text-white/50">
+              No credentials file yet — click “Seed 120 dummy users”.
+            </p>
+          ) : (
+            <div className="mt-3 max-h-64 overflow-auto rounded-xl border border-white/10">
+              <table className="w-full text-left text-xs">
+                <thead className="sticky top-0 bg-[#1f2430] text-white/60">
+                  <tr>
+                    <th className="px-3 py-2">#</th>
+                    <th className="px-3 py-2">Username</th>
+                    <th className="px-3 py-2">Password</th>
+                    <th className="px-3 py-2">Nickname</th>
+                    <th className="px-3 py-2">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {credentials.map((c) => (
+                    <tr key={c.username} className="border-t border-white/5">
+                      <td className="px-3 py-1.5 text-white/40">{c.index}</td>
+                      <td className="px-3 py-1.5 font-mono text-emerald-300">{c.username}</td>
+                      <td className="px-3 py-1.5 font-mono text-amber-200">{c.password}</td>
+                      <td className="px-3 py-1.5">{c.nickname}</td>
+                      <td className="px-3 py-1.5 text-white/55">{c.email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      )}
 
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <section className="rounded-2xl border border-white/10 bg-[#171a21] p-4">
@@ -168,6 +296,30 @@ export default function AdminUsersPage() {
           </div>
 
           <div className="mt-4 space-y-5">
+            <fieldset className="space-y-2">
+              <legend className="text-sm font-medium text-white/80">Login</legend>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Field label="Username">
+                  <input
+                    className={inputClass}
+                    value={form.username || ""}
+                    onChange={(e) => set("username", e.target.value)}
+                    autoComplete="off"
+                  />
+                </Field>
+                <Field label={editingId ? "Password (leave blank to keep)" : "Password"}>
+                  <input
+                    type="text"
+                    className={inputClass}
+                    value={form.password || ""}
+                    onChange={(e) => set("password", e.target.value)}
+                    autoComplete="new-password"
+                    placeholder={form.hasPassword ? "••••••••" : ""}
+                  />
+                </Field>
+              </div>
+            </fieldset>
+
             <fieldset className="space-y-2">
               <legend className="text-sm font-medium text-white/80">Profile</legend>
               <div className="grid gap-2 sm:grid-cols-2">
@@ -307,7 +459,7 @@ export default function AdminUsersPage() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search name, email, city…"
+              placeholder="Search username, name, email…"
               className={inputClass}
             />
             <select
@@ -332,7 +484,14 @@ export default function AdminUsersPage() {
                         {u.name} / {u.nameZh}
                       </p>
                       <p className="truncate text-xs text-white/50">
-                        {u.email} · {u.status} · {u.locale}
+                        {u.username ? (
+                          <span className="font-mono text-emerald-300/90">{u.username}</span>
+                        ) : (
+                          "no username"
+                        )}
+                        {" · "}
+                        {u.email || "no email"} · {u.status}
+                        {u.hasPassword ? " · password" : ""}
                       </p>
                       <p className="text-[11px] text-white/40">
                         {u.city}, {u.country} · Done {u.experienced} · Saved {u.favorited} · Claimed {u.claimed}

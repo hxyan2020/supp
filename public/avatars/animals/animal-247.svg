@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Midnight Lion">
+  <defs>
+    <radialGradient id="bg-animal-247" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#073B4C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#118AB2" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-247)"/>
+  <rect width="128" height="128" rx="64" fill="#FFD166" opacity="0.08"/>
+  
+  <circle cx="64" cy="70" r="38" fill="#118AB2"/>
+  <ellipse cx="38" cy="42" rx="22" ry="28" fill="#118AB2"/>
+  <ellipse cx="90" cy="42" rx="22" ry="28" fill="#118AB2"/>
+  <ellipse cx="38" cy="44" rx="16" ry="22" fill="#073B4C"/>
+  <ellipse cx="90" cy="44" rx="16" ry="22" fill="#073B4C"/>
+  <circle cx="50" cy="66" r="5" fill="#FFD166"/>
+  <circle cx="78" cy="66" r="5" fill="#FFD166"/>
+  <circle cx="51.5" cy="65" r="2" fill="#fff"/>
+  <circle cx="79.5" cy="65" r="2" fill="#fff"/>
+  <ellipse cx="64" cy="81" rx="12" ry="8.399999999999999" fill="#073B4C"/>
+  <ellipse cx="64" cy="83" rx="4" ry="3" fill="#FFD166"/>
+  <path d="M56 90 Q64 96 72 90" stroke="#FFD166" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  
+</svg>

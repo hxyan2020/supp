@@ -55,14 +55,14 @@
       "adrenaline": "Adrenaline",
       "wellness": "Wellness"
     },
-    "smartTitle": "Smart recommendations",
+    "smartTitle": "What do you want to experience today?",
     "manualSearch": "Manual search",
     "createHint": "Didn't find something that moves you? Create your own experience for free and earn extra income.",
     "createIdea": "Create a new experience idea",
     "experiencedCount": "Experienced: {count}",
-    "favoritedCount": "Favorites: {count}",
-    "markExperienced": "Done",
-    "markFavorite": "Save",
+    "favoritedCount": "Collected: {count}",
+    "markExperienced": "experienced",
+    "markFavorite": "collect",
     "back": "Back",
     "greetMorning": "Good morning.",
     "greetAfternoon": "Good afternoon.",
@@ -74,8 +74,8 @@
     "briefOnThisDay": "On this day in history —",
     "briefYouAreIn": "You are in",
     "briefWeatherSep": " — weather:",
-    "briefWeatherOnly": "Current weather:",
-    "briefClose": "Here are ideas that fit the moment.",
+    "briefWeatherOnly": "Weather:",
+    "briefClose": "Based on your browse history, we feel the following ideas would interest you.",
     "liveWeather": {
       "clear": "Clear",
       "cloudy": "Cloudy",
@@ -83,7 +83,15 @@
       "snow": "Snow",
       "showers": "Showers",
       "storm": "Storm"
-    }
+    },
+    "swipeLoadMore": "Swipe right to load more",
+    "noMoreIdeas": "No more ideas for now",
+    "travellerMode": "Traveller mode",
+    "travellerModeHint": "Show sightseeing, local food, and local gatherings suited for travellers",
+    "introvertMode": "Introvert mode",
+    "introvertModeHint": "Show solo-friendly ideas that do not need more people",
+    "modeOn": "On",
+    "modeOff": "Off"
   },
   "map": {
     "searchPlaceholder": "Search here",
@@ -101,30 +109,104 @@
     "distanceLocating": "Mencari lokasi…",
     "distanceUnknown": "Lokasi off",
     "closeCard": "Tutup",
-    "window24hCount": "{count} ide dalam 24 jam ke depan"
+    "window24hCount": "{count} ide dalam 24 jam ke depan",
+    "navigate": "Navigate",
+    "engagement": "Engagement",
+    "engagementLevels": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
   },
   "me": {
     "editProfile": "Edit avatar & username",
-    "experienced": "Done",
-    "favorited": "Saved",
+    "experienced": "experienced",
+    "favorited": "collected",
     "claimed": "Claimed",
     "summaryLead": "As of today, you have…",
     "summaryExperienced": "Experienced {count} ideas",
     "summarySaved": "Saved {count} ideas recently",
     "summaryPercentile": "Your experience count tops {pct}% of Supp users",
-    "summaryQuote": "Because you exist, our species gets more interesting!",
+    "summaryQuote": "Life begins where fear ends.",
     "soulReport": "Tap to generate your Interesting Soul Report",
+    "soulReportTitle": "Interesting Soul Report",
+    "soulReportEyebrow": "Supp · Soul Report",
+    "soulReportHeadline": "Interesting Soul Report",
+    "soulReportSub": "A snapshot of how you experience the city",
+    "soulReportPersonaLabel": "Persona",
+    "soulReportPercentileLabel": "top users",
+    "soulReportFooter": "Scan to find this soul on Supp — collect ideas, wander more.",
+    "soulReportScan": "Scan to meet",
+    "soulReportGenerating": "Designing your report…",
+    "soulReportHint": "A long image ready to share on social media",
+    "soulReportDownload": "Save image",
+    "soulReportShare": "Share",
+    "soulReportClose": "Close",
+    "soulReportFailed": "Couldn’t generate the image — try again",
+    "soulReportShareText": "{name}'s Interesting Soul Report on Supp",
     "personaTitle": "You are a {persona}",
     "joinedTitle": "Experiences I've joined",
     "joinedHint": "*Show this screen on the day to check in",
     "savedTitle": "Saved / liked ideas",
     "friendsTitle": "Similar souls",
-    "friendsSub": "People who collect ideas like yours",
+    "friendsSub": "People who collect and experience ideas like yours",
     "language": "Language",
     "settings": "Pengaturan",
     "closeSettings": "Tutup pengaturan",
     "currency": "Mata uang",
-    "currencyHint": "Untuk harga tiket di peta"
+    "currencyHint": "Untuk harga tiket di peta",
+    "guestBadge": "Browsing as guest",
+    "userIdLabel": "ID: {id}",
+    "profileSection": "Profile",
+    "nickname": "Nickname",
+    "nicknameHint": "Nicknames can be shared. Your ID is unique.",
+    "changeAvatar": "Profile photo",
+    "saveProfile": "Save profile",
+    "profileSaved": "Profile saved",
+    "searchAvatars": "Search animals…",
+    "loadMoreAvatars": "Load more",
+    "signInSection": "Sign in",
+    "signInHint": "Keep your profile across devices",
+    "passwordSignIn": "Username & password",
+    "passwordSignInAction": "Sign in",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "sendCode": "Send code",
+    "verifyCode": "Verify & sign in",
+    "code": "6-digit code",
+    "codeSent": "Code sent. Check your email (dev: shown below).",
+    "googleSignIn": "Continue with Google",
+    "googleUnavailable": "Google login needs GOOGLE_CLIENT_ID / SECRET",
+    "signOut": "Sign out",
+    "signingIn": "Signing in…",
+    "signedIn": "Signed in",
+    "authError": "Sign-in failed",
+    "personaLockedTitle": "Your role is waiting",
+    "personaLockedDesc": "Save or experience an idea to unlock your Supp persona.",
+    "personaUpdated": "Persona updated",
+    "collected": "collected",
+    "collectedTitle": "Ideas collected",
+    "collectedCount": "{count} collected",
+    "experiencedTitle": "Ideas experienced",
+    "experiencedCountLabel": "{count} experienced",
+    "experiencedByMonth": "By month",
+    "tapToCancel": "Tap a card to cancel",
+    "emptyCollected": "No collected ideas yet",
+    "emptyExperienced": "No experienced ideas yet",
+    "overlapCount": "{count} ideas in common",
+    "viewProfile": "View profile",
+    "follow": "Follow",
+    "following": "Following",
+    "followersTitle": "Followed me",
+    "followersSub": "People who follow you",
+    "emptySimilar": "Collect or experience ideas to find similar souls",
+    "emptyFollowers": "No followers yet",
+    "openIdea": "Open",
+    "cancelHint": "Tap × to cancel",
+    "cancelCollection": "Cancel collection",
+    "cancelExperience": "Cancel experience",
+    "back": "Back"
   },
   "idea": {
     "back": "Back",
@@ -133,8 +215,8 @@
     "duration": "Estimated duration",
     "minutes": "minutes",
     "publishedBy": "{name} published this idea",
-    "experienced": "Done",
-    "favorite": "Save",
+    "experienced": "experienced",
+    "favorite": "collect",
     "share": "Share",
     "claim": "Claim",
     "claimNote": "*Host events & earn",
@@ -145,6 +227,18 @@
     "address": "Address",
     "fee": "Fee",
     "free": "Free",
+    "steps": "Steps",
+    "stepsEmpty": "No steps yet — go with your instincts.",
+    "whatYouNeed": "What you need",
+    "needsEmpty": "Nothing special required.",
+    "socialMedia": "Social media",
+    "socialEmpty": "No video linked yet.",
+    "watchVideo": "Watch the video",
+    "platforms": {
+      "tiktok": "TikTok",
+      "instagram": "Instagram",
+      "xiaohongshu": "Xiaohongshu"
+    },
     "comments": "Comments",
     "writeComment": "Write a comment",
     "openOnMap": "Open on map",
@@ -158,9 +252,137 @@
     "postComment": "Post",
     "cancel": "Cancel",
     "replyingTo": "Replying to {name}",
-    "cancelReply": "Cancel reply"
+    "cancelReply": "Cancel reply",
+    "collect": "collect",
+    "toastExperiencedOn": "Marked as experienced",
+    "toastExperiencedOff": "Removed experienced mark",
+    "toastCollectOn": "Added to your collection",
+    "toastCollectOff": "Removed from collection",
+    "toastShared": "Shared (or link copied)",
+    "toastClaimedOn": "You claimed this idea — host it and earn",
+    "toastClaimedOff": "Claim removed",
+    "toastFailed": "Something went wrong — try again",
+    "commentsLoading": "Loading comments…",
+    "postingComment": "Posting…",
+    "moderationBlocked": "This content was blocked by safety screening.",
+    "moderationBadImageType": "Only JPG, PNG, WebP, or GIF images are allowed.",
+    "moderationImageTooLarge": "Each image must be under 5MB."
   },
   "common": {
     "loading": "Loading…"
+  },
+  "createIdea": {
+    "pageTitle": "Create an experience idea",
+    "back": "Back",
+    "stepOf": "Step {current} of {total}",
+    "next": "Continue",
+    "saving": "Saving…",
+    "saveDraft": "Save",
+    "submit": "Submit idea",
+    "submitting": "Submitting…",
+    "draftSaved": "Draft saved",
+    "published": "Idea published!",
+    "blocked": "Content did not pass safety screening.",
+    "saveFailed": "Could not save — try again",
+    "titleRequired": "Give your idea a name first",
+    "descriptionRequired": "Add a short description",
+    "aiGenerate": "AI",
+    "aiFailed": "AI could not generate — try again",
+    "uploadCover": "Upload cover photo",
+    "uploadFailed": "Upload failed",
+    "clearCover": "Clear upload (use auto cover)",
+    "coverHint": "Optional. If you skip, we’ll assign a cover from the photo library and keep it.",
+    "coverEmpty": "No cover yet — we’ll assign one on save",
+    "coverUploaded": "Your upload",
+    "coverAutoAssigned": "Auto-assigned cover",
+    "similarTitle": "Ideas with similar keywords",
+    "similarHint": "Tap to open and compare — avoid repeating an existing idea.",
+    "searching": "Checking…",
+    "reviewNote": "We’ll screen for sensitive content before publishing.",
+    "placeholders": {
+      "title": "e.g. Turn down headphones & eavesdrop",
+      "summary": "One-line tease for the idea",
+      "description": "What happens, how it feels, why try it…",
+      "tip": "A practical tip or warning",
+      "location": "e.g. Central MTR concourse",
+      "address": "Street / station address",
+      "city": "City",
+      "country": "Country",
+      "when": "e.g. Anytime · daytime",
+      "steps": "One step per line",
+      "needs": "One item per line"
+    },
+    "sensations": {
+      "calm": "Calm",
+      "curious": "Curious",
+      "stimulating": "Stimulating",
+      "intense": "Intense"
+    },
+    "steps": {
+      "title": {
+        "title": "Idea name",
+        "hint": "Name the experience. We’ll check for similar ideas as you type."
+      },
+      "summary": {
+        "title": "Short summary",
+        "hint": "A single sentence for cards and search."
+      },
+      "description": {
+        "title": "Description",
+        "hint": "Tell the story. Use AI if you need a draft."
+      },
+      "tip": {
+        "title": "Tip",
+        "hint": "One practical tip for people who try it."
+      },
+      "location": {
+        "title": "Location name",
+        "hint": "The place nickname people will recognize."
+      },
+      "address": {
+        "title": "Address",
+        "hint": "Where to go on a map."
+      },
+      "city": {
+        "title": "City & country",
+        "hint": "Where this experience lives."
+      },
+      "when": {
+        "title": "When",
+        "hint": "Time of day or schedule label."
+      },
+      "duration": {
+        "title": "Duration (minutes)",
+        "hint": "Rough time people should set aside."
+      },
+      "fee": {
+        "title": "Fee",
+        "hint": "0 for free. Amount in local currency units."
+      },
+      "categories": {
+        "title": "Categories",
+        "hint": "Pick one or more that fit."
+      },
+      "sensation": {
+        "title": "Sensation",
+        "hint": "How the experience tends to feel."
+      },
+      "steps": {
+        "title": "Steps",
+        "hint": "How to do it, one step per line. AI can help."
+      },
+      "needs": {
+        "title": "What you need",
+        "hint": "Tools or materials, one per line."
+      },
+      "cover": {
+        "title": "Cover photo",
+        "hint": "Upload or leave blank for an auto library cover."
+      },
+      "review": {
+        "title": "Review & submit",
+        "hint": "Check once, then submit for screening."
+      }
+    }
   }
 }

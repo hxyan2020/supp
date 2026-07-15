@@ -1,12 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { localizedIdea, type Idea } from "@/data/mock-ideas";
+import { scatterStyle } from "@/lib/scatter";
+
+const BATCH_SIZE = 6;
 
 type BriefPayload = {
+  city: string | null;
+  country: string | null;
   locationLabel: string | null;
   weatherKey: string | null;
   tempC: number | null;
@@ -23,11 +28,17 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
   const [brief, setBrief] = useState<BriefPayload | null>(null);
   const [experienced, setExperienced] = useState<Record<string, boolean>>({});
   const [favorited, setFavorited] = useState<Record<string, boolean>>({});
+  const [batchIndex, setBatchIndex] = useState(0);
+  const [swipeHint, setSwipeHint] = useState(false);
 
-  const top10 = useMemo(
-    () => [...ideas].sort((a, b) => b.relevance - a.relevance).slice(0, 10),
+  const ranked = useMemo(
+    () => [...ideas].sort((a, b) => b.relevance - a.relevance),
     [ideas],
   );
+
+  const visibleCount = Math.min((batchIndex + 1) * BATCH_SIZE, ranked.length);
+  const visibleIdeas = ranked.slice(0, visibleCount);
+  const hasMore = visibleCount < ranked.length;
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 30_000);
@@ -53,7 +64,6 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
       }
     }
 
-    // Always load history; attach weather/location if permitted
     void loadBrief();
 
     if (!navigator.geolocation) return;
@@ -65,7 +75,7 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         });
       },
       () => {
-        // location denied — brief already loaded without it
+        // location denied
       },
       { enableHighAccuracy: false, timeout: 12_000, maximumAge: 300_000 },
     );
@@ -95,16 +105,49 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         .join(" · ")
     : null;
 
+  const placeLabel =
+    brief?.city && brief?.country
+      ? `${brief.city}, ${brief.country}`
+      : brief?.locationLabel || brief?.city || brief?.country || null;
+
   const briefParts = buildBriefParts({
     greeting: greetingForHour(now.getHours(), t),
     dateLabel,
     timeLabel,
-    locationLabel: brief?.locationLabel ?? null,
+    placeLabel,
     weatherLabel,
     historyEvent: brief?.historyEvent ?? null,
     historyYear: brief?.historyYear ?? null,
     t,
   });
+
+  function loadNextBatch() {
+    if (!hasMore) return;
+    setBatchIndex((i) => i + 1);
+    setSwipeHint(true);
+    window.setTimeout(() => setSwipeHint(false), 900);
+  }
+
+  async function toggleAction(
+    ideaId: string,
+    action: "experienced" | "favorite",
+    next: boolean,
+  ) {
+    if (action === "experienced") {
+      setExperienced((s) => ({ ...s, [ideaId]: next }));
+    } else {
+      setFavorited((s) => ({ ...s, [ideaId]: next }));
+    }
+    try {
+      await fetch("/api/me/idea-actions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ideaId, action, active: next }),
+      });
+    } catch {
+      // optimistic UI kept
+    }
+  }
 
   return (
     <div className="relative min-h-[calc(100dvh-7.5rem)] overflow-hidden bg-supp-black text-white">
@@ -119,7 +162,9 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85" />
 
       <div className="relative z-10 px-4 pb-10 pt-5 animate-fade-up">
-        <h1 className="text-xl font-semibold tracking-wide">{t("smartTitle")}</h1>
+        <h1 className="text-xl font-semibold tracking-wide">
+          {t("smartTitle")}
+        </h1>
 
         <div className="mt-3 rounded-2xl bg-black/45 px-3.5 py-3 text-[13px] leading-relaxed text-white/90 backdrop-blur-md">
           {briefParts.map((part, i) =>
@@ -134,12 +179,11 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         </div>
 
         <ul className="mt-5 space-y-5 overflow-x-hidden px-1 pb-2">
-          {top10.map((idea, index) => {
+          {visibleIdeas.map((idea, index) => {
             const L = localizedIdea(idea, locale);
             const done = !!experienced[idea.id];
             const saved = !!favorited[idea.id];
-            const experiencedCount =
-              idea.experiencedCount + (done ? 1 : 0);
+            const experiencedCount = idea.experiencedCount + (done ? 1 : 0);
             const favoritedCount = idea.favoritedCount + (saved ? 1 : 0);
             const scatter = scatterStyle(idea.id, index);
 
@@ -174,10 +218,7 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
                         <button
                           type="button"
                           onClick={() =>
-                            setExperienced((s) => ({
-                              ...s,
-                              [idea.id]: !s[idea.id],
-                            }))
+                            void toggleAction(idea.id, "experienced", !done)
                           }
                           className={`flex items-center gap-1 text-[11px] ${
                             done ? "text-supp-red" : "text-white/70"
@@ -189,10 +230,7 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
                         <button
                           type="button"
                           onClick={() =>
-                            setFavorited((s) => ({
-                              ...s,
-                              [idea.id]: !s[idea.id],
-                            }))
+                            void toggleAction(idea.id, "favorite", !saved)
                           }
                           className={`flex items-center gap-1 text-[11px] ${
                             saved ? "text-supp-red" : "text-white/70"
@@ -211,9 +249,19 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         </ul>
 
         <div className="mt-6 space-y-4 text-center">
+          {hasMore ? (
+            <SwipeLoadMore
+              label={t("swipeLoadMore")}
+              hintActive={swipeHint}
+              onSwipeRight={loadNextBatch}
+            />
+          ) : (
+            <p className="text-[12px] text-white/55">{t("noMoreIdeas")}</p>
+          )}
+
           <Link
             href="/explore/search"
-            className="mx-auto flex w-[78%] items-center justify-center rounded-full bg-white py-3 text-sm font-semibold text-supp-ink shadow-lg transition hover:bg-white/95"
+            className="mx-auto flex w-[78%] items-center justify-center rounded-full bg-supp-red py-3 text-sm font-semibold text-white shadow-lg shadow-red-900/30 transition hover:bg-supp-red-dark"
           >
             {t("manualSearch")}
           </Link>
@@ -223,8 +271,8 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
           </p>
 
           <Link
-            href="/explore/search"
-            className="mx-auto flex w-[88%] items-center justify-center rounded-full bg-supp-red py-3.5 text-sm font-semibold text-white shadow-lg shadow-red-900/40 transition hover:bg-supp-red-dark"
+            href="/explore/create"
+            className="mx-auto flex w-[88%] items-center justify-center rounded-full bg-white py-3.5 text-sm font-semibold text-supp-ink shadow-lg transition hover:bg-white/95"
           >
             {t("createIdea")}
           </Link>
@@ -234,16 +282,40 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
   );
 }
 
-function scatterStyle(id: string, index: number): React.CSSProperties {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
-  hash = (hash + index * 97) >>> 0;
-  const tilt = ((hash % 13) - 6) * 0.9; // about -5.4° … 5.4°
-  const shiftX = ((hash >> 4) % 17) - 8; // about -8 … 8 px
-  const shiftY = ((hash >> 8) % 9) - 4;
-  return {
-    transform: `rotate(${tilt.toFixed(2)}deg) translate(${shiftX}px, ${shiftY}px)`,
-  };
+function SwipeLoadMore({
+  label,
+  hintActive,
+  onSwipeRight,
+}: {
+  label: string;
+  hintActive: boolean;
+  onSwipeRight: () => void;
+}) {
+  const startX = useRef<number | null>(null);
+
+  return (
+    <button
+      type="button"
+      onClick={onSwipeRight}
+      onTouchStart={(e) => {
+        startX.current = e.changedTouches[0]?.clientX ?? null;
+      }}
+      onTouchEnd={(e) => {
+        const start = startX.current;
+        const end = e.changedTouches[0]?.clientX;
+        startX.current = null;
+        if (start == null || end == null) return;
+        if (end - start > 56) onSwipeRight();
+      }}
+      className={`mx-auto flex w-[88%] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 py-3 text-sm font-semibold text-white backdrop-blur-sm transition ${
+        hintActive ? "translate-x-2 border-supp-red/60" : ""
+      }`}
+    >
+      <span aria-hidden>→</span>
+      {label}
+      <span aria-hidden>→</span>
+    </button>
+  );
 }
 
 function greetingForHour(hour: number, t: (key: string) => string) {
@@ -257,7 +329,7 @@ function buildBriefParts({
   greeting,
   dateLabel,
   timeLabel,
-  locationLabel,
+  placeLabel,
   weatherLabel,
   historyEvent,
   historyYear,
@@ -266,7 +338,7 @@ function buildBriefParts({
   greeting: string;
   dateLabel: string;
   timeLabel: string;
-  locationLabel: string | null;
+  placeLabel: string | null;
   weatherLabel: string | null;
   historyEvent: string | null;
   historyYear: number | null;
@@ -282,6 +354,22 @@ function buildBriefParts({
     { text: t("briefPeriod") },
   ];
 
+  if (placeLabel) {
+    parts.push({ text: " " });
+    parts.push({ text: t("briefYouAreIn") });
+    parts.push({ text: " " });
+    parts.push({ text: placeLabel, accent: true });
+    parts.push({ text: t("briefPeriod") });
+  }
+
+  if (weatherLabel) {
+    parts.push({ text: " " });
+    parts.push({ text: t("briefWeatherOnly") });
+    parts.push({ text: " " });
+    parts.push({ text: weatherLabel, accent: true });
+    parts.push({ text: t("briefPeriod") });
+  }
+
   if (historyEvent) {
     parts.push({ text: " " });
     parts.push({ text: t("briefOnThisDay") });
@@ -291,24 +379,6 @@ function buildBriefParts({
       parts.push({ text: ": " });
     }
     parts.push({ text: historyEvent, accent: true });
-    parts.push({ text: t("briefPeriod") });
-  }
-
-  if (locationLabel) {
-    parts.push({ text: " " });
-    parts.push({ text: t("briefYouAreIn") });
-    parts.push({ text: " " });
-    parts.push({ text: locationLabel, accent: true });
-    if (weatherLabel) {
-      parts.push({ text: t("briefWeatherSep") });
-      parts.push({ text: weatherLabel, accent: true });
-    }
-    parts.push({ text: t("briefPeriod") });
-  } else if (weatherLabel) {
-    parts.push({ text: " " });
-    parts.push({ text: t("briefWeatherOnly") });
-    parts.push({ text: " " });
-    parts.push({ text: weatherLabel, accent: true });
     parts.push({ text: t("briefPeriod") });
   }
 

@@ -1,4 +1,9 @@
-import type { Category, Sensation } from "@/data/mock-ideas";
+import type {
+  Category,
+  Engagement,
+  Sensation,
+  SocialEmbed,
+} from "@/data/mock-ideas";
 
 export type IdeaRecord = {
   id: string;
@@ -26,6 +31,7 @@ export type IdeaRecord = {
   country: string;
   categories: Category[];
   sensation: Sensation;
+  engagement?: Engagement;
   image: string;
   organizer: string;
   organizerZh: string;
@@ -36,7 +42,24 @@ export type IdeaRecord = {
   maxParticipants: number;
   relevance: number;
   tags: string[];
+  steps?: string[];
+  stepsZh?: string[];
+  needs?: string[];
+  needsZh?: string[];
+  socialEmbeds?: SocialEmbed[];
   published: boolean;
+  /**
+   * User-created idea workflow:
+   * draft = unfinished, rejected = failed screening, published = live
+   */
+  creationStatus?: "draft" | "rejected" | "published";
+  creatorUserId?: string;
+  creatorName?: string;
+  creatorNameZh?: string;
+  rejectionReason?: string;
+  rejectionReasonZh?: string;
+  /** Cover assigned from repository (locked after create) */
+  imageAssignedFromRepo?: boolean;
   sourceUrl?: string;
   sourcePlatform?: string;
   createdAt: string;
@@ -49,18 +72,39 @@ export type UserRecord = {
   nameZh: string;
   email: string;
   avatar: string;
+  /** References an entry in data/avatars/animals.json */
+  avatarAnimalId?: string;
   locale: string;
   city: string;
   country: string;
   experienced: number;
   favorited: number;
   claimed: number;
+  percentile?: number;
   persona: string;
   personaZh: string;
+  personaDesc?: string;
+  personaDescZh?: string;
   favoritedIds: string[];
   experiencedIds: string[];
+  /** ISO timestamps for when an idea was marked experienced (for month grouping) */
+  experiencedAt?: Record<string, string>;
   joinedIds: string[];
+  /** Users this account follows */
+  followingIds?: string[];
+  /** Users who follow this account */
+  followerIds?: string[];
   status: "active" | "suspended";
+  isGuest?: boolean;
+  authProvider?: "guest" | "email" | "google" | "password";
+  googleId?: string;
+  /** Login username (unique, optional for guests/OAuth) */
+  username?: string;
+  /** scrypt$hash — never expose to clients */
+  passwordHash?: string;
+  /** MBTI-like role id from data/personas/roles.json */
+  personaRoleId?: string;
+  personaAvatar?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -115,9 +159,31 @@ export type EventSource = {
   termsUrl?: string;
 };
 
+export type CommentRecord = {
+  id: string;
+  ideaId: string;
+  parentId?: string;
+  userId?: string;
+  authorName: string;
+  authorNameZh: string;
+  authorAvatar: string;
+  city: string;
+  cityZh: string;
+  country: string;
+  countryZh: string;
+  body: string;
+  bodyZh: string;
+  postedAt: string;
+  images: string[];
+  likes: number;
+  status: "published" | "blocked";
+  blockReason?: string;
+};
+
 export type DbShape = {
   ideas: IdeaRecord[];
   users: UserRecord[];
+  comments: CommentRecord[];
   scrapedEvents: ScrapedEventRecord[];
   scrapeRuns: {
     id: string;

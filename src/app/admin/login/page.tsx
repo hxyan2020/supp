@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
         onSubmit={onSubmit}
         className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#171a21] p-6"
       >
-        <h1 className="flex items-center gap-2.5 text-xl font-bold">
+        <h1 className="flex items-center gap-2.5 font-display text-xl font-extrabold tracking-tight">
           <img
             src="/logo.jpg"
             alt=""

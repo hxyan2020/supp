@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Cosmic Deer">
+  <defs>
+    <radialGradient id="bg-animal-013" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#F3722C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F94144" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-013)"/>
+  <rect width="128" height="128" rx="64" fill="#F9C74F" opacity="0.08"/>
+  
+  <circle cx="64" cy="70" r="38" fill="#F94144"/>
+  <ellipse cx="38" cy="42" rx="23" ry="29" fill="#F94144"/>
+  <ellipse cx="90" cy="42" rx="23" ry="29" fill="#F94144"/>
+  <ellipse cx="38" cy="44" rx="17" ry="23" fill="#F3722C"/>
+  <ellipse cx="90" cy="44" rx="17" ry="23" fill="#F3722C"/>
+  <circle cx="50" cy="66" r="5" fill="#F9C74F"/>
+  <circle cx="78" cy="66" r="5" fill="#F9C74F"/>
+  <circle cx="51.5" cy="65" r="2" fill="#fff"/>
+  <circle cx="79.5" cy="65" r="2" fill="#fff"/>
+  <ellipse cx="64" cy="81.75" rx="15" ry="10.5" fill="#F3722C"/>
+  <ellipse cx="64" cy="83.75" rx="4" ry="3" fill="#F9C74F"/>
+  <path d="M56 90 Q64 96 72 90" stroke="#F9C74F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  
+</svg>

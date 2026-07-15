@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Midnight Toad">
+  <defs>
+    <radialGradient id="bg-animal-314" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#43AA8B" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#577590" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-314)"/>
+  <rect width="128" height="128" rx="64" fill="#90BE6D" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="72" rx="34" ry="36" fill="#577590"/>
+  
+  <circle cx="52" cy="64" r="5.5" fill="#90BE6D"/>
+  <circle cx="76" cy="64" r="5.5" fill="#90BE6D"/>
+  <circle cx="53.5" cy="63" r="2" fill="#fff"/>
+  <circle cx="77.5" cy="63" r="2" fill="#fff"/>
+  <path d="M64 74 L88 78 L64 86 Z" fill="#43AA8B"/>
+  <ellipse cx="40" cy="90" rx="14" ry="8" fill="#43AA8B" transform="rotate(-20 40 90)"/>
+  <ellipse cx="88" cy="90" rx="14" ry="8" fill="#43AA8B" transform="rotate(20 88 90)"/>
+  
+  
+</svg>

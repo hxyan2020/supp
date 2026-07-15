@@ -1,0 +1,74 @@
+#cloud-config
+package_update: true
+packages:
+  - nginx
+  - git
+  - curl
+  - ca-certificates
+  - gnupg
+
+write_files:
+  - path: /etc/systemd/system/supp.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Supp Next.js app
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=www-data
+      WorkingDirectory=/var/www/supp
+      Environment=NODE_ENV=production
+      Environment=PORT=3000
+      Environment=HOME=/var/www/supp
+      Environment=npm_config_cache=/var/www/supp/.npm
+      Environment=ADMIN_PASSWORD=supp-admin-dev
+      ExecStart=/var/www/supp/node_modules/.bin/next start -H 127.0.0.1 -p 3000
+      Restart=always
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+
+  - path: /etc/nginx/sites-available/supp
+    permissions: "0644"
+    content: |
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+
+        client_max_body_size 20m;
+
+        location / {
+          proxy_pass http://127.0.0.1:3000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_read_timeout 60s;
+        }
+      }
+
+runcmd:
+  - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+  - apt-get install -y nodejs
+  - mkdir -p /var/www
+  - git clone --depth 1 --branch main https://github.com/hxyan2020/supp.git /var/www/supp
+  - cd /var/www/supp && npm install
+  - cd /var/www/supp && npm run build
+  - mkdir -p /var/www/supp/data/store /var/www/supp/.npm
+  - chown -R www-data:www-data /var/www/supp
+  - rm -f /etc/nginx/sites-enabled/default
+  - ln -sf /etc/nginx/sites-available/supp /etc/nginx/sites-enabled/supp
+  - systemctl daemon-reload
+  - systemctl enable supp
+  - systemctl restart supp
+  - systemctl restart nginx
+  - ufw allow OpenSSH || true
+  - ufw allow 'Nginx Full' || true
+  - ufw --force enable || true

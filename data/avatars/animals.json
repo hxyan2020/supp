@@ -1,0 +1,5207 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-14T14:02:22.176Z",
+  "count": 400,
+  "animals": [
+    {
+      "id": "animal-001",
+      "species": "Fox",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Fox",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-001.svg"
+    },
+    {
+      "id": "animal-002",
+      "species": "Wolf",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Wolf",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-002.svg"
+    },
+    {
+      "id": "animal-003",
+      "species": "Bear",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Bear",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-003.svg"
+    },
+    {
+      "id": "animal-004",
+      "species": "Panda",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Panda",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-004.svg"
+    },
+    {
+      "id": "animal-005",
+      "species": "Koala",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Koala",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-005.svg"
+    },
+    {
+      "id": "animal-006",
+      "species": "Cat",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Cat",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-006.svg"
+    },
+    {
+      "id": "animal-007",
+      "species": "Lion",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Lion",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-007.svg"
+    },
+    {
+      "id": "animal-008",
+      "species": "Tiger",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Tiger",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-008.svg"
+    },
+    {
+      "id": "animal-009",
+      "species": "Leopard",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Leopard",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-009.svg"
+    },
+    {
+      "id": "animal-010",
+      "species": "Cheetah",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Cheetah",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-010.svg"
+    },
+    {
+      "id": "animal-011",
+      "species": "Rabbit",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Rabbit",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-011.svg"
+    },
+    {
+      "id": "animal-012",
+      "species": "Hare",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hare",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-012.svg"
+    },
+    {
+      "id": "animal-013",
+      "species": "Deer",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Deer",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-013.svg"
+    },
+    {
+      "id": "animal-014",
+      "species": "Moose",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Moose",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-014.svg"
+    },
+    {
+      "id": "animal-015",
+      "species": "Elk",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Elk",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-015.svg"
+    },
+    {
+      "id": "animal-016",
+      "species": "Otter",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Otter",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-016.svg"
+    },
+    {
+      "id": "animal-017",
+      "species": "Beaver",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Beaver",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-017.svg"
+    },
+    {
+      "id": "animal-018",
+      "species": "Raccoon",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Raccoon",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-018.svg"
+    },
+    {
+      "id": "animal-019",
+      "species": "Badger",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Badger",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-019.svg"
+    },
+    {
+      "id": "animal-020",
+      "species": "Skunk",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Skunk",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-020.svg"
+    },
+    {
+      "id": "animal-021",
+      "species": "Hedgehog",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hedgehog",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-021.svg"
+    },
+    {
+      "id": "animal-022",
+      "species": "Squirrel",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Squirrel",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-022.svg"
+    },
+    {
+      "id": "animal-023",
+      "species": "Chipmunk",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Chipmunk",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-023.svg"
+    },
+    {
+      "id": "animal-024",
+      "species": "Mouse",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Mouse",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-024.svg"
+    },
+    {
+      "id": "animal-025",
+      "species": "Rat",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Rat",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-025.svg"
+    },
+    {
+      "id": "animal-026",
+      "species": "Hamster",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hamster",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-026.svg"
+    },
+    {
+      "id": "animal-027",
+      "species": "Guinea Pig",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Guinea Pig",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-027.svg"
+    },
+    {
+      "id": "animal-028",
+      "species": "Capybara",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Capybara",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-028.svg"
+    },
+    {
+      "id": "animal-029",
+      "species": "Sloth",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Sloth",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-029.svg"
+    },
+    {
+      "id": "animal-030",
+      "species": "Monkey",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Monkey",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-030.svg"
+    },
+    {
+      "id": "animal-031",
+      "species": "Gorilla",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Gorilla",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-031.svg"
+    },
+    {
+      "id": "animal-032",
+      "species": "Orangutan",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Orangutan",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-032.svg"
+    },
+    {
+      "id": "animal-033",
+      "species": "Lemur",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Lemur",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-033.svg"
+    },
+    {
+      "id": "animal-034",
+      "species": "Dog",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Dog",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-034.svg"
+    },
+    {
+      "id": "animal-035",
+      "species": "Husky",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Husky",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-035.svg"
+    },
+    {
+      "id": "animal-036",
+      "species": "Corgi",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Corgi",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-036.svg"
+    },
+    {
+      "id": "animal-037",
+      "species": "Puppy",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Puppy",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-037.svg"
+    },
+    {
+      "id": "animal-038",
+      "species": "Seal",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Seal",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-038.svg"
+    },
+    {
+      "id": "animal-039",
+      "species": "Walrus",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Walrus",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-039.svg"
+    },
+    {
+      "id": "animal-040",
+      "species": "Penguin",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Penguin",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-040.svg"
+    },
+    {
+      "id": "animal-041",
+      "species": "Owl",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Owl",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-041.svg"
+    },
+    {
+      "id": "animal-042",
+      "species": "Eagle",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Eagle",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-042.svg"
+    },
+    {
+      "id": "animal-043",
+      "species": "Hawk",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hawk",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-043.svg"
+    },
+    {
+      "id": "animal-044",
+      "species": "Falcon",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Falcon",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-044.svg"
+    },
+    {
+      "id": "animal-045",
+      "species": "Parrot",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Parrot",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-045.svg"
+    },
+    {
+      "id": "animal-046",
+      "species": "Toucan",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Toucan",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-046.svg"
+    },
+    {
+      "id": "animal-047",
+      "species": "Flamingo",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Flamingo",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-047.svg"
+    },
+    {
+      "id": "animal-048",
+      "species": "Swan",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Swan",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-048.svg"
+    },
+    {
+      "id": "animal-049",
+      "species": "Duck",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Duck",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-049.svg"
+    },
+    {
+      "id": "animal-050",
+      "species": "Goose",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Goose",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-050.svg"
+    },
+    {
+      "id": "animal-051",
+      "species": "Chicken",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Chicken",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-051.svg"
+    },
+    {
+      "id": "animal-052",
+      "species": "Rooster",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Rooster",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-052.svg"
+    },
+    {
+      "id": "animal-053",
+      "species": "Peacock",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Peacock",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-053.svg"
+    },
+    {
+      "id": "animal-054",
+      "species": "Crow",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Crow",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-054.svg"
+    },
+    {
+      "id": "animal-055",
+      "species": "Raven",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Raven",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-055.svg"
+    },
+    {
+      "id": "animal-056",
+      "species": "Sparrow",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Sparrow",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-056.svg"
+    },
+    {
+      "id": "animal-057",
+      "species": "Robin",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Robin",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-057.svg"
+    },
+    {
+      "id": "animal-058",
+      "species": "Dove",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Dove",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-058.svg"
+    },
+    {
+      "id": "animal-059",
+      "species": "Pigeon",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Pigeon",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-059.svg"
+    },
+    {
+      "id": "animal-060",
+      "species": "Hummingbird",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hummingbird",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-060.svg"
+    },
+    {
+      "id": "animal-061",
+      "species": "Dolphin",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Dolphin",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-061.svg"
+    },
+    {
+      "id": "animal-062",
+      "species": "Whale",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Whale",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-062.svg"
+    },
+    {
+      "id": "animal-063",
+      "species": "Shark",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Shark",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-063.svg"
+    },
+    {
+      "id": "animal-064",
+      "species": "Octopus",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Octopus",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-064.svg"
+    },
+    {
+      "id": "animal-065",
+      "species": "Squid",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Squid",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-065.svg"
+    },
+    {
+      "id": "animal-066",
+      "species": "Crab",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Crab",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-066.svg"
+    },
+    {
+      "id": "animal-067",
+      "species": "Lobster",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Lobster",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-067.svg"
+    },
+    {
+      "id": "animal-068",
+      "species": "Shrimp",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Shrimp",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-068.svg"
+    },
+    {
+      "id": "animal-069",
+      "species": "Jellyfish",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Jellyfish",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-069.svg"
+    },
+    {
+      "id": "animal-070",
+      "species": "Starfish",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Starfish",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-070.svg"
+    },
+    {
+      "id": "animal-071",
+      "species": "Turtle",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Turtle",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-071.svg"
+    },
+    {
+      "id": "animal-072",
+      "species": "Tortoise",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Tortoise",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-072.svg"
+    },
+    {
+      "id": "animal-073",
+      "species": "Frog",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Frog",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-073.svg"
+    },
+    {
+      "id": "animal-074",
+      "species": "Toad",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Toad",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-074.svg"
+    },
+    {
+      "id": "animal-075",
+      "species": "Lizard",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Lizard",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-075.svg"
+    },
+    {
+      "id": "animal-076",
+      "species": "Gecko",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Gecko",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-076.svg"
+    },
+    {
+      "id": "animal-077",
+      "species": "Chameleon",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Chameleon",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-077.svg"
+    },
+    {
+      "id": "animal-078",
+      "species": "Snake",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Snake",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-078.svg"
+    },
+    {
+      "id": "animal-079",
+      "species": "Cobra",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Cobra",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-079.svg"
+    },
+    {
+      "id": "animal-080",
+      "species": "Alligator",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Alligator",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-080.svg"
+    },
+    {
+      "id": "animal-081",
+      "species": "Crocodile",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Crocodile",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-081.svg"
+    },
+    {
+      "id": "animal-082",
+      "species": "Dinosaur",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Dinosaur",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-082.svg"
+    },
+    {
+      "id": "animal-083",
+      "species": "Axolotl",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Axolotl",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-083.svg"
+    },
+    {
+      "id": "animal-084",
+      "species": "Newt",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Newt",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-084.svg"
+    },
+    {
+      "id": "animal-085",
+      "species": "Salamander",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Salamander",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-085.svg"
+    },
+    {
+      "id": "animal-086",
+      "species": "Goat",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Goat",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-086.svg"
+    },
+    {
+      "id": "animal-087",
+      "species": "Sheep",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Sheep",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-087.svg"
+    },
+    {
+      "id": "animal-088",
+      "species": "Lamb",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Lamb",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-088.svg"
+    },
+    {
+      "id": "animal-089",
+      "species": "Cow",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Cow",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-089.svg"
+    },
+    {
+      "id": "animal-090",
+      "species": "Bull",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Bull",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-090.svg"
+    },
+    {
+      "id": "animal-091",
+      "species": "Horse",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Horse",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-091.svg"
+    },
+    {
+      "id": "animal-092",
+      "species": "Pony",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Pony",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-092.svg"
+    },
+    {
+      "id": "animal-093",
+      "species": "Zebra",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Zebra",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-093.svg"
+    },
+    {
+      "id": "animal-094",
+      "species": "Donkey",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Donkey",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-094.svg"
+    },
+    {
+      "id": "animal-095",
+      "species": "Pig",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Pig",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-095.svg"
+    },
+    {
+      "id": "animal-096",
+      "species": "Boar",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Boar",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-096.svg"
+    },
+    {
+      "id": "animal-097",
+      "species": "Alpaca",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Alpaca",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-097.svg"
+    },
+    {
+      "id": "animal-098",
+      "species": "Llama",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Llama",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-098.svg"
+    },
+    {
+      "id": "animal-099",
+      "species": "Camel",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Camel",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-099.svg"
+    },
+    {
+      "id": "animal-100",
+      "species": "Elephant",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Elephant",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-100.svg"
+    },
+    {
+      "id": "animal-101",
+      "species": "Rhino",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Rhino",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-101.svg"
+    },
+    {
+      "id": "animal-102",
+      "species": "Hippo",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Hippo",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-102.svg"
+    },
+    {
+      "id": "animal-103",
+      "species": "Giraffe",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Giraffe",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-103.svg"
+    },
+    {
+      "id": "animal-104",
+      "species": "Antelope",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Antelope",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-104.svg"
+    },
+    {
+      "id": "animal-105",
+      "species": "Buffalo",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Buffalo",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-105.svg"
+    },
+    {
+      "id": "animal-106",
+      "species": "Bison",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Bison",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-106.svg"
+    },
+    {
+      "id": "animal-107",
+      "species": "Yak",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Yak",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-107.svg"
+    },
+    {
+      "id": "animal-108",
+      "species": "Kangaroo",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Kangaroo",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-108.svg"
+    },
+    {
+      "id": "animal-109",
+      "species": "Wallaby",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Wallaby",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-109.svg"
+    },
+    {
+      "id": "animal-110",
+      "species": "Platypus",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Platypus",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-110.svg"
+    },
+    {
+      "id": "animal-111",
+      "species": "Echidna",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Echidna",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-111.svg"
+    },
+    {
+      "id": "animal-112",
+      "species": "Bat",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Bat",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-112.svg"
+    },
+    {
+      "id": "animal-113",
+      "species": "Bee",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Bee",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-113.svg"
+    },
+    {
+      "id": "animal-114",
+      "species": "Butterfly",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Butterfly",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-114.svg"
+    },
+    {
+      "id": "animal-115",
+      "species": "Dragonfly",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Dragonfly",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-115.svg"
+    },
+    {
+      "id": "animal-116",
+      "species": "Ladybug",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Ladybug",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-116.svg"
+    },
+    {
+      "id": "animal-117",
+      "species": "Beetle",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Beetle",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-117.svg"
+    },
+    {
+      "id": "animal-118",
+      "species": "Ant",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Ant",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-118.svg"
+    },
+    {
+      "id": "animal-119",
+      "species": "Snail",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Snail",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-119.svg"
+    },
+    {
+      "id": "animal-120",
+      "species": "Caterpillar",
+      "adjective": "Cosmic",
+      "nicknameHint": "Cosmic Caterpillar",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-120.svg"
+    },
+    {
+      "id": "animal-121",
+      "species": "Fox",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Fox",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-121.svg"
+    },
+    {
+      "id": "animal-122",
+      "species": "Wolf",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Wolf",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-122.svg"
+    },
+    {
+      "id": "animal-123",
+      "species": "Bear",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Bear",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-123.svg"
+    },
+    {
+      "id": "animal-124",
+      "species": "Panda",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Panda",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-124.svg"
+    },
+    {
+      "id": "animal-125",
+      "species": "Koala",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Koala",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-125.svg"
+    },
+    {
+      "id": "animal-126",
+      "species": "Cat",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Cat",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-126.svg"
+    },
+    {
+      "id": "animal-127",
+      "species": "Lion",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Lion",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-127.svg"
+    },
+    {
+      "id": "animal-128",
+      "species": "Tiger",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Tiger",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-128.svg"
+    },
+    {
+      "id": "animal-129",
+      "species": "Leopard",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Leopard",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-129.svg"
+    },
+    {
+      "id": "animal-130",
+      "species": "Cheetah",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Cheetah",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-130.svg"
+    },
+    {
+      "id": "animal-131",
+      "species": "Rabbit",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Rabbit",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-131.svg"
+    },
+    {
+      "id": "animal-132",
+      "species": "Hare",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hare",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-132.svg"
+    },
+    {
+      "id": "animal-133",
+      "species": "Deer",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Deer",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-133.svg"
+    },
+    {
+      "id": "animal-134",
+      "species": "Moose",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Moose",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-134.svg"
+    },
+    {
+      "id": "animal-135",
+      "species": "Elk",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Elk",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-135.svg"
+    },
+    {
+      "id": "animal-136",
+      "species": "Otter",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Otter",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-136.svg"
+    },
+    {
+      "id": "animal-137",
+      "species": "Beaver",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Beaver",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-137.svg"
+    },
+    {
+      "id": "animal-138",
+      "species": "Raccoon",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Raccoon",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-138.svg"
+    },
+    {
+      "id": "animal-139",
+      "species": "Badger",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Badger",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-139.svg"
+    },
+    {
+      "id": "animal-140",
+      "species": "Skunk",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Skunk",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-140.svg"
+    },
+    {
+      "id": "animal-141",
+      "species": "Hedgehog",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hedgehog",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-141.svg"
+    },
+    {
+      "id": "animal-142",
+      "species": "Squirrel",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Squirrel",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-142.svg"
+    },
+    {
+      "id": "animal-143",
+      "species": "Chipmunk",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Chipmunk",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-143.svg"
+    },
+    {
+      "id": "animal-144",
+      "species": "Mouse",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Mouse",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-144.svg"
+    },
+    {
+      "id": "animal-145",
+      "species": "Rat",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Rat",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-145.svg"
+    },
+    {
+      "id": "animal-146",
+      "species": "Hamster",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hamster",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-146.svg"
+    },
+    {
+      "id": "animal-147",
+      "species": "Guinea Pig",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Guinea Pig",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-147.svg"
+    },
+    {
+      "id": "animal-148",
+      "species": "Capybara",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Capybara",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-148.svg"
+    },
+    {
+      "id": "animal-149",
+      "species": "Sloth",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Sloth",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-149.svg"
+    },
+    {
+      "id": "animal-150",
+      "species": "Monkey",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Monkey",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-150.svg"
+    },
+    {
+      "id": "animal-151",
+      "species": "Gorilla",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Gorilla",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-151.svg"
+    },
+    {
+      "id": "animal-152",
+      "species": "Orangutan",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Orangutan",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-152.svg"
+    },
+    {
+      "id": "animal-153",
+      "species": "Lemur",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Lemur",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-153.svg"
+    },
+    {
+      "id": "animal-154",
+      "species": "Dog",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Dog",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-154.svg"
+    },
+    {
+      "id": "animal-155",
+      "species": "Husky",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Husky",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-155.svg"
+    },
+    {
+      "id": "animal-156",
+      "species": "Corgi",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Corgi",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-156.svg"
+    },
+    {
+      "id": "animal-157",
+      "species": "Puppy",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Puppy",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-157.svg"
+    },
+    {
+      "id": "animal-158",
+      "species": "Seal",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Seal",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-158.svg"
+    },
+    {
+      "id": "animal-159",
+      "species": "Walrus",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Walrus",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-159.svg"
+    },
+    {
+      "id": "animal-160",
+      "species": "Penguin",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Penguin",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-160.svg"
+    },
+    {
+      "id": "animal-161",
+      "species": "Owl",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Owl",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-161.svg"
+    },
+    {
+      "id": "animal-162",
+      "species": "Eagle",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Eagle",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-162.svg"
+    },
+    {
+      "id": "animal-163",
+      "species": "Hawk",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hawk",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-163.svg"
+    },
+    {
+      "id": "animal-164",
+      "species": "Falcon",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Falcon",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-164.svg"
+    },
+    {
+      "id": "animal-165",
+      "species": "Parrot",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Parrot",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-165.svg"
+    },
+    {
+      "id": "animal-166",
+      "species": "Toucan",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Toucan",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-166.svg"
+    },
+    {
+      "id": "animal-167",
+      "species": "Flamingo",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Flamingo",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-167.svg"
+    },
+    {
+      "id": "animal-168",
+      "species": "Swan",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Swan",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-168.svg"
+    },
+    {
+      "id": "animal-169",
+      "species": "Duck",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Duck",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-169.svg"
+    },
+    {
+      "id": "animal-170",
+      "species": "Goose",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Goose",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-170.svg"
+    },
+    {
+      "id": "animal-171",
+      "species": "Chicken",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Chicken",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-171.svg"
+    },
+    {
+      "id": "animal-172",
+      "species": "Rooster",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Rooster",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-172.svg"
+    },
+    {
+      "id": "animal-173",
+      "species": "Peacock",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Peacock",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-173.svg"
+    },
+    {
+      "id": "animal-174",
+      "species": "Crow",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Crow",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-174.svg"
+    },
+    {
+      "id": "animal-175",
+      "species": "Raven",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Raven",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-175.svg"
+    },
+    {
+      "id": "animal-176",
+      "species": "Sparrow",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Sparrow",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-176.svg"
+    },
+    {
+      "id": "animal-177",
+      "species": "Robin",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Robin",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-177.svg"
+    },
+    {
+      "id": "animal-178",
+      "species": "Dove",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Dove",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-178.svg"
+    },
+    {
+      "id": "animal-179",
+      "species": "Pigeon",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Pigeon",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-179.svg"
+    },
+    {
+      "id": "animal-180",
+      "species": "Hummingbird",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hummingbird",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-180.svg"
+    },
+    {
+      "id": "animal-181",
+      "species": "Dolphin",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Dolphin",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-181.svg"
+    },
+    {
+      "id": "animal-182",
+      "species": "Whale",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Whale",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-182.svg"
+    },
+    {
+      "id": "animal-183",
+      "species": "Shark",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Shark",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-183.svg"
+    },
+    {
+      "id": "animal-184",
+      "species": "Octopus",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Octopus",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-184.svg"
+    },
+    {
+      "id": "animal-185",
+      "species": "Squid",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Squid",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-185.svg"
+    },
+    {
+      "id": "animal-186",
+      "species": "Crab",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Crab",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-186.svg"
+    },
+    {
+      "id": "animal-187",
+      "species": "Lobster",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Lobster",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-187.svg"
+    },
+    {
+      "id": "animal-188",
+      "species": "Shrimp",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Shrimp",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-188.svg"
+    },
+    {
+      "id": "animal-189",
+      "species": "Jellyfish",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Jellyfish",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-189.svg"
+    },
+    {
+      "id": "animal-190",
+      "species": "Starfish",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Starfish",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-190.svg"
+    },
+    {
+      "id": "animal-191",
+      "species": "Turtle",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Turtle",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-191.svg"
+    },
+    {
+      "id": "animal-192",
+      "species": "Tortoise",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Tortoise",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-192.svg"
+    },
+    {
+      "id": "animal-193",
+      "species": "Frog",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Frog",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-193.svg"
+    },
+    {
+      "id": "animal-194",
+      "species": "Toad",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Toad",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-194.svg"
+    },
+    {
+      "id": "animal-195",
+      "species": "Lizard",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Lizard",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-195.svg"
+    },
+    {
+      "id": "animal-196",
+      "species": "Gecko",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Gecko",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-196.svg"
+    },
+    {
+      "id": "animal-197",
+      "species": "Chameleon",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Chameleon",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-197.svg"
+    },
+    {
+      "id": "animal-198",
+      "species": "Snake",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Snake",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-198.svg"
+    },
+    {
+      "id": "animal-199",
+      "species": "Cobra",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Cobra",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-199.svg"
+    },
+    {
+      "id": "animal-200",
+      "species": "Alligator",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Alligator",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-200.svg"
+    },
+    {
+      "id": "animal-201",
+      "species": "Crocodile",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Crocodile",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-201.svg"
+    },
+    {
+      "id": "animal-202",
+      "species": "Dinosaur",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Dinosaur",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-202.svg"
+    },
+    {
+      "id": "animal-203",
+      "species": "Axolotl",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Axolotl",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-203.svg"
+    },
+    {
+      "id": "animal-204",
+      "species": "Newt",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Newt",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-204.svg"
+    },
+    {
+      "id": "animal-205",
+      "species": "Salamander",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Salamander",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-205.svg"
+    },
+    {
+      "id": "animal-206",
+      "species": "Goat",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Goat",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-206.svg"
+    },
+    {
+      "id": "animal-207",
+      "species": "Sheep",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Sheep",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-207.svg"
+    },
+    {
+      "id": "animal-208",
+      "species": "Lamb",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Lamb",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-208.svg"
+    },
+    {
+      "id": "animal-209",
+      "species": "Cow",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Cow",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-209.svg"
+    },
+    {
+      "id": "animal-210",
+      "species": "Bull",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Bull",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-210.svg"
+    },
+    {
+      "id": "animal-211",
+      "species": "Horse",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Horse",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-211.svg"
+    },
+    {
+      "id": "animal-212",
+      "species": "Pony",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Pony",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-212.svg"
+    },
+    {
+      "id": "animal-213",
+      "species": "Zebra",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Zebra",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-213.svg"
+    },
+    {
+      "id": "animal-214",
+      "species": "Donkey",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Donkey",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-214.svg"
+    },
+    {
+      "id": "animal-215",
+      "species": "Pig",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Pig",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-215.svg"
+    },
+    {
+      "id": "animal-216",
+      "species": "Boar",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Boar",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-216.svg"
+    },
+    {
+      "id": "animal-217",
+      "species": "Alpaca",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Alpaca",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-217.svg"
+    },
+    {
+      "id": "animal-218",
+      "species": "Llama",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Llama",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-218.svg"
+    },
+    {
+      "id": "animal-219",
+      "species": "Camel",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Camel",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-219.svg"
+    },
+    {
+      "id": "animal-220",
+      "species": "Elephant",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Elephant",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-220.svg"
+    },
+    {
+      "id": "animal-221",
+      "species": "Rhino",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Rhino",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-221.svg"
+    },
+    {
+      "id": "animal-222",
+      "species": "Hippo",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Hippo",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-222.svg"
+    },
+    {
+      "id": "animal-223",
+      "species": "Giraffe",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Giraffe",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-223.svg"
+    },
+    {
+      "id": "animal-224",
+      "species": "Antelope",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Antelope",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-224.svg"
+    },
+    {
+      "id": "animal-225",
+      "species": "Buffalo",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Buffalo",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-225.svg"
+    },
+    {
+      "id": "animal-226",
+      "species": "Bison",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Bison",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-226.svg"
+    },
+    {
+      "id": "animal-227",
+      "species": "Yak",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Yak",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-227.svg"
+    },
+    {
+      "id": "animal-228",
+      "species": "Kangaroo",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Kangaroo",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-228.svg"
+    },
+    {
+      "id": "animal-229",
+      "species": "Wallaby",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Wallaby",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-229.svg"
+    },
+    {
+      "id": "animal-230",
+      "species": "Platypus",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Platypus",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-230.svg"
+    },
+    {
+      "id": "animal-231",
+      "species": "Echidna",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Echidna",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-231.svg"
+    },
+    {
+      "id": "animal-232",
+      "species": "Bat",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Bat",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-232.svg"
+    },
+    {
+      "id": "animal-233",
+      "species": "Bee",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Bee",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-233.svg"
+    },
+    {
+      "id": "animal-234",
+      "species": "Butterfly",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Butterfly",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-234.svg"
+    },
+    {
+      "id": "animal-235",
+      "species": "Dragonfly",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Dragonfly",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-235.svg"
+    },
+    {
+      "id": "animal-236",
+      "species": "Ladybug",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Ladybug",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-236.svg"
+    },
+    {
+      "id": "animal-237",
+      "species": "Beetle",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Beetle",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-237.svg"
+    },
+    {
+      "id": "animal-238",
+      "species": "Ant",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Ant",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-238.svg"
+    },
+    {
+      "id": "animal-239",
+      "species": "Snail",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Snail",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-239.svg"
+    },
+    {
+      "id": "animal-240",
+      "species": "Caterpillar",
+      "adjective": "Sunny",
+      "nicknameHint": "Sunny Caterpillar",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-240.svg"
+    },
+    {
+      "id": "animal-241",
+      "species": "Fox",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Fox",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-241.svg"
+    },
+    {
+      "id": "animal-242",
+      "species": "Wolf",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Wolf",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-242.svg"
+    },
+    {
+      "id": "animal-243",
+      "species": "Bear",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Bear",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-243.svg"
+    },
+    {
+      "id": "animal-244",
+      "species": "Panda",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Panda",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-244.svg"
+    },
+    {
+      "id": "animal-245",
+      "species": "Koala",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Koala",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-245.svg"
+    },
+    {
+      "id": "animal-246",
+      "species": "Cat",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Cat",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-246.svg"
+    },
+    {
+      "id": "animal-247",
+      "species": "Lion",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Lion",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-247.svg"
+    },
+    {
+      "id": "animal-248",
+      "species": "Tiger",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Tiger",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-248.svg"
+    },
+    {
+      "id": "animal-249",
+      "species": "Leopard",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Leopard",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-249.svg"
+    },
+    {
+      "id": "animal-250",
+      "species": "Cheetah",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Cheetah",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-250.svg"
+    },
+    {
+      "id": "animal-251",
+      "species": "Rabbit",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Rabbit",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-251.svg"
+    },
+    {
+      "id": "animal-252",
+      "species": "Hare",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hare",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-252.svg"
+    },
+    {
+      "id": "animal-253",
+      "species": "Deer",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Deer",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-253.svg"
+    },
+    {
+      "id": "animal-254",
+      "species": "Moose",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Moose",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-254.svg"
+    },
+    {
+      "id": "animal-255",
+      "species": "Elk",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Elk",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-255.svg"
+    },
+    {
+      "id": "animal-256",
+      "species": "Otter",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Otter",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-256.svg"
+    },
+    {
+      "id": "animal-257",
+      "species": "Beaver",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Beaver",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-257.svg"
+    },
+    {
+      "id": "animal-258",
+      "species": "Raccoon",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Raccoon",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-258.svg"
+    },
+    {
+      "id": "animal-259",
+      "species": "Badger",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Badger",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-259.svg"
+    },
+    {
+      "id": "animal-260",
+      "species": "Skunk",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Skunk",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-260.svg"
+    },
+    {
+      "id": "animal-261",
+      "species": "Hedgehog",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hedgehog",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-261.svg"
+    },
+    {
+      "id": "animal-262",
+      "species": "Squirrel",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Squirrel",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-262.svg"
+    },
+    {
+      "id": "animal-263",
+      "species": "Chipmunk",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Chipmunk",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-263.svg"
+    },
+    {
+      "id": "animal-264",
+      "species": "Mouse",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Mouse",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-264.svg"
+    },
+    {
+      "id": "animal-265",
+      "species": "Rat",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Rat",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-265.svg"
+    },
+    {
+      "id": "animal-266",
+      "species": "Hamster",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hamster",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-266.svg"
+    },
+    {
+      "id": "animal-267",
+      "species": "Guinea Pig",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Guinea Pig",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-267.svg"
+    },
+    {
+      "id": "animal-268",
+      "species": "Capybara",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Capybara",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-268.svg"
+    },
+    {
+      "id": "animal-269",
+      "species": "Sloth",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Sloth",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-269.svg"
+    },
+    {
+      "id": "animal-270",
+      "species": "Monkey",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Monkey",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-270.svg"
+    },
+    {
+      "id": "animal-271",
+      "species": "Gorilla",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Gorilla",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-271.svg"
+    },
+    {
+      "id": "animal-272",
+      "species": "Orangutan",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Orangutan",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-272.svg"
+    },
+    {
+      "id": "animal-273",
+      "species": "Lemur",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Lemur",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-273.svg"
+    },
+    {
+      "id": "animal-274",
+      "species": "Dog",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Dog",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-274.svg"
+    },
+    {
+      "id": "animal-275",
+      "species": "Husky",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Husky",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-275.svg"
+    },
+    {
+      "id": "animal-276",
+      "species": "Corgi",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Corgi",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-276.svg"
+    },
+    {
+      "id": "animal-277",
+      "species": "Puppy",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Puppy",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-277.svg"
+    },
+    {
+      "id": "animal-278",
+      "species": "Seal",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Seal",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-278.svg"
+    },
+    {
+      "id": "animal-279",
+      "species": "Walrus",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Walrus",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-279.svg"
+    },
+    {
+      "id": "animal-280",
+      "species": "Penguin",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Penguin",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-280.svg"
+    },
+    {
+      "id": "animal-281",
+      "species": "Owl",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Owl",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-281.svg"
+    },
+    {
+      "id": "animal-282",
+      "species": "Eagle",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Eagle",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-282.svg"
+    },
+    {
+      "id": "animal-283",
+      "species": "Hawk",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hawk",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-283.svg"
+    },
+    {
+      "id": "animal-284",
+      "species": "Falcon",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Falcon",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-284.svg"
+    },
+    {
+      "id": "animal-285",
+      "species": "Parrot",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Parrot",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-285.svg"
+    },
+    {
+      "id": "animal-286",
+      "species": "Toucan",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Toucan",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-286.svg"
+    },
+    {
+      "id": "animal-287",
+      "species": "Flamingo",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Flamingo",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-287.svg"
+    },
+    {
+      "id": "animal-288",
+      "species": "Swan",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Swan",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-288.svg"
+    },
+    {
+      "id": "animal-289",
+      "species": "Duck",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Duck",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-289.svg"
+    },
+    {
+      "id": "animal-290",
+      "species": "Goose",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Goose",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-290.svg"
+    },
+    {
+      "id": "animal-291",
+      "species": "Chicken",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Chicken",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-291.svg"
+    },
+    {
+      "id": "animal-292",
+      "species": "Rooster",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Rooster",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-292.svg"
+    },
+    {
+      "id": "animal-293",
+      "species": "Peacock",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Peacock",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-293.svg"
+    },
+    {
+      "id": "animal-294",
+      "species": "Crow",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Crow",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-294.svg"
+    },
+    {
+      "id": "animal-295",
+      "species": "Raven",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Raven",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-295.svg"
+    },
+    {
+      "id": "animal-296",
+      "species": "Sparrow",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Sparrow",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-296.svg"
+    },
+    {
+      "id": "animal-297",
+      "species": "Robin",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Robin",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-297.svg"
+    },
+    {
+      "id": "animal-298",
+      "species": "Dove",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Dove",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-298.svg"
+    },
+    {
+      "id": "animal-299",
+      "species": "Pigeon",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Pigeon",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-299.svg"
+    },
+    {
+      "id": "animal-300",
+      "species": "Hummingbird",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hummingbird",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-300.svg"
+    },
+    {
+      "id": "animal-301",
+      "species": "Dolphin",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Dolphin",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-301.svg"
+    },
+    {
+      "id": "animal-302",
+      "species": "Whale",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Whale",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-302.svg"
+    },
+    {
+      "id": "animal-303",
+      "species": "Shark",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Shark",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-303.svg"
+    },
+    {
+      "id": "animal-304",
+      "species": "Octopus",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Octopus",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-304.svg"
+    },
+    {
+      "id": "animal-305",
+      "species": "Squid",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Squid",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-305.svg"
+    },
+    {
+      "id": "animal-306",
+      "species": "Crab",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Crab",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-306.svg"
+    },
+    {
+      "id": "animal-307",
+      "species": "Lobster",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Lobster",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-307.svg"
+    },
+    {
+      "id": "animal-308",
+      "species": "Shrimp",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Shrimp",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-308.svg"
+    },
+    {
+      "id": "animal-309",
+      "species": "Jellyfish",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Jellyfish",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-309.svg"
+    },
+    {
+      "id": "animal-310",
+      "species": "Starfish",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Starfish",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-310.svg"
+    },
+    {
+      "id": "animal-311",
+      "species": "Turtle",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Turtle",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-311.svg"
+    },
+    {
+      "id": "animal-312",
+      "species": "Tortoise",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Tortoise",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-312.svg"
+    },
+    {
+      "id": "animal-313",
+      "species": "Frog",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Frog",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-313.svg"
+    },
+    {
+      "id": "animal-314",
+      "species": "Toad",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Toad",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-314.svg"
+    },
+    {
+      "id": "animal-315",
+      "species": "Lizard",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Lizard",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-315.svg"
+    },
+    {
+      "id": "animal-316",
+      "species": "Gecko",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Gecko",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-316.svg"
+    },
+    {
+      "id": "animal-317",
+      "species": "Chameleon",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Chameleon",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-317.svg"
+    },
+    {
+      "id": "animal-318",
+      "species": "Snake",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Snake",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-318.svg"
+    },
+    {
+      "id": "animal-319",
+      "species": "Cobra",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Cobra",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-319.svg"
+    },
+    {
+      "id": "animal-320",
+      "species": "Alligator",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Alligator",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-320.svg"
+    },
+    {
+      "id": "animal-321",
+      "species": "Crocodile",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Crocodile",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-321.svg"
+    },
+    {
+      "id": "animal-322",
+      "species": "Dinosaur",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Dinosaur",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-322.svg"
+    },
+    {
+      "id": "animal-323",
+      "species": "Axolotl",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Axolotl",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-323.svg"
+    },
+    {
+      "id": "animal-324",
+      "species": "Newt",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Newt",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-324.svg"
+    },
+    {
+      "id": "animal-325",
+      "species": "Salamander",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Salamander",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-325.svg"
+    },
+    {
+      "id": "animal-326",
+      "species": "Goat",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Goat",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-326.svg"
+    },
+    {
+      "id": "animal-327",
+      "species": "Sheep",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Sheep",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-327.svg"
+    },
+    {
+      "id": "animal-328",
+      "species": "Lamb",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Lamb",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-328.svg"
+    },
+    {
+      "id": "animal-329",
+      "species": "Cow",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Cow",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-329.svg"
+    },
+    {
+      "id": "animal-330",
+      "species": "Bull",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Bull",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-330.svg"
+    },
+    {
+      "id": "animal-331",
+      "species": "Horse",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Horse",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-331.svg"
+    },
+    {
+      "id": "animal-332",
+      "species": "Pony",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Pony",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-332.svg"
+    },
+    {
+      "id": "animal-333",
+      "species": "Zebra",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Zebra",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-333.svg"
+    },
+    {
+      "id": "animal-334",
+      "species": "Donkey",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Donkey",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-334.svg"
+    },
+    {
+      "id": "animal-335",
+      "species": "Pig",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Pig",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-335.svg"
+    },
+    {
+      "id": "animal-336",
+      "species": "Boar",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Boar",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-336.svg"
+    },
+    {
+      "id": "animal-337",
+      "species": "Alpaca",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Alpaca",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-337.svg"
+    },
+    {
+      "id": "animal-338",
+      "species": "Llama",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Llama",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-338.svg"
+    },
+    {
+      "id": "animal-339",
+      "species": "Camel",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Camel",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-339.svg"
+    },
+    {
+      "id": "animal-340",
+      "species": "Elephant",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Elephant",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-340.svg"
+    },
+    {
+      "id": "animal-341",
+      "species": "Rhino",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Rhino",
+      "family": "bug",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-341.svg"
+    },
+    {
+      "id": "animal-342",
+      "species": "Hippo",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Hippo",
+      "family": "farm",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-342.svg"
+    },
+    {
+      "id": "animal-343",
+      "species": "Giraffe",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Giraffe",
+      "family": "mammal",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-343.svg"
+    },
+    {
+      "id": "animal-344",
+      "species": "Antelope",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Antelope",
+      "family": "bird",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-344.svg"
+    },
+    {
+      "id": "animal-345",
+      "species": "Buffalo",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Buffalo",
+      "family": "aquatic",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-345.svg"
+    },
+    {
+      "id": "animal-346",
+      "species": "Bison",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Bison",
+      "family": "reptile",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-346.svg"
+    },
+    {
+      "id": "animal-347",
+      "species": "Yak",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Yak",
+      "family": "bug",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-347.svg"
+    },
+    {
+      "id": "animal-348",
+      "species": "Kangaroo",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Kangaroo",
+      "family": "farm",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-348.svg"
+    },
+    {
+      "id": "animal-349",
+      "species": "Wallaby",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Wallaby",
+      "family": "mammal",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-349.svg"
+    },
+    {
+      "id": "animal-350",
+      "species": "Platypus",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Platypus",
+      "family": "bird",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-350.svg"
+    },
+    {
+      "id": "animal-351",
+      "species": "Echidna",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Echidna",
+      "family": "aquatic",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-351.svg"
+    },
+    {
+      "id": "animal-352",
+      "species": "Bat",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Bat",
+      "family": "reptile",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-352.svg"
+    },
+    {
+      "id": "animal-353",
+      "species": "Bee",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Bee",
+      "family": "bug",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-353.svg"
+    },
+    {
+      "id": "animal-354",
+      "species": "Butterfly",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Butterfly",
+      "family": "farm",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-354.svg"
+    },
+    {
+      "id": "animal-355",
+      "species": "Dragonfly",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Dragonfly",
+      "family": "mammal",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-355.svg"
+    },
+    {
+      "id": "animal-356",
+      "species": "Ladybug",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Ladybug",
+      "family": "bird",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-356.svg"
+    },
+    {
+      "id": "animal-357",
+      "species": "Beetle",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Beetle",
+      "family": "aquatic",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-357.svg"
+    },
+    {
+      "id": "animal-358",
+      "species": "Ant",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Ant",
+      "family": "reptile",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-358.svg"
+    },
+    {
+      "id": "animal-359",
+      "species": "Snail",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Snail",
+      "family": "bug",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-359.svg"
+    },
+    {
+      "id": "animal-360",
+      "species": "Caterpillar",
+      "adjective": "Midnight",
+      "nicknameHint": "Midnight Caterpillar",
+      "family": "farm",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-360.svg"
+    },
+    {
+      "id": "animal-361",
+      "species": "Fox",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Fox",
+      "family": "mammal",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-361.svg"
+    },
+    {
+      "id": "animal-362",
+      "species": "Wolf",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Wolf",
+      "family": "bird",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-362.svg"
+    },
+    {
+      "id": "animal-363",
+      "species": "Bear",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Bear",
+      "family": "aquatic",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-363.svg"
+    },
+    {
+      "id": "animal-364",
+      "species": "Panda",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Panda",
+      "family": "reptile",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-364.svg"
+    },
+    {
+      "id": "animal-365",
+      "species": "Koala",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Koala",
+      "family": "bug",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-365.svg"
+    },
+    {
+      "id": "animal-366",
+      "species": "Cat",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Cat",
+      "family": "farm",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-366.svg"
+    },
+    {
+      "id": "animal-367",
+      "species": "Lion",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Lion",
+      "family": "mammal",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-367.svg"
+    },
+    {
+      "id": "animal-368",
+      "species": "Tiger",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Tiger",
+      "family": "bird",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-368.svg"
+    },
+    {
+      "id": "animal-369",
+      "species": "Leopard",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Leopard",
+      "family": "aquatic",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-369.svg"
+    },
+    {
+      "id": "animal-370",
+      "species": "Cheetah",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Cheetah",
+      "family": "reptile",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-370.svg"
+    },
+    {
+      "id": "animal-371",
+      "species": "Rabbit",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Rabbit",
+      "family": "bug",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-371.svg"
+    },
+    {
+      "id": "animal-372",
+      "species": "Hare",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Hare",
+      "family": "farm",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-372.svg"
+    },
+    {
+      "id": "animal-373",
+      "species": "Deer",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Deer",
+      "family": "mammal",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-373.svg"
+    },
+    {
+      "id": "animal-374",
+      "species": "Moose",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Moose",
+      "family": "bird",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-374.svg"
+    },
+    {
+      "id": "animal-375",
+      "species": "Elk",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Elk",
+      "family": "aquatic",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-375.svg"
+    },
+    {
+      "id": "animal-376",
+      "species": "Otter",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Otter",
+      "family": "reptile",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-376.svg"
+    },
+    {
+      "id": "animal-377",
+      "species": "Beaver",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Beaver",
+      "family": "bug",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-377.svg"
+    },
+    {
+      "id": "animal-378",
+      "species": "Raccoon",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Raccoon",
+      "family": "farm",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-378.svg"
+    },
+    {
+      "id": "animal-379",
+      "species": "Badger",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Badger",
+      "family": "mammal",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-379.svg"
+    },
+    {
+      "id": "animal-380",
+      "species": "Skunk",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Skunk",
+      "family": "bird",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-380.svg"
+    },
+    {
+      "id": "animal-381",
+      "species": "Hedgehog",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Hedgehog",
+      "family": "aquatic",
+      "palette": [
+        "#FF6B6B",
+        "#FFE66D",
+        "#2C3E50"
+      ],
+      "path": "/avatars/animals/animal-381.svg"
+    },
+    {
+      "id": "animal-382",
+      "species": "Squirrel",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Squirrel",
+      "family": "reptile",
+      "palette": [
+        "#4ECDC4",
+        "#1A535C",
+        "#F7FFF7"
+      ],
+      "path": "/avatars/animals/animal-382.svg"
+    },
+    {
+      "id": "animal-383",
+      "species": "Chipmunk",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Chipmunk",
+      "family": "bug",
+      "palette": [
+        "#FF9F1C",
+        "#2EC4B6",
+        "#FFF8F0"
+      ],
+      "path": "/avatars/animals/animal-383.svg"
+    },
+    {
+      "id": "animal-384",
+      "species": "Mouse",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Mouse",
+      "family": "farm",
+      "palette": [
+        "#9B5DE5",
+        "#F15BB5",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-384.svg"
+    },
+    {
+      "id": "animal-385",
+      "species": "Rat",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Rat",
+      "family": "mammal",
+      "palette": [
+        "#00BBF9",
+        "#00F5D4",
+        "#FEE440"
+      ],
+      "path": "/avatars/animals/animal-385.svg"
+    },
+    {
+      "id": "animal-386",
+      "species": "Hamster",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Hamster",
+      "family": "bird",
+      "palette": [
+        "#EF476F",
+        "#FFD166",
+        "#06D6A0"
+      ],
+      "path": "/avatars/animals/animal-386.svg"
+    },
+    {
+      "id": "animal-387",
+      "species": "Guinea Pig",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Guinea Pig",
+      "family": "aquatic",
+      "palette": [
+        "#118AB2",
+        "#073B4C",
+        "#FFD166"
+      ],
+      "path": "/avatars/animals/animal-387.svg"
+    },
+    {
+      "id": "animal-388",
+      "species": "Capybara",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Capybara",
+      "family": "reptile",
+      "palette": [
+        "#F72585",
+        "#7209B7",
+        "#4CC9F0"
+      ],
+      "path": "/avatars/animals/animal-388.svg"
+    },
+    {
+      "id": "animal-389",
+      "species": "Sloth",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Sloth",
+      "family": "bug",
+      "palette": [
+        "#E76F51",
+        "#2A9D8F",
+        "#E9C46A"
+      ],
+      "path": "/avatars/animals/animal-389.svg"
+    },
+    {
+      "id": "animal-390",
+      "species": "Monkey",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Monkey",
+      "family": "farm",
+      "palette": [
+        "#264653",
+        "#E9C46A",
+        "#F4A261"
+      ],
+      "path": "/avatars/animals/animal-390.svg"
+    },
+    {
+      "id": "animal-391",
+      "species": "Gorilla",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Gorilla",
+      "family": "mammal",
+      "palette": [
+        "#FF8FAB",
+        "#FFB3C6",
+        "#FFE5EC"
+      ],
+      "path": "/avatars/animals/animal-391.svg"
+    },
+    {
+      "id": "animal-392",
+      "species": "Orangutan",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Orangutan",
+      "family": "bird",
+      "palette": [
+        "#80ED99",
+        "#57CC99",
+        "#22577A"
+      ],
+      "path": "/avatars/animals/animal-392.svg"
+    },
+    {
+      "id": "animal-393",
+      "species": "Lemur",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Lemur",
+      "family": "aquatic",
+      "palette": [
+        "#F94144",
+        "#F3722C",
+        "#F9C74F"
+      ],
+      "path": "/avatars/animals/animal-393.svg"
+    },
+    {
+      "id": "animal-394",
+      "species": "Dog",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Dog",
+      "family": "reptile",
+      "palette": [
+        "#577590",
+        "#43AA8B",
+        "#90BE6D"
+      ],
+      "path": "/avatars/animals/animal-394.svg"
+    },
+    {
+      "id": "animal-395",
+      "species": "Husky",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Husky",
+      "family": "bug",
+      "palette": [
+        "#5E60CE",
+        "#6930C3",
+        "#64DFDF"
+      ],
+      "path": "/avatars/animals/animal-395.svg"
+    },
+    {
+      "id": "animal-396",
+      "species": "Corgi",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Corgi",
+      "family": "farm",
+      "palette": [
+        "#FF7B00",
+        "#FF8800",
+        "#FFB700"
+      ],
+      "path": "/avatars/animals/animal-396.svg"
+    },
+    {
+      "id": "animal-397",
+      "species": "Puppy",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Puppy",
+      "family": "mammal",
+      "palette": [
+        "#006D77",
+        "#83C5BE",
+        "#EDF6F9"
+      ],
+      "path": "/avatars/animals/animal-397.svg"
+    },
+    {
+      "id": "animal-398",
+      "species": "Seal",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Seal",
+      "family": "bird",
+      "palette": [
+        "#D62828",
+        "#F77F00",
+        "#FCBF49"
+      ],
+      "path": "/avatars/animals/animal-398.svg"
+    },
+    {
+      "id": "animal-399",
+      "species": "Walrus",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Walrus",
+      "family": "aquatic",
+      "palette": [
+        "#3D5A80",
+        "#98C1D9",
+        "#EE6C4D"
+      ],
+      "path": "/avatars/animals/animal-399.svg"
+    },
+    {
+      "id": "animal-400",
+      "species": "Penguin",
+      "adjective": "Neon",
+      "nicknameHint": "Neon Penguin",
+      "family": "reptile",
+      "palette": [
+        "#22223B",
+        "#4A4E69",
+        "#9A8C98"
+      ],
+      "path": "/avatars/animals/animal-400.svg"
+    }
+  ]
+}

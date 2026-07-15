@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { IdeaRecord } from "@/lib/types";
-import type { Category, Sensation } from "@/data/mock-ideas";
+import type { Category, Sensation, SocialPlatform } from "@/data/mock-ideas";
 
 const CATEGORIES: Category[] = [
   "comfort",
@@ -17,6 +17,15 @@ const CATEGORIES: Category[] = [
 
 const SENSATIONS: Sensation[] = ["calm", "curious", "stimulating", "intense"];
 const WEATHERS: IdeaRecord["weather"][] = ["any", "sunny", "cloudy", "rainy"];
+const SOCIAL_PLATFORMS: SocialPlatform[] = ["tiktok", "instagram", "xiaohongshu"];
+
+function linesValue(value?: string[]) {
+  return (value || []).join("\n");
+}
+
+function parseLines(value: string) {
+  return value.split(/\r?\n/);
+}
 
 const emptyIdea = (): Partial<IdeaRecord> => ({
   title: "",
@@ -53,6 +62,11 @@ const emptyIdea = (): Partial<IdeaRecord> => ({
   maxParticipants: 20,
   relevance: 80,
   tags: [],
+  steps: [],
+  stepsZh: [],
+  needs: [],
+  needsZh: [],
+  socialEmbeds: [],
   published: true,
   sourceUrl: "",
   sourcePlatform: "",
@@ -99,7 +113,9 @@ export default function AdminIdeasPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<"all" | "published" | "draft">("all");
+  const [filter, setFilter] = useState<
+    "all" | "published" | "draft" | "rejected"
+  >("all");
   const [message, setMessage] = useState("");
 
   async function load() {
@@ -114,11 +130,17 @@ export default function AdminIdeasPage() {
     void load();
   }, []);
 
+  function statusOf(idea: IdeaRecord) {
+    return (
+      idea.creationStatus || (idea.published ? "published" : "draft")
+    );
+  }
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return ideas.filter((idea) => {
-      if (filter === "published" && !idea.published) return false;
-      if (filter === "draft" && idea.published) return false;
+      const status = statusOf(idea);
+      if (filter !== "all" && status !== filter) return false;
       if (!q) return true;
       return [
         idea.id,
@@ -126,7 +148,8 @@ export default function AdminIdeasPage() {
         idea.titleZh,
         idea.city,
         idea.country,
-        idea.address,
+        idea.creatorName,
+        idea.creatorUserId,
         ...(idea.tags || []),
       ]
         .join(" ")
@@ -157,6 +180,13 @@ export default function AdminIdeasPage() {
             .map((t) => t.trim())
             .filter(Boolean),
       categories: form.categories?.length ? form.categories : ["social"],
+      steps: (form.steps || []).map((s) => s.trim()).filter(Boolean),
+      stepsZh: (form.stepsZh || []).map((s) => s.trim()).filter(Boolean),
+      needs: (form.needs || []).map((s) => s.trim()).filter(Boolean),
+      needsZh: (form.needsZh || []).map((s) => s.trim()).filter(Boolean),
+      socialEmbeds: (form.socialEmbeds || []).filter(
+        (e) => e?.platform && e?.url?.trim(),
+      ),
       lat: Number(form.lat) || 0,
       lng: Number(form.lng) || 0,
       durationMin: Number(form.durationMin) || 60,
@@ -199,6 +229,11 @@ export default function AdminIdeasPage() {
     setEditingId(idea.id);
     setForm({
       ...idea,
+      steps: idea.steps || [],
+      stepsZh: idea.stepsZh || [],
+      needs: idea.needs || [],
+      needsZh: idea.needsZh || [],
+      socialEmbeds: idea.socialEmbeds || [],
       startsAt: toLocalInput(idea.startsAt),
       endsAt: toLocalInput(idea.endsAt),
     });
@@ -216,12 +251,35 @@ export default function AdminIdeasPage() {
     );
   }
 
+  function updateEmbed(
+    index: number,
+    patch: Partial<NonNullable<IdeaRecord["socialEmbeds"]>[number]>,
+  ) {
+    const list = [...(form.socialEmbeds || [])];
+    list[index] = { ...list[index], ...patch };
+    set("socialEmbeds", list);
+  }
+
+  function addEmbed() {
+    set("socialEmbeds", [
+      ...(form.socialEmbeds || []),
+      { platform: "tiktok", url: "", title: "", titleZh: "" },
+    ]);
+  }
+
+  function removeEmbed(index: number) {
+    set(
+      "socialEmbeds",
+      (form.socialEmbeds || []).filter((_, i) => i !== index),
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Ideas</h1>
         <p className="text-sm text-white/55">
-          Manage every idea field — copy, location, schedule, stats, publishing
+          Manage ideas — unfinished drafts, rejected (screening), and published. Shows creator.
         </p>
       </div>
 
@@ -263,6 +321,125 @@ export default function AdminIdeasPage() {
               <Field label="Tip (ZH)">
                 <textarea className={inputClass} rows={2} value={form.tipZh || ""} onChange={(e) => set("tipZh", e.target.value)} />
               </Field>
+            </fieldset>
+
+            <fieldset className="space-y-2">
+              <legend className="text-sm font-medium text-white/80">Steps / What you need</legend>
+              <p className="text-[11px] text-white/45">One item per line. Leave blank if not needed.</p>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Field label="Steps (EN)">
+                  <textarea
+                    className={inputClass}
+                    rows={4}
+                    value={linesValue(form.steps)}
+                    onChange={(e) => set("steps", parseLines(e.target.value))}
+                    placeholder={"Step 1\nStep 2"}
+                  />
+                </Field>
+                <Field label="Steps (ZH)">
+                  <textarea
+                    className={inputClass}
+                    rows={4}
+                    value={linesValue(form.stepsZh)}
+                    onChange={(e) => set("stepsZh", parseLines(e.target.value))}
+                  />
+                </Field>
+                <Field label="What you need (EN)">
+                  <textarea
+                    className={inputClass}
+                    rows={3}
+                    value={linesValue(form.needs)}
+                    onChange={(e) => set("needs", parseLines(e.target.value))}
+                    placeholder={"Headphones\nPhone"}
+                  />
+                </Field>
+                <Field label="What you need (ZH)">
+                  <textarea
+                    className={inputClass}
+                    rows={3}
+                    value={linesValue(form.needsZh)}
+                    onChange={(e) => set("needsZh", parseLines(e.target.value))}
+                  />
+                </Field>
+              </div>
+            </fieldset>
+
+            <fieldset className="space-y-2">
+              <legend className="text-sm font-medium text-white/80">Social media embeds</legend>
+              <p className="text-[11px] text-white/45">
+                Optional TikTok / Instagram / Xiaohongshu video links for the idea detail page.
+              </p>
+              <div className="space-y-3">
+                {(form.socialEmbeds || []).map((embed, index) => (
+                  <div
+                    key={`embed-${index}`}
+                    className="rounded-xl border border-white/10 bg-black/20 p-3"
+                  >
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      <Field label="Platform">
+                        <select
+                          className={inputClass}
+                          value={embed.platform}
+                          onChange={(e) =>
+                            updateEmbed(index, {
+                              platform: e.target.value as SocialPlatform,
+                            })
+                          }
+                        >
+                          {SOCIAL_PLATFORMS.map((p) => (
+                            <option key={p} value={p}>
+                              {p}
+                            </option>
+                          ))}
+                        </select>
+                      </Field>
+                      <Field label="URL">
+                        <input
+                          className={inputClass}
+                          value={embed.url || ""}
+                          onChange={(e) => updateEmbed(index, { url: e.target.value })}
+                          placeholder="https://…"
+                        />
+                      </Field>
+                      <Field label="Title (EN)">
+                        <input
+                          className={inputClass}
+                          value={embed.title || ""}
+                          onChange={(e) => updateEmbed(index, { title: e.target.value })}
+                        />
+                      </Field>
+                      <Field label="Title (ZH)">
+                        <input
+                          className={inputClass}
+                          value={embed.titleZh || ""}
+                          onChange={(e) => updateEmbed(index, { titleZh: e.target.value })}
+                        />
+                      </Field>
+                      <Field label="Embed URL (optional)" className="sm:col-span-2">
+                        <input
+                          className={inputClass}
+                          value={embed.embedUrl || ""}
+                          onChange={(e) => updateEmbed(index, { embedUrl: e.target.value })}
+                        />
+                      </Field>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeEmbed(index)}
+                      className="mt-2 text-xs text-red-300"
+                    >
+                      Remove embed
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={addEmbed}
+                className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/80"
+              >
+                + Add social embed
+              </button>
             </fieldset>
 
             <fieldset className="space-y-2">
@@ -466,25 +643,37 @@ export default function AdminIdeasPage() {
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value as typeof filter)}
-              className={`${inputClass} sm:w-36`}
+              className={`${inputClass} sm:w-40`}
             >
               <option value="all">All</option>
               <option value="published">Published</option>
-              <option value="draft">Draft</option>
+              <option value="draft">Unfinished (draft)</option>
+              <option value="rejected">Rejected</option>
             </select>
           </div>
           {loading ? (
             <p className="mt-3 text-sm text-white/50">Loading…</p>
           ) : (
             <ul className="mt-3 max-h-[80vh] space-y-2 overflow-y-auto">
-              {filtered.map((idea) => (
+              {filtered.map((idea) => {
+                const status = statusOf(idea);
+                return (
                 <li key={idea.id} className="rounded-xl border border-white/10 p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <p className="truncate font-medium">{idea.title}</p>
                       <p className="text-xs text-white/50">
-                        {idea.city}, {idea.country} · {idea.published ? "published" : "draft"}
+                        {idea.city}, {idea.country} · {status}
                       </p>
+                      <p className="text-[11px] text-white/40">
+                        by {idea.creatorName || idea.organizer || "—"}
+                        {idea.creatorUserId ? ` · ${idea.creatorUserId}` : ""}
+                      </p>
+                      {status === "rejected" && idea.rejectionReason && (
+                        <p className="mt-1 text-[11px] text-red-300/90">
+                          {idea.rejectionReason}
+                        </p>
+                      )}
                       <p className="text-[11px] text-white/40">
                         fee {idea.fee} · {idea.durationMin}m · exp {idea.experiencedCount}
                       </p>
@@ -499,7 +688,8 @@ export default function AdminIdeasPage() {
                     </div>
                   </div>
                 </li>
-              ))}
+              );
+              })}
             </ul>
           )}
         </section>

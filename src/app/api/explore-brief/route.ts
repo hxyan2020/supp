@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
 export type ExploreBrief = {
+  city: string | null;
+  country: string | null;
   weatherLabel: string | null;
   locationLabel: string | null;
   historyEvent: string | null;
@@ -38,12 +40,12 @@ async function fetchWeather(lat: number, lng: number) {
   };
 }
 
-async function fetchDistrict(lat: number, lng: number, locale: string) {
+async function fetchPlace(lat: number, lng: number, locale: string) {
   const url = new URL("https://nominatim.openstreetmap.org/reverse");
   url.searchParams.set("format", "jsonv2");
   url.searchParams.set("lat", String(lat));
   url.searchParams.set("lon", String(lng));
-  url.searchParams.set("zoom", "14");
+  url.searchParams.set("zoom", "10");
   url.searchParams.set("addressdetails", "1");
   if (locale.startsWith("zh")) url.searchParams.set("accept-language", "zh");
   else url.searchParams.set("accept-language", locale);
@@ -59,19 +61,29 @@ async function fetchDistrict(lat: number, lng: number, locale: string) {
     address?: Record<string, string>;
   };
   const a = data.address ?? {};
+  const city =
+    a.city || a.town || a.municipality || a.village || a.state || a.county || null;
+  const country = a.country || null;
   const district =
     a.city_district ||
     a.suburb ||
     a.neighbourhood ||
     a.quarter ||
     a.borough ||
-    a.county ||
-    a.city_district;
-  const city = a.city || a.town || a.municipality || a.state || a.county;
-  if (district && city && district !== city) return `${city} · ${district}`;
-  if (city) return city;
-  if (district) return district;
-  return null;
+    null;
+
+  let locationLabel: string | null = null;
+  if (city && country) locationLabel = `${city}, ${country}`;
+  else if (city) locationLabel = city;
+  else if (country) locationLabel = country;
+
+  if (district && city && district !== city) {
+    locationLabel = locationLabel
+      ? `${city} · ${district}, ${country || ""}`.replace(/,\s*$/, "")
+      : `${district}`;
+  }
+
+  return { city, country, district, locationLabel };
 }
 
 async function fetchOnThisDay(locale: string) {
@@ -147,17 +159,19 @@ export async function GET(req: Request) {
     ? fetchWeather(lat, lng)
     : Promise.resolve(null);
   const locationPromise = hasCoords
-    ? fetchDistrict(lat, lng, locale)
+    ? fetchPlace(lat, lng, locale)
     : Promise.resolve(null);
 
-  const [history, weather, locationLabel] = await Promise.all([
+  const [history, weather, place] = await Promise.all([
     historyPromise,
     weatherPromise,
     locationPromise,
   ]);
 
   return NextResponse.json({
-    locationLabel,
+    city: place?.city ?? null,
+    country: place?.country ?? null,
+    locationLabel: place?.locationLabel ?? null,
     weatherKey: weather?.key ?? null,
     tempC: weather?.tempC ?? null,
     historyEvent: history?.text ?? null,

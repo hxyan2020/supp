@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Sunny Koala">
+  <defs>
+    <radialGradient id="bg-animal-125" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#00F5D4" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00BBF9" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-125)"/>
+  <rect width="128" height="128" rx="64" fill="#FEE440" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="78" rx="28" ry="32" fill="#00BBF9"/>
+  <circle cx="64" cy="48" r="18" fill="#00BBF9"/>
+  <line x1="50" y1="36" x2="40" y2="22" stroke="#FEE440" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="36" x2="88" y2="22" stroke="#FEE440" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="20" r="4" fill="#00F5D4"/>
+  <circle cx="88" cy="20" r="4" fill="#00F5D4"/>
+  <circle cx="56" cy="48" r="4" fill="#FEE440"/>
+  <circle cx="72" cy="48" r="4" fill="#FEE440"/>
+  <path d="M44 70 Q64 60 84 70" stroke="#00F5D4" stroke-width="3" fill="none"/>
+  <path d="M46 86 Q64 78 82 86" stroke="#00F5D4" stroke-width="3" fill="none"/>
+  
+  
+  
+</svg>

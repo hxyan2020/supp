@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Midnight Pig">
+  <defs>
+    <radialGradient id="bg-animal-335" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#6930C3" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#5E60CE" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-335)"/>
+  <rect width="128" height="128" rx="64" fill="#64DFDF" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="78" rx="28" ry="32" fill="#5E60CE"/>
+  <circle cx="64" cy="48" r="18" fill="#5E60CE"/>
+  <line x1="50" y1="36" x2="40" y2="22" stroke="#64DFDF" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="36" x2="88" y2="22" stroke="#64DFDF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="20" r="4" fill="#6930C3"/>
+  <circle cx="88" cy="20" r="4" fill="#6930C3"/>
+  <circle cx="56" cy="48" r="4" fill="#64DFDF"/>
+  <circle cx="72" cy="48" r="4" fill="#64DFDF"/>
+  <path d="M44 70 Q64 60 84 70" stroke="#6930C3" stroke-width="3" fill="none"/>
+  <path d="M46 86 Q64 78 82 86" stroke="#6930C3" stroke-width="3" fill="none"/>
+  <ellipse cx="36" cy="70" rx="14" ry="8" fill="#6930C3" opacity="0.5"/><ellipse cx="92" cy="70" rx="14" ry="8" fill="#6930C3" opacity="0.5"/>
+  
+  
+</svg>

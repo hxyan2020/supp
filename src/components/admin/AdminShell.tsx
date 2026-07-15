@@ -26,7 +26,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-6">
             <Link
               href="/admin"
-              className="flex items-center gap-2 text-sm font-bold tracking-wide text-supp-red"
+              className="flex items-center gap-2 font-display text-sm font-extrabold tracking-tight text-supp-red"
             >
               <img
                 src="/logo.jpg"

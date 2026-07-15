@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Sunny Badger">
+  <defs>
+    <radialGradient id="bg-animal-139" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#98C1D9" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#3D5A80" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-139)"/>
+  <rect width="128" height="128" rx="64" fill="#EE6C4D" opacity="0.08"/>
+  
+  <circle cx="64" cy="70" r="38" fill="#3D5A80"/>
+  <ellipse cx="38" cy="42" rx="25" ry="31" fill="#3D5A80"/>
+  <ellipse cx="90" cy="42" rx="25" ry="31" fill="#3D5A80"/>
+  <ellipse cx="38" cy="44" rx="19" ry="25" fill="#98C1D9"/>
+  <ellipse cx="90" cy="44" rx="19" ry="25" fill="#98C1D9"/>
+  <circle cx="50" cy="66" r="5" fill="#EE6C4D"/>
+  <circle cx="78" cy="66" r="5" fill="#EE6C4D"/>
+  <circle cx="51.5" cy="65" r="2" fill="#fff"/>
+  <circle cx="79.5" cy="65" r="2" fill="#fff"/>
+  <ellipse cx="64" cy="81.75" rx="15" ry="10.5" fill="#98C1D9"/>
+  <ellipse cx="64" cy="83.75" rx="4" ry="3" fill="#EE6C4D"/>
+  <path d="M56 90 Q64 96 72 90" stroke="#EE6C4D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  
+</svg>

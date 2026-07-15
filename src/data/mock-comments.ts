@@ -1,6 +1,7 @@
 export type IdeaComment = {
   id: string;
   ideaId: string;
+  authorUserId?: string;
   authorName: string;
   authorNameZh: string;
   authorAvatar: string;
@@ -24,6 +25,7 @@ export const mockComments: IdeaComment[] = [
   {
     id: "c1",
     ideaId: "eavesdrop-headphones",
+    authorUserId: "f1",
     authorName: "Stephen's buddy",
     authorNameZh: "史蒂芬的未具名基友",
     authorAvatar: "/images/avatar-1.png",
@@ -40,6 +42,7 @@ export const mockComments: IdeaComment[] = [
   {
     id: "c2",
     ideaId: "eavesdrop-headphones",
+    authorUserId: "f2",
     authorName: "Mira",
     authorNameZh: "米拉",
     authorAvatar: "/images/persona.png",
@@ -57,6 +60,7 @@ export const mockComments: IdeaComment[] = [
     id: "c2r1",
     ideaId: "eavesdrop-headphones",
     parentId: "c2",
+    authorUserId: "f3",
     authorName: "Kai Wong",
     authorNameZh: "黄凯",
     authorAvatar:

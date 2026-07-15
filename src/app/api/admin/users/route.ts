@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { listUsers, upsertUser, newId } from "@/lib/db";
+import { upsertUser, newId } from "@/lib/db";
+import {
+  listUsersSansSecrets,
+  sanitizeUserForAdmin,
+} from "@/lib/dummy-users";
+import { hashPassword } from "@/lib/password";
 import type { UserRecord } from "@/lib/types";
 
 async function guard() {
@@ -13,19 +18,29 @@ async function guard() {
 export async function GET() {
   const denied = await guard();
   if (denied) return denied;
-  return NextResponse.json({ users: await listUsers() });
+  return NextResponse.json({ users: await listUsersSansSecrets() });
 }
 
 export async function POST(req: Request) {
   const denied = await guard();
   if (denied) return denied;
-  const body = (await req.json()) as Partial<UserRecord>;
+  const body = (await req.json()) as Partial<UserRecord> & {
+    password?: string;
+  };
   const now = new Date().toISOString();
+  const username = body.username?.trim().toLowerCase() || undefined;
+  const password =
+    typeof body.password === "string" && body.password.trim()
+      ? body.password.trim()
+      : "";
+
   const user: UserRecord = {
     id: body.id || newId("user"),
-    name: body.name || "",
-    nameZh: body.nameZh || body.name || "",
+    name: body.name || username || "",
+    nameZh: body.nameZh || body.name || username || "",
     email: body.email || "",
+    username,
+    passwordHash: password ? hashPassword(password) : undefined,
     avatar: body.avatar || "/images/avatar-user.jpg",
     locale: body.locale || "en",
     city: body.city || "",
@@ -38,9 +53,14 @@ export async function POST(req: Request) {
     favoritedIds: body.favoritedIds || [],
     experiencedIds: body.experiencedIds || [],
     joinedIds: body.joinedIds || [],
+    followingIds: body.followingIds || [],
+    followerIds: body.followerIds || [],
     status: body.status || "active",
+    isGuest: false,
+    authProvider: password || username ? "password" : body.authProvider,
     createdAt: body.createdAt || now,
     updatedAt: now,
   };
-  return NextResponse.json({ user: await upsertUser(user) });
+  const saved = await upsertUser(user);
+  return NextResponse.json({ user: sanitizeUserForAdmin(saved) });
 }

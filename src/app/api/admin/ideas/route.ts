@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { listAllIdeas, upsertIdea, newId } from "@/lib/db";
 import type { IdeaRecord } from "@/lib/types";
+import {
+  normalizeSocialEmbeds,
+  normalizeStringList,
+} from "@/lib/content-moderation";
 
 async function guard() {
   if (!(await isAdminAuthenticated())) {
@@ -48,6 +52,7 @@ export async function POST(req: Request) {
     country: body.country || "",
     categories: body.categories || ["social"],
     sensation: body.sensation || "curious",
+    engagement: body.engagement,
     image: body.image || "/images/event-park.jpg",
     organizer: body.organizer || "Supp",
     organizerZh: body.organizerZh || "嘛呢",
@@ -58,7 +63,18 @@ export async function POST(req: Request) {
     maxParticipants: Number(body.maxParticipants) || 20,
     relevance: Number(body.relevance) || 70,
     tags: body.tags || [],
+    steps: normalizeStringList(body.steps),
+    stepsZh: normalizeStringList(body.stepsZh),
+    needs: normalizeStringList(body.needs),
+    needsZh: normalizeStringList(body.needsZh),
+    socialEmbeds: normalizeSocialEmbeds(body.socialEmbeds),
     published: body.published ?? true,
+    creationStatus:
+      body.creationStatus ||
+      (body.published === false ? "draft" : "published"),
+    creatorUserId: body.creatorUserId,
+    creatorName: body.creatorName,
+    creatorNameZh: body.creatorNameZh,
     sourceUrl: body.sourceUrl,
     sourcePlatform: body.sourcePlatform,
     createdAt: body.createdAt || now,

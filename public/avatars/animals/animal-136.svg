@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Sunny Otter">
+  <defs>
+    <radialGradient id="bg-animal-136" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#FF8800" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF7B00" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-136)"/>
+  <rect width="128" height="128" rx="64" fill="#FFB700" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="74" rx="36" ry="30" fill="#FF7B00"/>
+  <ellipse cx="64" cy="48" rx="22" ry="18" fill="#FF7B00"/>
+  <circle cx="54" cy="46" r="4.5" fill="#FFB700"/>
+  <circle cx="74" cy="46" r="4.5" fill="#FFB700"/>
+  <circle cx="55" cy="45" r="1.6" fill="#fff"/>
+  <circle cx="75" cy="45" r="1.6" fill="#fff"/>
+  <ellipse cx="64" cy="56" rx="8" ry="5" fill="#FF8800"/>
+  <path d="M40 70 L50 66 L46 78 Z" fill="#FF8800"/>
+  <path d="M88 70 L78 66 L82 78 Z" fill="#FF8800"/>
+  <path d="M48 88 Q64 98 80 88" stroke="#FFB700" stroke-width="2" fill="none"/>
+  
+  <circle cx="30" cy="110" r="4" fill="#FF8800" opacity="0.35"/><circle cx="100" cy="108" r="3" fill="#FFB700" opacity="0.3"/>
+</svg>

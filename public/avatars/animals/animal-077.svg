@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Cosmic Chameleon">
+  <defs>
+    <radialGradient id="bg-animal-077" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#83C5BE" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#006D77" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-077)"/>
+  <rect width="128" height="128" rx="64" fill="#EDF6F9" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="78" rx="28" ry="32" fill="#006D77"/>
+  <circle cx="64" cy="48" r="18" fill="#006D77"/>
+  <line x1="50" y1="36" x2="40" y2="22" stroke="#EDF6F9" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="36" x2="88" y2="22" stroke="#EDF6F9" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="20" r="4" fill="#83C5BE"/>
+  <circle cx="88" cy="20" r="4" fill="#83C5BE"/>
+  <circle cx="56" cy="48" r="4" fill="#EDF6F9"/>
+  <circle cx="72" cy="48" r="4" fill="#EDF6F9"/>
+  <path d="M44 70 Q64 60 84 70" stroke="#83C5BE" stroke-width="3" fill="none"/>
+  <path d="M46 86 Q64 78 82 86" stroke="#83C5BE" stroke-width="3" fill="none"/>
+  
+  
+  
+</svg>

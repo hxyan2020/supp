@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { localizedIdea, type Idea, type SearchFilters } from "@/data/mock-ideas";
 import {
+  DEFAULT_SEARCH_FILTERS,
   filterIdeas,
   SEARCH_CATEGORIES,
   SEARCH_CITIES,
@@ -20,11 +21,7 @@ export function ExploreSearchView({ ideas }: { ideas: Idea[] }) {
   const [mode, setMode] = useState<"filters" | "results">("filters");
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<SearchFilters>({
-    city: "any",
-    weather: "any",
-    fee: "any",
-    duration: "any",
-    category: "any",
+    ...DEFAULT_SEARCH_FILTERS,
   });
 
   const results = useMemo(
@@ -133,7 +130,7 @@ export function ExploreSearchView({ ideas }: { ideas: Idea[] }) {
         <div className="space-y-2.5">
           <FilterRow
             label={t("city")}
-            value={filters.city ?? "any"}
+            value={filters.city ?? "Hong Kong"}
             options={SEARCH_CITIES.map((c) => ({
               value: c,
               label: c === "any" ? t("any") : c,
@@ -176,6 +173,27 @@ export function ExploreSearchView({ ideas }: { ideas: Idea[] }) {
             }))}
             onChange={(category) => setFilters((f) => ({ ...f, category }))}
           />
+
+          <ToggleRow
+            label={t("travellerMode")}
+            hint={t("travellerModeHint")}
+            on={Boolean(filters.travellerMode)}
+            onChange={(travellerMode) =>
+              setFilters((f) => ({ ...f, travellerMode }))
+            }
+            onLabel={t("modeOn")}
+            offLabel={t("modeOff")}
+          />
+          <ToggleRow
+            label={t("introvertMode")}
+            hint={t("introvertModeHint")}
+            on={Boolean(filters.introvertMode)}
+            onChange={(introvertMode) =>
+              setFilters((f) => ({ ...f, introvertMode }))
+            }
+            onLabel={t("modeOn")}
+            offLabel={t("modeOff")}
+          />
         </div>
 
         <button
@@ -201,20 +219,81 @@ function FilterRow({
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
 }) {
+  const selectedLabel =
+    options.find((o) => o.value === value)?.label ?? value;
+
   return (
     <label className="flex items-center gap-3">
       <span className="w-24 shrink-0 text-sm text-white/90">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-10 flex-1 appearance-none rounded-lg border-0 bg-[#d9d9d9] px-3 text-sm text-black outline-none"
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
+      <div className="relative flex-1">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          aria-label={`${label}: ${selectedLabel}`}
+          className="h-10 w-full appearance-none rounded-lg border-0 bg-[#d9d9d9] px-3 pe-9 text-sm font-medium text-black outline-none"
+        >
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <span
+          className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-xs text-black/45"
+          aria-hidden
+        >
+          ▾
+        </span>
+      </div>
     </label>
+  );
+}
+
+function ToggleRow({
+  label,
+  hint,
+  on,
+  onChange,
+  onLabel,
+  offLabel,
+}: {
+  label: string;
+  hint: string;
+  on: boolean;
+  onChange: (value: boolean) => void;
+  onLabel: string;
+  offLabel: string;
+}) {
+  return (
+    <div className="rounded-xl bg-white/10 px-3 py-2.5 backdrop-blur-sm">
+      <div className="flex items-center gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-white">{label}</p>
+          <p className="mt-0.5 text-[11px] leading-snug text-white/60">{hint}</p>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={on}
+          onClick={() => onChange(!on)}
+          className={`relative h-8 w-[4.75rem] shrink-0 rounded-full transition ${
+            on ? "bg-supp-red" : "bg-[#d9d9d9]"
+          }`}
+        >
+          <span
+            className={`pointer-events-none absolute inset-y-0 flex items-center px-2 text-[10px] font-semibold ${
+              on ? "justify-start text-white" : "justify-end text-black/55"
+            }`}
+          >
+            {on ? onLabel : offLabel}
+          </span>
+          <span
+            className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${
+              on ? "left-[2.85rem]" : "left-1"
+            }`}
+          />
+        </button>
+      </div>
+    </div>
   );
 }

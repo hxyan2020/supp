@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Midnight Sloth">
+  <defs>
+    <radialGradient id="bg-animal-269" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#2A9D8F" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#E76F51" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-269)"/>
+  <rect width="128" height="128" rx="64" fill="#E9C46A" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="78" rx="28" ry="32" fill="#E76F51"/>
+  <circle cx="64" cy="48" r="18" fill="#E76F51"/>
+  <line x1="50" y1="36" x2="40" y2="22" stroke="#E9C46A" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="36" x2="88" y2="22" stroke="#E9C46A" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="20" r="4" fill="#2A9D8F"/>
+  <circle cx="88" cy="20" r="4" fill="#2A9D8F"/>
+  <circle cx="56" cy="48" r="4" fill="#E9C46A"/>
+  <circle cx="72" cy="48" r="4" fill="#E9C46A"/>
+  <path d="M44 70 Q64 60 84 70" stroke="#2A9D8F" stroke-width="3" fill="none"/>
+  <path d="M46 86 Q64 78 82 86" stroke="#2A9D8F" stroke-width="3" fill="none"/>
+  
+  
+  <circle cx="30" cy="110" r="4" fill="#2A9D8F" opacity="0.35"/><circle cx="100" cy="108" r="3" fill="#E9C46A" opacity="0.3"/>
+</svg>

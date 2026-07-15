@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Sunny Squirrel">
+  <defs>
+    <radialGradient id="bg-animal-142" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#1A535C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-142)"/>
+  <rect width="128" height="128" rx="64" fill="#F7FFF7" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="74" rx="36" ry="30" fill="#4ECDC4"/>
+  <ellipse cx="64" cy="48" rx="22" ry="18" fill="#4ECDC4"/>
+  <circle cx="54" cy="46" r="4.5" fill="#F7FFF7"/>
+  <circle cx="74" cy="46" r="4.5" fill="#F7FFF7"/>
+  <circle cx="55" cy="45" r="1.6" fill="#fff"/>
+  <circle cx="75" cy="45" r="1.6" fill="#fff"/>
+  <ellipse cx="64" cy="56" rx="8" ry="5" fill="#1A535C"/>
+  <path d="M40 70 L50 66 L46 78 Z" fill="#1A535C"/>
+  <path d="M88 70 L78 66 L82 78 Z" fill="#1A535C"/>
+  <path d="M48 88 Q64 92 80 88" stroke="#F7FFF7" stroke-width="2" fill="none"/>
+  
+  
+</svg>

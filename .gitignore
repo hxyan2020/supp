@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local data store (ideas, users, scraped events)
 /data/store/db.json
+/data/store/email-otps.json
+/data/store/dummy-credentials.json
+/public/uploads/

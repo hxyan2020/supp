@@ -1,16 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   formatCommentTime,
-  getCommentsForIdea,
   type IdeaComment,
 } from "@/data/mock-comments";
-import { mockUser } from "@/data/mock-ideas";
 
 const MAX_IMAGES = 6;
+
+type DraftImage = {
+  name: string;
+  mime: string;
+  dataUrl: string;
+};
 
 export function IdeaComments({ ideaId }: { ideaId: string }) {
   const t = useTranslations("idea");
@@ -18,13 +23,34 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
   const zh = locale === "zh";
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const [comments, setComments] = useState<IdeaComment[]>(() =>
-    getCommentsForIdea(ideaId),
-  );
+  const [comments, setComments] = useState<IdeaComment[]>([]);
+  const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState("");
-  const [draftImages, setDraftImages] = useState<string[]>([]);
+  const [draftImages, setDraftImages] = useState<DraftImage[]>([]);
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [composerOpen, setComposerOpen] = useState(false);
+  const [posting, setPosting] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    void fetch(`/api/ideas/${ideaId}/comments`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (cancelled) return;
+        setComments(Array.isArray(data.comments) ? data.comments : []);
+      })
+      .catch(() => {
+        if (!cancelled) setComments([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [ideaId]);
 
   const roots = useMemo(
     () => comments.filter((c) => !c.parentId),
@@ -51,53 +77,78 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
 
   async function onPickImages(files: FileList | null) {
     if (!files?.length) return;
+    setError("");
     const remaining = MAX_IMAGES - draftImages.length;
     const picked = Array.from(files).slice(0, remaining);
-    const urls = await Promise.all(
-      picked.map(
-        (file) =>
-          new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(String(reader.result));
-            reader.onerror = () => reject(reader.error);
-            reader.readAsDataURL(file);
-          }),
-      ),
-    );
-    setDraftImages((prev) => [...prev, ...urls]);
+
+    const next: DraftImage[] = [];
+    for (const file of picked) {
+      if (!file.type.startsWith("image/")) {
+        setError(t("moderationBadImageType"));
+        continue;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setError(t("moderationImageTooLarge"));
+        continue;
+      }
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+      next.push({
+        name: file.name,
+        mime: file.type,
+        dataUrl,
+      });
+    }
+    if (next.length) setDraftImages((prev) => [...prev, ...next]);
   }
 
-  function submitComment() {
+  async function submitComment() {
     const body = draft.trim();
-    if (!body && draftImages.length === 0) return;
-    const comment: IdeaComment = {
-      id: `local-${Date.now()}`,
-      ideaId,
-      parentId: replyTo || undefined,
-      authorName: mockUser.name,
-      authorNameZh: mockUser.nameZh,
-      authorAvatar: mockUser.avatar,
-      city: "Hong Kong",
-      cityZh: "香港",
-      country: "China",
-      countryZh: "中国",
-      body,
-      bodyZh: body,
-      postedAt: new Date().toISOString(),
-      images: draftImages,
-      likes: 0,
-      likedByMe: false,
-    };
-    setComments((list) => [...list, comment]);
-    setDraft("");
-    setDraftImages([]);
-    setReplyTo(null);
-    setComposerOpen(false);
+    if ((!body && draftImages.length === 0) || posting) return;
+    setPosting(true);
+    setError("");
+
+    try {
+      const res = await fetch(`/api/ideas/${ideaId}/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: body,
+          parentId: replyTo || undefined,
+          images: draftImages,
+        }),
+      });
+      const data = await res.json();
+      if (res.status === 422 || data.code === "blocked") {
+        setError(zh ? data.reasonZh || t("moderationBlocked") : data.reason || t("moderationBlocked"));
+        return;
+      }
+      if (!res.ok) {
+        setError(t("toastFailed"));
+        return;
+      }
+      if (data.comment) {
+        setComments((list) => [data.comment as IdeaComment, ...list]);
+      }
+      setDraft("");
+      setDraftImages([]);
+      setReplyTo(null);
+      setComposerOpen(false);
+    } catch {
+      setError(t("toastFailed"));
+    } finally {
+      setPosting(false);
+    }
   }
 
   function startReply(id: string) {
     setReplyTo(id);
     setComposerOpen(true);
+    setError("");
   }
 
   const replyTarget = replyTo
@@ -108,38 +159,45 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
     <section className="rounded-2xl bg-white/5 p-4">
       <h2 className="text-sm font-semibold">{t("comments")}</h2>
 
-      <div className="mt-3 space-y-4">
-        {roots.map((comment) => (
-          <div key={comment.id} className="space-y-2">
-            <CommentCard
-              comment={comment}
-              locale={locale}
-              zh={zh}
-              onLike={() => toggleLike(comment.id)}
-              onReply={() => startReply(comment.id)}
-              t={t}
-            />
-            {repliesOf(comment.id).map((reply) => (
-              <div key={reply.id} className="ms-8 border-s border-white/10 ps-3">
-                <CommentCard
-                  comment={reply}
-                  locale={locale}
-                  zh={zh}
-                  onLike={() => toggleLike(reply.id)}
-                  onReply={() => startReply(comment.id)}
-                  t={t}
-                  compact
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <p className="mt-3 text-xs text-white/45">{t("commentsLoading")}</p>
+      ) : (
+        <div className="mt-3 space-y-4">
+          {roots.map((comment) => (
+            <div key={comment.id} className="space-y-2">
+              <CommentCard
+                comment={comment}
+                locale={locale}
+                zh={zh}
+                onLike={() => toggleLike(comment.id)}
+                onReply={() => startReply(comment.id)}
+                t={t}
+              />
+              {repliesOf(comment.id).map((reply) => (
+                <div key={reply.id} className="ms-8 border-s border-white/10 ps-3">
+                  <CommentCard
+                    comment={reply}
+                    locale={locale}
+                    zh={zh}
+                    onLike={() => toggleLike(reply.id)}
+                    onReply={() => startReply(comment.id)}
+                    t={t}
+                    compact
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
 
       {!composerOpen ? (
         <button
           type="button"
-          onClick={() => setComposerOpen(true)}
+          onClick={() => {
+            setComposerOpen(true);
+            setError("");
+          }}
           className="mt-4 w-full rounded-xl border border-white/15 py-2.5 text-sm text-white/80"
         >
           {t("writeComment")}
@@ -171,13 +229,13 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
           />
           {draftImages.length > 0 && (
             <div className="flex gap-2 overflow-x-auto">
-              {draftImages.map((src, i) => (
+              {draftImages.map((img, i) => (
                 <div
-                  key={`${src.slice(0, 24)}-${i}`}
+                  key={`${img.name}-${i}`}
                   className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" className="h-full w-full object-cover" />
+                  <img src={img.dataUrl} alt="" className="h-full w-full object-cover" />
                   <button
                     type="button"
                     onClick={() =>
@@ -192,12 +250,17 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
               ))}
             </div>
           )}
+          {error && (
+            <p className="rounded-lg border border-red-500/40 bg-red-500/15 px-3 py-2 text-xs text-red-200">
+              {error}
+            </p>
+          )}
           <div className="flex items-center justify-between gap-2">
             <div>
               <input
                 ref={fileRef}
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp,image/gif"
                 multiple
                 className="hidden"
                 onChange={(e) => {
@@ -208,7 +271,7 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                disabled={draftImages.length >= MAX_IMAGES}
+                disabled={draftImages.length >= MAX_IMAGES || posting}
                 className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/80 disabled:opacity-40"
               >
                 {t("addImages")}
@@ -222,6 +285,7 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
                   setReplyTo(null);
                   setDraft("");
                   setDraftImages([]);
+                  setError("");
                 }}
                 className="rounded-lg px-3 py-1.5 text-xs text-white/60"
               >
@@ -229,10 +293,11 @@ export function IdeaComments({ ideaId }: { ideaId: string }) {
               </button>
               <button
                 type="button"
-                onClick={submitComment}
-                className="rounded-lg bg-supp-red px-3 py-1.5 text-xs font-semibold text-white"
+                onClick={() => void submitComment()}
+                disabled={posting}
+                className="rounded-lg bg-supp-red px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
               >
-                {t("postComment")}
+                {posting ? t("postingComment") : t("postComment")}
               </button>
             </div>
           </div>
@@ -272,17 +337,38 @@ function CommentCard({
             compact ? "h-8 w-8" : "h-10 w-10"
           }`}
         >
-          <Image
-            src={comment.authorAvatar}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="40px"
-          />
+          {comment.authorUserId ? (
+            <Link href={`/users/${comment.authorUserId}`} className="absolute inset-0">
+              <Image
+                src={comment.authorAvatar}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="40px"
+              />
+            </Link>
+          ) : (
+            <Image
+              src={comment.authorAvatar}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="40px"
+            />
+          )}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <p className="text-xs font-semibold text-white/95">{name}</p>
+            {comment.authorUserId ? (
+              <Link
+                href={`/users/${comment.authorUserId}`}
+                className="text-xs font-semibold text-white/95 hover:underline"
+              >
+                {name}
+              </Link>
+            ) : (
+              <p className="text-xs font-semibold text-white/95">{name}</p>
+            )}
             <p className="text-[10px] text-white/45">
               {city}, {country}
             </p>
@@ -295,18 +381,23 @@ function CommentCard({
           ) : null}
           {comment.images.length > 0 && (
             <div className="mt-2 flex gap-2 overflow-x-auto">
-              {comment.images.map((src) => (
+              {comment.images.map((src, idx) => (
                 <div
-                  key={src}
+                  key={`${comment.id}-img-${idx}`}
                   className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg"
                 >
-                  <Image
-                    src={src}
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="80px"
-                  />
+                  {src.startsWith("data:") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={src} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
+                  )}
                 </div>
               ))}
             </div>

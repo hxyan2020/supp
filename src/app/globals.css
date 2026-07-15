@@ -25,7 +25,9 @@
   --color-supp-line: var(--supp-line);
   --color-supp-soft: var(--supp-soft);
   --font-sans: var(--font-noto-sans);
-  --font-display: var(--font-noto-sans);
+  --font-display: var(--font-syne), var(--font-noto-sans);
+  --font-hand: var(--font-caveat), "Caveat", cursive;
+  --font-hand-zh: var(--font-ma-shan), "Ma Shan Zheng", cursive;
 }
 
 * {

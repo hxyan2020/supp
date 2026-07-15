@@ -8,6 +8,7 @@ import { usePreferredCurrency } from "@/components/CurrencySwitcher";
 import { formatFee } from "@/lib/currency";
 import {
   formatDistanceKm,
+  formatEventDate,
   formatTimeRange,
   haversineKm,
   isIdeaInHoursWindow,
@@ -15,14 +16,12 @@ import {
   MAP_DAY_WINDOW_HOURS,
   type LatLng,
 } from "@/lib/geo";
-import { localizedIdea, type Idea } from "@/data/mock-ideas";
-
-function navigationUrl(idea: Idea, locale: string) {
-  if (locale === "zh") {
-    return `https://uri.amap.com/navigation?to=${idea.lng},${idea.lat},${encodeURIComponent(idea.addressZh)}&mode=car&src=supp`;
-  }
-  return `https://www.google.com/maps/dir/?api=1&destination=${idea.lat},${idea.lng}&travelmode=walking`;
-}
+import {
+  engagementForIdea,
+  localizedIdea,
+  type Idea,
+} from "@/data/mock-ideas";
+import { navigationUrl } from "@/lib/map-address";
 
 export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
   const t = useTranslations("map");
@@ -162,7 +161,7 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
           />
           <span className="text-black/35">🎙</span>
         </div>
-        <div className="mx-auto w-fit rounded-full bg-[#141414]/80 px-3.5 py-1.5 text-center text-xs font-medium text-white shadow-md backdrop-blur-sm">
+        <div className="mx-auto w-fit rounded-full bg-[#141414]/70 px-3.5 py-1.5 text-center text-xs font-medium text-white shadow-md backdrop-blur-sm">
           {t("window24hCount", { count: ideasIn24h })}
         </div>
       </div>
@@ -194,20 +193,10 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
         >
           ◎
         </button>
-        {selected && (
-          <a
-            href={navigationUrl(selected, locale)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1a73e8] text-sm font-bold text-white shadow-xl"
-          >
-            {t("go")}
-          </a>
-        )}
       </div>
 
       {selected && (
-        <div className="absolute inset-x-3 bottom-24 z-20 animate-fade-up rounded-2xl border border-white/10 bg-[#141414]/80 p-3 text-white shadow-xl backdrop-blur-sm">
+        <div className="absolute inset-x-3 bottom-24 z-20 animate-fade-up rounded-2xl border border-white/10 bg-[#141414]/70 p-3 text-white shadow-xl backdrop-blur-sm">
           <button
             type="button"
             onClick={() => {
@@ -236,11 +225,17 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
               <p className="mt-0.5 truncate text-xs text-white/55">
                 {localizedIdea(selected, locale).address}
               </p>
-              <p className="mt-1 text-[11px] text-supp-red">
-                {locale === "zh" ? t("providerChina") : t("providerGoogle")}
-              </p>
             </div>
           </Link>
+
+          <a
+            href={navigationUrl(selected, locale)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 flex w-full items-center justify-center rounded-xl bg-supp-red py-3 text-sm font-semibold text-white shadow-lg shadow-red-900/30 transition hover:bg-supp-red-dark"
+          >
+            {t("navigate")}
+          </a>
 
           <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-3 text-[11px] text-white/80">
             <MetaRow
@@ -264,9 +259,14 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
               value={distanceLabel}
             />
             <MetaRow
+              icon={<BoltIcon />}
+              label={t("engagement")}
+              value={t(`engagementLevels.${engagementForIdea(selected)}`)}
+            />
+            <MetaRow
               icon={<ClockIcon />}
               label={t("time")}
-              value={formatTimeRange(selected.startsAt, selected.endsAt, locale)}
+              value={`${formatEventDate(selected.startsAt, locale)} · ${formatTimeRange(selected.startsAt, selected.endsAt, locale)}`}
               className="col-span-2"
             />
           </div>
@@ -274,7 +274,7 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
       )}
 
       {!filtered.length && (
-        <div className="absolute inset-x-3 bottom-24 z-20 rounded-2xl border border-white/10 bg-[#141414]/80 px-4 py-3 text-center text-sm text-white/70 shadow-xl backdrop-blur-sm">
+        <div className="absolute inset-x-3 bottom-24 z-20 rounded-2xl border border-white/10 bg-[#141414]/70 px-4 py-3 text-center text-sm text-white/70 shadow-xl backdrop-blur-sm">
           {t("noUpcoming")}
         </div>
       )}
@@ -347,6 +347,14 @@ function ClockIcon() {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <circle cx="12" cy="12" r="8.5" />
       <path strokeLinecap="round" d="M12 7.5V12l3 2" />
+    </svg>
+  );
+}
+
+function BoltIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
     </svg>
   );
 }

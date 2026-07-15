@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { deleteIdea, upsertIdea, listAllIdeas } from "@/lib/db";
 import type { IdeaRecord } from "@/lib/types";
+import {
+  normalizeSocialEmbeds,
+  normalizeStringList,
+} from "@/lib/content-moderation";
 
 async function guard() {
   if (!(await isAdminAuthenticated())) {
@@ -50,6 +54,26 @@ export async function PUT(
       body.relevance != null ? Number(body.relevance) : existing.relevance,
     tags: body.tags ?? existing.tags,
     categories: body.categories ?? existing.categories,
+    steps:
+      body.steps !== undefined
+        ? normalizeStringList(body.steps)
+        : existing.steps ?? [],
+    stepsZh:
+      body.stepsZh !== undefined
+        ? normalizeStringList(body.stepsZh)
+        : existing.stepsZh ?? [],
+    needs:
+      body.needs !== undefined
+        ? normalizeStringList(body.needs)
+        : existing.needs ?? [],
+    needsZh:
+      body.needsZh !== undefined
+        ? normalizeStringList(body.needsZh)
+        : existing.needsZh ?? [],
+    socialEmbeds:
+      body.socialEmbeds !== undefined
+        ? normalizeSocialEmbeds(body.socialEmbeds)
+        : existing.socialEmbeds ?? [],
     updatedAt: new Date().toISOString(),
   });
   return NextResponse.json({ idea: saved });

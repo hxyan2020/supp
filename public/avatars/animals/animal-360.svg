@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Midnight Caterpillar">
+  <defs>
+    <radialGradient id="bg-animal-360" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#4A4E69" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#22223B" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-360)"/>
+  <rect width="128" height="128" rx="64" fill="#9A8C98" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="78" rx="36" ry="32" fill="#22223B"/>
+  <circle cx="64" cy="52" r="26" fill="#22223B"/>
+  <ellipse cx="40" cy="40" rx="10" ry="14" fill="#4A4E69"/>
+  <ellipse cx="88" cy="40" rx="10" ry="14" fill="#4A4E69"/>
+  <circle cx="54" cy="52" r="5" fill="#9A8C98"/>
+  <circle cx="74" cy="52" r="5" fill="#9A8C98"/>
+  <circle cx="55.5" cy="51" r="1.8" fill="#fff"/>
+  <circle cx="75.5" cy="51" r="1.8" fill="#fff"/>
+  <ellipse cx="64" cy="64" rx="14" ry="7" fill="#4A4E69"/>
+  <path d="M56 72 Q64 78 72 72" stroke="#9A8C98" stroke-width="2" fill="none"/>
+  
+  
+</svg>

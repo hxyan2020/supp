@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Sunny Guinea Pig">
+  <defs>
+    <radialGradient id="bg-animal-147" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#073B4C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#118AB2" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="url(#bg-animal-147)"/>
+  <rect width="128" height="128" rx="64" fill="#FFD166" opacity="0.08"/>
+  
+  <ellipse cx="64" cy="68" rx="40" ry="28" fill="#118AB2"/>
+  <path d="M24 68 Q8 48 14 72 Q8 92 24 72 Z" fill="#073B4C"/>
+  <path d="M64 36.75 L43 52 L85 52 Z" fill="#073B4C"/>
+  <circle cx="78" cy="64" r="6" fill="#FFD166"/>
+  <circle cx="80" cy="63" r="2.2" fill="#fff"/>
+  <path d="M86 74 Q92 76 88 80" stroke="#FFD166" stroke-width="2" fill="none"/>
+  <ellipse cx="50" cy="78" rx="8" ry="5" fill="#073B4C" opacity="0.55"/>
+  
+  
+</svg>
