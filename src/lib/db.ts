@@ -151,16 +151,27 @@ async function ensureDb(): Promise<DbShape> {
   try {
     const raw = await fs.readFile(DB_FILE, "utf8");
     return migrateDb(JSON.parse(raw) as DbShape);
-  } catch {
+  } catch (err) {
+    // Never replace an existing file with the default seed — a concurrent write
+    // or transient read/parse failure would otherwise wipe demo users.
+    try {
+      const st = await fs.stat(DB_FILE);
+      if (st.size > 0) throw err;
+    } catch (statErr) {
+      if ((statErr as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+    }
     const db = defaultDb();
-    await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8");
+    await writeDb(db);
     return db;
   }
 }
 
 async function writeDb(db: DbShape) {
   await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8");
+  const payload = JSON.stringify(db, null, 2);
+  const tmp = `${DB_FILE}.${process.pid}.${Date.now()}.tmp`;
+  await fs.writeFile(tmp, payload, "utf8");
+  await fs.rename(tmp, DB_FILE);
 }
 
 export async function readDb(): Promise<DbShape> {
