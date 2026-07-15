@@ -457,7 +457,7 @@ function CommentCard({
                 comment.likedByMe ? "text-supp-red" : "text-white/55"
               }`}
             >
-              <HeartIcon filled={comment.likedByMe} />
+              <HeartIcon filled={Boolean(comment.likedByMe)} />
               {comment.likes > 0 ? (
                 <span className="tabular-nums">{comment.likes}</span>
               ) : null}
