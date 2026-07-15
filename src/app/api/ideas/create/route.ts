@@ -64,8 +64,9 @@ export async function POST(req: Request) {
   const action = body.action || "save_draft";
   const now = new Date().toISOString();
 
-  const existing =
-    body.id && (await getIdeaRecordById(body.id));
+  const existing = body.id
+    ? await getIdeaRecordById(body.id)
+    : null;
   if (existing?.creatorUserId && existing.creatorUserId !== user.id) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
