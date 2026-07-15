@@ -14,18 +14,15 @@ function createAvatarIcon(src: string) {
   });
 }
 
-function FitBounds({ ideas, selected }: { ideas: Idea[]; selected: Idea | null }) {
+function FlyToSelected({ selected }: { selected: Idea | null }) {
   const map = useMap();
 
   useEffect(() => {
-    if (selected) {
-      map.flyTo([selected.lat, selected.lng], 14, { duration: 0.8 });
-      return;
-    }
-    if (ideas.length === 0) return;
-    const bounds = L.latLngBounds(ideas.map((i) => [i.lat, i.lng] as [number, number]));
-    map.fitBounds(bounds.pad(0.2));
-  }, [ideas, selected, map]);
+    // Only move when an idea is selected. Closing the snippet must keep
+    // the current center/zoom (do not fitBounds / zoom out).
+    if (!selected) return;
+    map.flyTo([selected.lat, selected.lng], 14, { duration: 0.8 });
+  }, [selected, map]);
 
   return null;
 }
@@ -65,7 +62,7 @@ export function IdeaMap({
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       )}
 
-      <FitBounds ideas={ideas} selected={selected} />
+      <FlyToSelected selected={selected} />
 
       {ideas.map((idea) => (
         <Marker
