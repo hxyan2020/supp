@@ -744,7 +744,7 @@ function SettingsSheet({
     }
   }
 
-  async function loginPassword() {
+  async function submitPasswordLogin() {
     setAuthBusy(true);
     setAuthMsg("");
     try {
@@ -1000,7 +1000,7 @@ function SettingsSheet({
                       !loginUsername.trim() ||
                       !loginPassword.trim()
                     }
-                    onClick={() => void loginPassword()}
+                    onClick={() => void submitPasswordLogin()}
                     className="mt-3 w-full rounded-xl bg-supp-red py-2.5 text-sm font-semibold text-white disabled:opacity-50"
                   >
                     {t("passwordSignInAction")}
