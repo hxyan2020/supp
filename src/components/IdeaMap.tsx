@@ -69,7 +69,9 @@ export function IdeaMap({
         <Marker
           key={idea.id}
           position={[idea.lat, idea.lng]}
-          icon={createAvatarIcon(resolveAvatar(idea.organizerAvatar))}
+          icon={createAvatarIcon(
+            resolveAvatar(idea.organizerAvatar, idea.creatorUserId || idea.id),
+          )}
           eventHandlers={{
             click: () => onSelect(idea),
           }}

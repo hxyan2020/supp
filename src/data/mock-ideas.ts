@@ -693,9 +693,19 @@ export function withSchedule(
   };
 }
 
-export const mockIdeas: Idea[] = mockIdeaSeeds.map((idea, i) =>
-  withSchedule(idea, i),
-);
+export const mockIdeas: Idea[] = mockIdeaSeeds.map((idea, i) => {
+  const scheduled = withSchedule(idea, i);
+  // Lazy import-free: assign demo creators inline with animal paths
+  const n = (i % 120) + 1;
+  const animalNum = ((n - 1) % 400) + 1;
+  return {
+    ...scheduled,
+    creatorUserId: `demo${String(n).padStart(3, "0")}`,
+    organizer: `Demo ${String(n).padStart(3, "0")}`,
+    organizerZh: `演示 ${String(n).padStart(3, "0")}`,
+    organizerAvatar: `/avatars/animals/animal-${String(animalNum).padStart(3, "0")}.svg`,
+  };
+});
 
 export type Friend = {
   id: string;

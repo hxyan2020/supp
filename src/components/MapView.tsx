@@ -307,8 +307,8 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
             </div>
           </Link>
 
-          <div className="mt-2 flex items-end gap-2 border-t border-white/10 pt-2">
-            <div className="grid min-w-0 flex-1 grid-cols-3 gap-x-2 gap-y-1.5 text-[10px] text-white/80">
+          <div className="mt-2 space-y-2 border-t border-white/10 pt-2">
+            <div className="grid min-w-0 grid-cols-3 gap-x-2 gap-y-1.5 text-[10px] text-white/80">
               <MetaCompact
                 icon={<UsersIcon />}
                 label={t("experienced")}
@@ -341,14 +341,16 @@ export function MapView({ ideas: allIdeas }: { ideas: Idea[] }) {
               />
             </div>
 
-            <a
-              href={navigationUrl(selected, locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 self-end rounded-xl bg-supp-red px-3.5 py-2.5 text-xs font-semibold text-white shadow-md shadow-red-900/30 transition hover:bg-supp-red-dark"
-            >
-              {t("navigate")}
-            </a>
+            <div className="flex justify-end">
+              <a
+                href={navigationUrl(selected, locale)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl bg-supp-red px-3.5 py-2.5 text-xs font-semibold text-white shadow-md shadow-red-900/30 transition hover:bg-supp-red-dark"
+              >
+                {t("navigate")}
+              </a>
+            </div>
           </div>
         </div>
       )}
@@ -374,10 +376,10 @@ function MetaCompact({
   return (
     <div className="min-w-0">
       <p className="flex items-center gap-1 text-[9px] uppercase tracking-wide text-white/40">
-        <span className="text-supp-red">{icon}</span>
+        <span className="shrink-0 text-supp-red">{icon}</span>
         {label}
       </p>
-      <p className="truncate font-medium leading-tight text-white/90">{value}</p>
+      <p className="break-words font-medium leading-snug text-white/90">{value}</p>
     </div>
   );
 }

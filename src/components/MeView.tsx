@@ -13,7 +13,8 @@ import { scatterStyle } from "@/lib/scatter";
 import {
   ME_LISTS_EVENT,
   applyMeListChange,
-  readPendingMeListChange,
+  mergeIdeaLists,
+  readPendingMeListChanges,
   type MeListChange,
 } from "@/lib/me-lists-sync";
 import { usePathname } from "@/i18n/navigation";
@@ -166,17 +167,49 @@ export function MeView() {
         experiencedAt?: Record<string, string>;
       };
       if (typeof data.total === "number") setIdeasTotal(data.total);
-      setCollectedIdeas(data.collected ?? []);
-      setExperiencedIdeas(data.experienced ?? []);
-      setExperiencedAt(data.experiencedAt ?? {});
+
+      const serverCollected = data.collected ?? [];
+      const serverExperienced = data.experienced ?? [];
+      const serverAt = data.experiencedAt ?? {};
+
+      // Keep any optimistic local items that the server snapshot may still omit
+      const mergedCollected = mergeIdeaLists(
+        serverCollected,
+        listsRef.current.collected,
+        [
+          ...(user?.favoritedIds ?? []),
+          ...listsRef.current.collected.map((i) => i.id),
+          ...serverCollected.map((i) => i.id),
+        ],
+      );
+      const mergedExperienced = mergeIdeaLists(
+        serverExperienced,
+        listsRef.current.experienced,
+        [
+          ...(user?.experiencedIds ?? []),
+          ...listsRef.current.experienced.map((i) => i.id),
+          ...serverExperienced.map((i) => i.id),
+        ],
+      );
+      const mergedAt = { ...serverAt, ...listsRef.current.at };
+
+      listsRef.current = {
+        collected: mergedCollected,
+        experienced: mergedExperienced,
+        at: mergedAt,
+      };
+      setCollectedIdeas(mergedCollected);
+      setExperiencedIdeas(mergedExperienced);
+      setExperiencedAt(mergedAt);
     } catch {
       // keep last known list
     }
   });
 
   useEffect(() => {
-    const pending = readPendingMeListChange();
-    if (pending) applyLocalChange(pending);
+    for (const change of readPendingMeListChanges()) {
+      applyLocalChange(change);
+    }
     void loadMe();
     void loadIdeas();
     const params = new URLSearchParams(window.location.search);
@@ -192,8 +225,9 @@ export function MeView() {
   useEffect(() => {
     // Refresh whenever user lands on Me (including client navigations)
     if (pathname !== "/me") return;
-    const pending = readPendingMeListChange();
-    if (pending) applyLocalChange(pending);
+    for (const change of readPendingMeListChanges()) {
+      applyLocalChange(change);
+    }
     void loadMe();
     void loadIdeas();
   }, [pathname]);
@@ -202,8 +236,11 @@ export function MeView() {
     const onChange = (event: Event) => {
       const detail = (event as CustomEvent<MeListChange>).detail;
       if (detail) applyLocalChange(detail);
+      // Refresh user counts; delay list refetch so optimistic row is not wiped mid-flight
       void loadMe();
-      void loadIdeas();
+      window.setTimeout(() => {
+        void loadIdeas();
+      }, 400);
     };
     window.addEventListener(ME_LISTS_EVENT, onChange);
     return () => window.removeEventListener(ME_LISTS_EVENT, onChange);
@@ -271,6 +308,9 @@ export function MeView() {
     action: "favorite" | "experienced",
   ) {
     const key = `${action}:${ideaId}`;
+    const idea =
+      collectedIdeas.find((i) => i.id === ideaId) ||
+      experiencedIdeas.find((i) => i.id === ideaId);
     setDimming((s) => ({ ...s, [key]: true }));
     await new Promise((r) => window.setTimeout(r, 280));
     try {
@@ -282,6 +322,9 @@ export function MeView() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed");
       setUser(data.user);
+      if (idea) {
+        applyLocalChange({ action, active: false, idea });
+      }
       void loadIdeas();
       const socialRes = await fetch("/api/me/social", { cache: "no-store" });
       const socialData = await socialRes.json();
@@ -487,9 +530,12 @@ export function MeView() {
                 className="h-full w-full object-cover"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-black/10 to-black/5 text-lg text-supp-muted">
-                ?
-              </div>
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/images/persona-egg.svg"
+                alt=""
+                className="h-full w-full object-contain p-2"
+              />
             )}
           </div>
           <div className="min-w-0">
@@ -843,7 +889,7 @@ function SettingsSheet({
   const [loginPassword, setLoginPassword] = useState("");
   const [activityOpen, setActivityOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<
-    "profile" | "account" | "prefs" | "help"
+    "profile" | "account" | "prefs" | "help" | "activity"
   >("profile");
 
   useEffect(() => {
@@ -1028,6 +1074,7 @@ function SettingsSheet({
               ["account", "settingsTabAccount"],
               ["prefs", "settingsTabPrefs"],
               ["help", "settingsTabHelp"],
+              ["activity", "settingsTabActivity"],
             ] as const
           ).map(([id, labelKey]) => {
             const active = settingsTab === id;
@@ -1293,25 +1340,6 @@ function SettingsSheet({
             <div className="space-y-5">
               <section>
                 <h3 className="mb-2 text-sm font-semibold text-supp-ink">
-                  {t("activitySection")}
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setActivityOpen(true)}
-                  className="flex w-full items-center justify-between rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-3 text-sm font-medium text-supp-ink transition hover:bg-black/[0.03]"
-                >
-                  <span>{t("myActivity")}</span>
-                  <span className="text-supp-muted" aria-hidden>
-                    →
-                  </span>
-                </button>
-                <p className="mt-1.5 text-[11px] text-supp-muted">
-                  {t("myActivityHint")}
-                </p>
-              </section>
-
-              <section>
-                <h3 className="mb-2 text-sm font-semibold text-supp-ink">
                   {t("customerService")}
                 </h3>
                 <div className="space-y-2 rounded-xl border border-black/10 bg-[#f7f7f7] p-3">
@@ -1332,6 +1360,29 @@ function SettingsSheet({
                     <span className="text-right font-medium">hola@supp.com</span>
                   </a>
                 </div>
+              </section>
+            </div>
+          )}
+
+          {settingsTab === "activity" && (
+            <div className="space-y-5">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold text-supp-ink">
+                  {t("activitySection")}
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setActivityOpen(true)}
+                  className="flex w-full items-center justify-between rounded-xl border border-black/10 bg-[#f7f7f7] px-3 py-3 text-sm font-medium text-supp-ink transition hover:bg-black/[0.03]"
+                >
+                  <span>{t("myActivity")}</span>
+                  <span className="text-supp-muted" aria-hidden>
+                    →
+                  </span>
+                </button>
+                <p className="mt-1.5 text-[11px] text-supp-muted">
+                  {t("myActivityHint")}
+                </p>
               </section>
             </div>
           )}

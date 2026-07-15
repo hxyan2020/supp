@@ -16,12 +16,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isIdeaDetail = pathname.startsWith("/ideas/");
   const isCreateIdea = pathname.startsWith("/explore/create");
-  const hideChrome = isIdeaDetail || isCreateIdea;
+  const hideHeader = isIdeaDetail || isCreateIdea;
+  const hideNav = isCreateIdea;
   const brandHand = locale === "zh" ? "font-hand-zh" : "font-hand";
 
   return (
     <div className="mx-auto flex min-h-full w-full max-w-md flex-col bg-supp-black text-white sm:max-w-lg">
-      {!hideChrome && (
+      {!hideHeader && (
         <div className="sticky top-0 z-30 px-4 pt-3">
           <header className="flex h-12 items-center justify-between rounded-2xl border border-white/10 bg-black/80 px-4 shadow-lg shadow-black/30 backdrop-blur-md">
             <Link
@@ -46,16 +47,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      <main className={`flex-1 ${hideChrome ? "" : "pb-[92px]"}`}>{children}</main>
+      <main className={`flex-1 ${hideNav ? "" : "pb-[92px]"}`}>{children}</main>
 
-      {!hideChrome && (
+      {!hideNav && (
         <nav className="fixed bottom-3 left-1/2 z-40 w-full max-w-md -translate-x-1/2 px-4 sm:max-w-lg">
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#141414] pb-[env(safe-area-inset-bottom)] shadow-lg shadow-black/30">
             <div className="grid grid-cols-3">
               {navItems.map(({ href, key, icon: Icon }) => {
                 const active =
                   pathname === href ||
-                  (href === "/explore" && pathname.startsWith("/explore"));
+                  (href === "/explore" && pathname.startsWith("/explore")) ||
+                  (href === "/explore" && pathname.startsWith("/ideas/"));
                 return (
                   <Link
                     key={href}

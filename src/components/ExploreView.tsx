@@ -148,15 +148,17 @@ export function ExploreView({ ideas }: { ideas: Idea[] }) {
         body: JSON.stringify({ ideaId, action, active: next }),
       });
       if (!res.ok) throw new Error("failed");
-      if (idea) {
-        const { notifyMeListsChanged } = await import("@/lib/me-lists-sync");
-        notifyMeListsChanged({
-          action,
-          active: next,
-          idea,
-          at: next && action === "experienced" ? new Date().toISOString() : undefined,
-        });
-      }
+      const { notifyMeListsChanged } = await import("@/lib/me-lists-sync");
+      const payloadIdea =
+        idea ||
+        ranked.find((i) => i.id === ideaId) ||
+        ({ id: ideaId } as Idea);
+      notifyMeListsChanged({
+        action,
+        active: next,
+        idea: payloadIdea as Idea,
+        at: next && action === "experienced" ? new Date().toISOString() : undefined,
+      });
     } catch {
       if (action === "experienced") {
         setExperienced((s) => ({ ...s, [ideaId]: !next }));

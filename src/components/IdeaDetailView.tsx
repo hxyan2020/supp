@@ -265,8 +265,6 @@ export function IdeaDetailView({ idea }: { idea: Idea }) {
           <h1 className="text-xl font-bold leading-snug tracking-tight">{L.title}</h1>
           <p className="text-xs text-white/80">
             {t("category")}: {L.categories.join(" | ")}
-            <span className="mx-2 text-white/40">·</span>
-            {t("sensation")}: {L.sensation}
           </p>
           <p className="text-xs text-white/80">
             {t("duration")}: {idea.durationMin} {t("minutes")}
@@ -436,7 +434,7 @@ export function IdeaDetailView({ idea }: { idea: Idea }) {
         </div>
       )}
 
-      <div className="space-y-4 px-4 pb-8 pt-5">
+      <div className="space-y-4 px-4 pb-24 pt-5">
         <div className="rounded-2xl bg-supp-red/90 p-4 shadow-lg shadow-red-950/30 animate-fade-up backdrop-blur-sm">
           <p className="text-sm font-semibold">#{L.title}</p>
           <p className="mt-3 text-[15px] leading-relaxed text-white/95">

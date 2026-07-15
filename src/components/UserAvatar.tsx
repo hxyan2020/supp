@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DEFAULT_AVATAR, resolveAvatar } from "@/lib/avatar";
+import { resolveAvatar } from "@/lib/avatar";
 
 type Props = {
   src?: string | null;
@@ -21,12 +21,13 @@ export function UserAvatar({
   className = "h-full w-full object-cover",
   wrapperClassName,
   crossOrigin,
-}: Props) {
-  const [current, setCurrent] = useState(() => resolveAvatar(src));
+  seed,
+}: Props & { seed?: string }) {
+  const [current, setCurrent] = useState(() => resolveAvatar(src, seed));
 
   useEffect(() => {
-    setCurrent(resolveAvatar(src));
-  }, [src]);
+    setCurrent(resolveAvatar(src, seed));
+  }, [src, seed]);
 
   const img = (
     // eslint-disable-next-line @next/next/no-img-element
@@ -38,7 +39,8 @@ export function UserAvatar({
       decoding="async"
       crossOrigin={crossOrigin}
       onError={() => {
-        if (current !== DEFAULT_AVATAR) setCurrent(DEFAULT_AVATAR);
+        const fallback = resolveAvatar(null, seed || src || "default");
+        if (current !== fallback) setCurrent(fallback);
       }}
     />
   );
